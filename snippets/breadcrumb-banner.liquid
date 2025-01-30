@@ -1,0 +1,16 @@
+<div class="page-header-wrap breadcrumbs overlay-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="page-header-content">
+          <div class="page-header-content-inner">
+            {%- if settings.breadcrub_page_title_enable -%}
+            <h1 class="breadcrumbs-title">{{ page_title }}</h1>
+            {%- endif -%}
+            {%- include 'breadcrumb-builtin' -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

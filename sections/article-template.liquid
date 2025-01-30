@@ -1,0 +1,236 @@
+<div class="page-content-wrapper sp-y">
+  <div class="blog-page-content-wrap">
+    <div class="container container-wide">
+      <div class="row {% if section.settings.sidebar_handle == 'left_sidebar_handle' %}flex-row-reverse{% endif %}">
+        <div class="{% if section.settings.sidebar_handle == 'without_sidebar' %}col-lg-12{% else %}col-lg-9{% endif %}">
+          <article class="blog-post-details">
+            <figure class="blog-post-thumb">
+              <img src="{{ article | img_url: 'master' }}" alt="{{ article.image.alt }}">
+            </figure>
+            <section class="blog-post-txt-wrap">
+              <div class="blog-post-txt">
+                <h2>{{ article.title }}</h2>
+                {{ article.content }}
+              </div>
+              
+              {%- if section.settings.article_share_enable -%}
+              <div class="share-article text-center">
+                {% if blog.previous_article %}
+                  <span class="left">
+                    &larr; {{ 'blogs.article.older_post' | t | link_to: blog.previous_article }}
+                  </span>
+                  {% endif %}
+                <h6>{{ section.settings.share_title }}</h6>
+                {% if blog.next_article %}
+                <span class="right">
+                  {{ 'blogs.article.newer_post' | t | link_to: blog.next_article }} &rarr;
+                </span>
+                {% endif %}
+                <div class="share-icons nav justify-content-center">
+                  {%- include 'blog-share' -%}
+                </div>
+              </div>
+              {%- endif -%}
+              
+            </section>
+          </article>
+ 
+          {%- if article.comments_enabled? -%}
+          {%- assign comment_post_limit = section.settings.comment_post_limit_handle -%}
+          {%- paginate article.comments by comment_post_limit -%}
+          <div class="comment-area-wrapper" id="comments">
+            <div class="comments-view-area">
+              {%- if comment and comment.created_at -%}
+              <p class="note form-success">
+                {%- if blog.comments_modareted? -%}
+                {{ 'blogs.comments.success_moderated' | t }}            
+                {%- else -%}
+                {{ 'blogs.comments.success' | t }}
+                {%- endif -%}
+              </p>
+              {%- endif -%}
+              
+              {%- if article.comments.size > 0 -%}
+              {%- include 'blog-comments' -%}
+              {%- endif -%}
+              {%- if paginate.pages > 1 -%}
+              <div class="action-bar-inner mt-30">
+                <div class="row align-items-center">
+                  <div class="col-sm-12">
+                    {% include 'pagination' %}
+                  </div>
+                </div>
+              </div>
+              {%- endif -%}
+            </div>
+            {%- include 'blog-comment-form' -%}
+          </div>
+          {%- endpaginate -%}
+          {%- endif -%}
+        </div>
+
+        {%- unless section.settings.sidebar_handle == 'without_sidebar' -%}
+        <div class="col-lg-3">
+          {% include 'blog-sidebar' %}
+        </div>
+        {%- endunless -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Article Page",
+    "settings": [
+		{
+			"type": "header",
+			"content": "Article Share"
+		},
+		{
+			"type": "checkbox",
+			"id": "article_share_enable",
+			"label": "Show Article Share Option",
+			"default": true
+		},
+		{
+			"type": "text",
+			"id": "share_title",
+			"label": "Share Title",
+			"default": "Share this article"
+		},
+		{
+			"type": "header",
+			"content": "Comment Box"
+		},
+		{
+			"type": "image_picker",
+			"id": "commentator_image",
+			"label": "Comment Thumb Image",
+			"info": "Recommended Size: 80 x 80px"
+		},
+		{
+            "type": "range",
+            "id": "comment_post_limit_handle",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "label": "How Many Comment Post Show",
+            "default": 5
+        },
+		{
+			"type": "header",
+			"content": "Article Sidebar"
+		},
+		{
+			"type": "radio",
+			"id": "sidebar_handle",
+			"label": "Sidebar Position -",
+			"options": [
+				{
+					"label": "Left Sidebar",
+					"value": "left_sidebar_handle"
+				},
+				{
+					"label": "Right Sidebar",
+					"value": "right_sidebar_handle"
+				},
+				{
+					"label": "Without Sidebar",
+					"value": "without_sidebar"
+				}
+			],
+			"default": "left_sidebar_handle"
+		}
+	],
+	 "blocks":[
+		{
+          "type": "search",
+          "name": "Search",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "widget_title",
+              "label": "Title",
+              "default": "Search"
+            }
+          ]
+       },
+	   {
+          "type": "recent_post",
+          "name": "Recent Post",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "recent_post_title",
+              "label": "Recent Post Title",
+              "default": "Recent Post"
+			},
+            {
+              "type": "range",
+              "id": "recent_post_limit_handle",
+              "min": 2,
+              "max": 10,
+              "step": 1,
+              "label": "Post Limit",
+              "default": 3
+            }
+          ]
+       },
+	   {
+          "type": "archive",
+          "name": "Archive",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "archive_title",
+              "label": "Archive Title",
+              "default": "Archive"
+            }
+          ]
+       },
+	   {
+          "type": "tag",
+          "name": "Tag",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "blog_tags_title",
+              "label": "Tags Title",
+              "default": "Tags"
+			},
+            {
+              "type": "range",
+              "id": "blog_tags_list_limit_handle",
+              "min": 5,
+              "max": 20,
+              "step": 1,
+              "label": "Tag Limit",
+              "default": 10
+            }
+          ]
+       },
+	   {
+          "type": "menu",
+          "name": "Menu",
+          "settings": [
+            {
+              "type": "text",
+              "id": "menu_title",
+              "label": "Menu Title",
+              "default": "Custom Menu"
+            },
+			{
+              "type": "link_list",
+              "id": "menu_handle",
+              "label": "Menu"
+            }
+          ]
+       }
+	]
+  }
+{% endschema %}

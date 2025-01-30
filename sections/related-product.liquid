@@ -1,0 +1,174 @@
+{%- assign related_product_limit_count = section.settings.related_product_limit_handle -%}
+{%- assign related_product_limit = related_product_limit_count | plus: 1 -%}
+
+{%- if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' -%}
+{%- assign found_a_collection = false -%}
+{%- for c in product.collections -%}
+
+{%- if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 -%}
+{%- assign found_a_collection = true -%}
+{%- assign collection = c -%}
+{%- endif -%}
+
+{%- endfor -%}
+{%- endif -%}
+
+{%- if collection and collection.products_count > 1 and section.settings.related_products_enable -%}
+<div class="related-product sm-bottom" id="section-{{ section.id }}">
+  <div class="">
+    {%- if section.settings.section_title != '' -%}
+    <div class="row">
+      <div class="col-lg-5 m-auto text-center">
+        <div class="section-title">
+          <h2 class="h3">{{ section.settings.section_title }}</h2>
+          {%- if section.settings.section_sub_title != '' -%}
+          <p>{{ section.settings.section_sub_title }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+
+    <div class="row">
+      <div class="col-12">
+        <div class="product-wrapper">
+          <div class="product-carousel">
+            {%- assign current_product = product -%}
+            {%- assign current_product_found = false -%}
+            {%- for product in collection.products limit: related_product_limit -%}
+
+            {%- if product.handle == current_product.handle -%}
+            {%- assign current_product_found = true -%}
+            {%- else -%}
+            {%- unless current_product_found == false and forloop.last -%}
+            {% include 'product-grid-item' %}
+            {%- endunless -%}
+            {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $("#section-{{ section.id }} .product-carousel").slick({
+    slidesToShow: {{ section.settings.product_column }},
+    slidesToScroll: 2,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: {{ section.settings.product_column_sm }},
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: {{ section.settings.product_column_md }},
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 1300,
+        settings: {
+          slidesToShow: {{ section.settings.product_column }},
+          slidesToScroll: 1
+        }
+      }
+    ]
+  });
+</script>
+
+
+{%- endif -%}
+
+
+{% schema %}
+  {
+    "name": "Related Product",
+    "settings": [
+		{
+            "type": "checkbox",
+            "id": "related_products_enable",
+            "label": "Show Related Product",
+            "default": true
+        },
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Section Title Here"
+      	},
+		{
+          "type": "text",
+          "id": "section_sub_title",
+          "label": "Sub Title",
+          "default": "Section sub title here"
+      	},
+		{
+            "type": "header",
+            "content": "Product Options"
+        },
+		{
+            "type": "range",
+            "id": "related_product_limit_handle",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "label": "Product Limit",
+            "default": 8
+        },
+		{
+			"type": "header",
+            "content": "Product Column"
+        },
+		{
+            "type": "range",
+            "id": "product_column",
+            "min": 1,
+            "max": 12,
+            "step": 1,
+            "label": "Desktop",
+            "default": 4
+        },
+		{
+            "type": "range",
+            "id": "product_column_md",
+            "min": 1,
+            "max": 12,
+            "step": 1,
+            "label": "Tablet",
+            "default": 3
+        },
+		{
+            "type": "range",
+            "id": "product_column_sm",
+            "min": 1,
+            "max": 12,
+            "step": 1,
+            "label": "Large Mobile",
+            "default": 2
+        }
+	]
+  }
+{% endschema %}
+
+
+
+

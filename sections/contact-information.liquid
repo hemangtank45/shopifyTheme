@@ -1,0 +1,288 @@
+{%- if section.settings.contact_information -%}
+<div class="contact-info-wrapper" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row mtn-30">
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'contact_info' -%}
+      <div class="col-lg-{{ block.settings.content_column }} col-md-{{ block.settings.content_column_md }}">
+        <div class="contact-info-item">
+          {%- if block.settings.icon_name != '' -%}
+          <div class="con-info-icon">
+            <i class="{{ block.settings.icon_name }}"></i>
+          </div>
+          {%- endif -%}  
+          <div class="con-info-txt">
+            {%- if block.settings.content_title != '' -%}
+            <h4>{{ block.settings.content_title }}</h4>
+            {%- endif -%}        
+            {{ block.settings.about_content }}
+          </div>
+        </div>
+      </div>
+      {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{%- include 'section-style' -%}
+{%- endif -%}
+
+
+{% schema %}
+  {
+    "name": "Contact Info",
+    "settings": [
+		{
+          "type": "checkbox",
+          "id": "contact_information",
+          "label": "Show Contact Information",
+          "default": true
+      	}
+	],
+	"blocks":[
+          {
+            "type": "contact_info",
+            "name": "Contact",
+            "settings": [
+              {
+                "type": "text",
+                "id": "icon_name",
+                "label": "Icon Name",
+                "default": "ion-ios-location-outline",
+                "info": "[Find icon](https://ionicons.com/v2/)"
+              },
+              {
+                "type": "text",
+                "id": "content_title",
+                "label": "Title",
+                "default": "Our Location"
+              },
+              {
+                "type": "richtext",
+                "id": "about_content",
+                "label": "Content",
+                "default": "<p>(800) 123 456 789 / (800) 123 456 789 info@example.com</p>"
+              },
+              {
+                "type": "range",
+                "id": "content_column",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Content Column",
+                "unit": "/12",
+                "default": 4
+              },
+              {
+                "type": "range",
+                "id": "content_column_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Tablet Content Column",
+                "unit": "/12",
+                "default": 6
+              }
+            ]
+         },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Contact Info",
+		  "category": "6. contact",
+		  "blocks":[
+				{
+					"type": "contact_info"
+				},
+				{
+					"type": "contact_info"
+				},
+				{
+					"type": "contact_info"
+				},
+				{
+					"type": "section_padding"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

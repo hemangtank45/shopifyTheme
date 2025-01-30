@@ -1,0 +1,267 @@
+<footer class="footer-area">
+  <div class="footer-widget-area">
+    <div class="container container-wide">
+      <div class="row mtn-40">
+        {%- for block in section.blocks -%}
+        {%- case block.type -%}
+        {%- when 'about' -%}
+        <div class="col-sm-{{ block.settings.widget_column_sm }} col-md-{{ block.settings.widget_column_md }} col-lg-{{ block.settings.widget_column }}">
+          <div class="widget-item">
+            <div class="about-widget">
+              {%- capture logo_size -%}{{ block.settings.logo_width | escape }}x{%- endcapture -%}
+              {%- if block.settings.logo -%}
+              <a href="/" class="theme-logo">
+                <img src="{{ block.settings.logo | img_url: logo_size }}" alt="{{ block.settings.logo.alt | default: shop.name }}"
+                     {%- if block.settings.ratina_logo_enable -%}
+                     srcset="{{ block.settings.logo | img_url: logo_size }} 1x, {{ block.settings.logo | img_url: logo_size, scale: 2 }} 2x"
+                     {%- endif -%}>
+              </a>
+              {%- endif -%}
+              {{ block.settings.about_content }}
+              
+              <div class="footer-social">
+              {%- include 'social-midea' -%}
+              </div>
+            </div>
+          </div>
+        </div>
+		{%- when 'menu' -%}
+        <div class="col-sm-{{ block.settings.widget_column_sm }} col-md-{{ block.settings.widget_column_md }} col-lg-{{ block.settings.widget_column }}">
+          <div class="widget-item">
+            {%- if block.settings.widget_title != '' -%}
+            <h4 class="widget-title">{{ block.settings.widget_title }}</h4>
+            {%- endif -%}
+            <div class="widget-body">
+              <ul class="widget-list">
+                {%- assign menu = block.settings.menu_handle -%}
+                {%- for link in linklists[menu].links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+        </div>
+		{%- when 'contact' -%}
+        <div class="col-sm-{{ block.settings.widget_column_sm }} col-md-{{ block.settings.widget_column_md }} col-lg-{{ block.settings.widget_column }}">
+          <div class="widget-item">
+            {%- if block.settings.widget_title != '' -%}
+            <h4 class="widget-title">{{ block.settings.widget_title }}</h4>
+            {%- endif -%}
+            <div class="widget-body">
+              <address>
+                {{ block.settings.address }}
+              </address>
+            </div>
+          </div>
+        </div>
+        {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+	{%- if section.settings.copy_ritht_text != '' -%}
+  <div class="footer-copyright-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="copyright-content">
+            {{ section.settings.copy_ritht_text }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+</footer>
+
+
+
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+		{
+          "type": "richtext",
+          "id": "copy_ritht_text",
+          "label": "CopyRight Text",
+		  "default": "<p>Copyright ©99Shopify All Right Reserved.</p>"
+		}
+    ],
+	"blocks":[
+	   {
+          "type": "about",
+          "name": "About",
+		  "limit": 1,
+          "settings": [
+              {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo"
+              },
+              {
+                "type": "range",
+                "id": "logo_width",
+                "label": "Custom logo width",
+                "min": 50,
+                "max": 300,
+                "step": 5,
+                "unit": "px",
+                "default": 150
+              },
+              {
+                "type": "checkbox",
+                "id": "ratina_logo_enable",
+                "label": "Retina Logo Enable",
+                "default": false
+              },
+              {
+                "type": "richtext",
+                "id": "about_content",
+                "label": "Content",
+                "default": "<p>Content here...</p>"
+              },
+              {
+                "type": "header",
+                "content": "Column"
+              },
+              {
+                "type": "range",
+                "id": "widget_column",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Desktop",
+                "unit": "/12",
+                "default": 3
+              },
+              {
+                "type": "range",
+                "id": "widget_column_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Tablet",
+                "unit": "/12",
+                "default": 6
+              },
+              {
+                "type": "range",
+                "id": "widget_column_sm",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Large Mobile",
+                "unit": "/12",
+                "default": 12
+              }
+          ]
+       },
+	   {
+          "type": "menu",
+          "name": "Menu",
+		  "limit": 3,
+          "settings": [
+              {
+                "type": "text",
+                "id": "widget_title",
+                "label": "Title",
+                "default": "Information"
+              },
+              {
+                "type": "link_list",
+                "id": "menu_handle",
+                "label": "Menu"
+              },
+              {
+                "type": "header",
+                "content": "Column"
+              },
+              {
+                "type": "range",
+                "id": "widget_column",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Desktop",
+                "unit": "/12",
+                "default": 3
+              },
+              {
+                "type": "range",
+                "id": "widget_column_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Tablet",
+                "unit": "/12",
+                "default": 6
+              },
+              {
+                "type": "range",
+                "id": "widget_column_sm",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Large Mobile",
+                "unit": "/12",
+                "default": 12
+              }
+          ]
+       },
+	   {
+          "type": "contact",
+          "name": "Contact",
+		  "limit": 1,
+          "settings": [
+              {
+                "type": "text",
+                "id": "widget_title",
+                "label": "Title",
+                "default": "Store Information"
+              },
+              {
+                "type": "richtext",
+                "id": "address",
+                "label": "Address",
+				"default": "<p>Your store information</p>"
+              },
+              {
+                "type": "header",
+                "content": "Column"
+              },
+              {
+                "type": "range",
+                "id": "widget_column",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Desktop",
+                "unit": "/12",
+                "default": 3
+              },
+              {
+                "type": "range",
+                "id": "widget_column_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Tablet",
+                "unit": "/12",
+                "default": 6
+              },
+              {
+                "type": "range",
+                "id": "widget_column_sm",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Large Mobile",
+                "unit": "/12",
+                "default": 12
+              }
+          ]
+       }
+	]
+  }
+{% endschema %}

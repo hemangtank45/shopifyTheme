@@ -1,0 +1,471 @@
+/* Newsletter PopUp */.subscribe_area > h2, .subscribe-content > h2 {
+  color: #000000;
+}
+.subscribe_area > p, .subscribe-content > p {
+  color: #666666;
+}
+.grid__item h1{
+  color: ;
+}
+.subscribe-form-input {
+  border: 1px solid #ddd;
+  color: #ddd;
+}
+.subscribe-form-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #ddd !important;
+}
+.subscribe-form-input::-moz-placeholder { /* Firefox 19+ */
+  color: #ddd !important;
+}
+.subscribe-form-input:-ms-input-placeholder { /* IE 10+ */
+  color: #ddd !important;
+}
+.subscribe-form-input:placeholder { /* Firefox 18- */
+  color: #ddd !important;
+}
+.newsletter-btn {
+  background: #000000 none repeat scroll 0 0;
+  color: #fff;
+}
+.newsletter-btn:hover{
+  background: #666666 none repeat scroll 0 0;
+  color: #fff;
+}
+.popup_off{
+  color: #999999;
+}
+.newsletter_popup_inner:before {
+  background: #ffffff;
+  opacity: 0.1;
+}
+.form-group.subscribe-form-group p {
+  color: #000000;
+}
+/* Breadcurmb Banner */
+.breadcrumbs {
+  background: #000000 ;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    }
+.overlay-bg::before {
+  background: #000000 none repeat scroll 0 0;
+  opacity: 0.2;
+}
+.breadcrumbs-title {
+  color: #666666;
+}
+.breadcrumb-list > li > a {
+  color: #ffffff;
+}
+.breadcrumb-list > li::after {
+  color: #ffffff;
+}
+.breadcrumb-list > li {
+  color: #ca2027;
+}
+@media (max-width: 767px) {
+  .breadcrumbs {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+/* Top Bar Noticfication */
+
+.top-notification-bar {
+  background: #f4bbfa;
+  background: -moz-linear-gradient(left, #f4bbfa 0%, #f4bbfa 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, #f4bbfa), color-stop(100%, #f4bbfa));
+  background: -webkit-linear-gradient(left, #f4bbfa 0%, #f4bbfa 100%);
+  background: -o-linear-gradient(left, #f4bbfa 0%, #f4bbfa 100%);
+  background: -ms-linear-gradient(left, #f4bbfa 0%, #f4bbfa 100%);
+  background: linear-gradient(to right, #f4bbfa 0%, #f4bbfa 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4bbfa', endColorstr='#f4bbfa', GradientType=1 );
+    }
+
+.notification-entry p a.notification-button {
+  background-color: #666666;
+  border: 1px solid #000000;
+  color: #000000;
+}
+.notification-entry p a.notification-button:hover {
+  background-color: #f29afa;
+  border: 1px solid #000000;
+  color: #000000;
+}
+.notification-close-btn {
+  background-color: ;
+  border: 1px solid rgba(0,0,0,0);
+  color: #000000;
+}
+.notification-close-btn:hover{
+  background-color: rgba(0,0,0,0);
+  border: 1px solid rgba(0,0,0,0);
+  color: #000000;
+}
+
+.notification-entry p {
+  color: #000000;
+}
+.top-notification-bar::before {
+  background: rgba(0, 0, 0, 0);
+}
+/* Typography */
+
+
+
+@font-face {
+  font-family: Poppins;
+  font-weight: 400;
+  font-style: normal;
+  src: url("//eastcoastspares.com.au/cdn/fonts/poppins/poppins_n4.934accbf9f5987aa89334210e6c1e9151f37d3b6.woff2?h1=ZWFzdC1jb2FzdC1zcGFyZXMtMzcxOS5hY2NvdW50Lm15c2hvcGlmeS5jb20&h2=ZWFzdGNvYXN0c3BhcmVzLmNvbS5hdQ&hmac=f624749e0d824eb01859db9bbfad1086712ede7be1cf79f131381a6f7dfdd0db") format("woff2"),
+       url("//eastcoastspares.com.au/cdn/fonts/poppins/poppins_n4.ee28d4489eaf5de9cf6e17e696991b5e9148c716.woff?h1=ZWFzdC1jb2FzdC1zcGFyZXMtMzcxOS5hY2NvdW50Lm15c2hvcGlmeS5jb20&h2=ZWFzdGNvYXN0c3BhcmVzLmNvbS5hdQ&hmac=2942dfd474a18f5a89c516c33f9d6cf48ca297f757a02f6642a86ff715ba0837") format("woff");
+}
+
+@font-face {
+  font-family: Oswald;
+  font-weight: 400;
+  font-style: normal;
+  src: url("//eastcoastspares.com.au/cdn/fonts/oswald/oswald_n4.a5ee385bde39969d807f7f1297bf51d73fbf3c1e.woff2?h1=ZWFzdC1jb2FzdC1zcGFyZXMtMzcxOS5hY2NvdW50Lm15c2hvcGlmeS5jb20&h2=ZWFzdGNvYXN0c3BhcmVzLmNvbS5hdQ&hmac=10116671dbfff47178bd3d163e8beafa25ee7729270d1047f181862560a41db6") format("woff2"),
+       url("//eastcoastspares.com.au/cdn/fonts/oswald/oswald_n4.8f3e284746fbc2d29e34993609c51fdc432b0b24.woff?h1=ZWFzdC1jb2FzdC1zcGFyZXMtMzcxOS5hY2NvdW50Lm15c2hvcGlmeS5jb20&h2=ZWFzdGNvYXN0c3BhcmVzLmNvbS5hdQ&hmac=4abdc6360d8efa969c74f0452b8672964ec806e7320e199d176b1296844364db") format("woff");
+}
+
+@font-face {
+  font-family: Poppins;
+  font-weight: 300;
+  font-style: normal;
+  src: url("//eastcoastspares.com.au/cdn/fonts/poppins/poppins_n3.bf4dd4af82ac263dde50abfd3dfa16485ed1e002.woff2?h1=ZWFzdC1jb2FzdC1zcGFyZXMtMzcxOS5hY2NvdW50Lm15c2hvcGlmeS5jb20&h2=ZWFzdGNvYXN0c3BhcmVzLmNvbS5hdQ&hmac=c5c005a6340a6c5f88748b51956629e54ba1228215476ded3fb03d2a30809edb") format("woff2"),
+       url("//eastcoastspares.com.au/cdn/fonts/poppins/poppins_n3.6758f33361b35d8ab1e3e2f74c575be1fc4c1fda.woff?h1=ZWFzdC1jb2FzdC1zcGFyZXMtMzcxOS5hY2NvdW50Lm15c2hvcGlmeS5jb20&h2=ZWFzdGNvYXN0c3BhcmVzLmNvbS5hdQ&hmac=3e79f223f1c8d932f1a27711503ba678c39d9a93054f83defd1b205f8df5401f") format("woff");
+}
+
+
+html, body, input, textarea, button, select{
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+h1, h2, h3, h4, h5, h6{
+  font-family: Oswald, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+p{
+  font-family: Poppins, sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}/* End Typography */
+/* Custom and Customer Page */
+.theme-default-margin, .shopify-challenge__container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+@media (max-width: 767px) {
+  .theme-default-margin, .shopify-challenge__container{
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+.create-custom-page{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+@media (max-width: 767px) {
+  .create-custom-page{
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
+}
+/* End Custom Page */
+/* QuickView */
+
+/* End Quickview */
+
+
+
+
+/* ======================================================================
+Name: Your Theme Color CSS file
+====================================================================== */
+::-moz-selection {
+  background: #ca2027;
+}
+::selection {
+  background: #ca2027;
+}
+.btn-white:hover {
+  background-color: #ca2027;
+  border-color: #ca2027;
+}
+
+.btn-brand {
+  background-color: #ca2027;
+  border-color: #ca2027;
+}
+.btn-bordered:hover {
+  border-color: #ca2027;
+  color: #ca2027;
+}
+.tippy-popper .tippy-tooltip {
+  background-color: #ca2027;
+}
+.tippy-popper[x-placement^='top'] .tippy-arrow {
+  border-top-color: #ca2027 !important;
+}
+.tippy-popper[x-placement^='bottom'] .tippy-arrow {
+  border-bottom-color: #ca2027 !important;
+}
+.tippy-popper[x-placement^='left'] .tippy-arrow {
+  border-left-color: #ca2027 !important;
+}
+.tippy-popper[x-placement^='right'] .tippy-arrow {
+  border-right-color: #ca2027 !important;
+}
+.ht-mfp .mfp-close {
+  background-color: #ca2027;
+}
+.ht-mfp .mfp-close:hover {
+  background-color: #ca2027;
+}
+.ht-mfp .mfp-arrow {
+  background-color: #ca2027;
+}
+blockquote-title,
+.blockquote-title {
+  color: #ca2027;
+}
+.btn-video-popup {
+  background-color: #ca2027;
+}
+.bg-brand {
+  background-color: #ca2027;
+}
+.bg-blackSoft {
+  background-color: #1b1b1c;
+}
+.text-brand {
+  color: #ca2027;
+}
+.header-area .nav li a:hover {
+  color: #ca2027;
+}
+.mini-cart-wrap .mini-product__info .title a:hover {
+  color: #ca2027;
+}
+.mini-cart-wrap .mini-product__info .mini-calculation .price span {
+  color: #ca2027;
+}
+.mini-cart-wrap .mini-product__info .mini-calculation .remove-pro:hover {
+  color: #ca2027;
+}
+.main-menu li.has-submenu .sub-menu li a:hover {
+  color: #ca2027;
+}
+.main-menu li:hover a {
+  color: #ca2027;
+}
+.mobile-menu .slicknav_nav li a:hover {
+  color: #ca2027;
+}
+.mobile-menu .slicknav_nav .slicknav_open>.slicknav_item .slicknav_arrow {
+  color: #ca2027;
+}
+.widget-list li a:hover {
+  color: #ca2027;
+}
+.btn-scroll-top {
+  background-color: #ca2027;
+}
+.slider-area-wrapper .slick-arrow:hover {
+  background-color: #ca2027;
+}
+.slider-area-wrapper .slick-dots li.slick-active {
+  background-color: #ca2027;
+}
+.product-item__content .title a:hover {
+  color: #ca2027;
+}
+.ht-countdown--light .countdown-item__time {
+  color: #ca2027;
+}
+.newsletter-content h4 span {
+  color: #ca2027;
+}
+.newsletter-form-wrap .form-content .btn-newsletter {
+  background-color: #ca2027;
+}
+.off-canvas-wrapper .close-btn {
+  color: #ca2027;
+}
+.off-canvas-wrapper .close-btn:hover {
+  color: #ca2027;
+}
+.breadcrumb li a:hover {
+  color: #ca2027;
+}
+.breadcrumb li.current a {
+  color: #ca2027;
+}
+.contact-info-item .con-info-icon {
+  border: 1px solid #ca2027;
+  color: #ca2027;
+}
+.contact-info-item:hover .con-info-icon {
+  background-color: #ca2027;
+}
+.input-item input:focus,
+.input-item textarea:focus {
+  border-color: #ca2027;
+}
+.pagination--2 li:hover a,
+.pagination--2 li.active a {
+  border-color: #ca2027;
+  color: #ca2027;
+}
+.sidebar-list li a:hover {
+  color: #ca2027;
+}
+.sidebar-product .content .title:hover {
+  color: #ca2027;
+}
+.sidebar-search form input:focus {
+  border-color: #ca2027;
+}
+.sidebar-search form .btn-src:hover {
+  color: #ca2027;
+}
+.tags li a:hover {
+  color: #ca2027;
+  border-color: #ca2027;
+}
+.product-config .table .config-option a:hover {
+  color: #ca2027;
+}
+.product-meta a:hover {
+  color: #ca2027;
+}
+.pro-qty a:hover {
+  background-color: #ca2027;
+  border-color: #ca2027;
+}
+.product-description-review .desc-review-tab-menu li a.active {
+  background-color: #ca2027;
+}
+.product-rating-wrap .display-ratings .rating-item .rating-author-txt .rating-star {
+  color: #ca2027;
+}
+.product-rating-wrap .rating-form-wrapper .rating-form .rating-star:hover i {
+  color: #ca2027;
+}
+.product-rating-wrap .rating-form-wrapper .rating-form input:focus,
+.product-rating-wrap .rating-form-wrapper .rating-form textarea:focus {
+  border-color: #ca2027;
+}
+.shopping-cart-table .product-list .remove-icon button:hover {
+  color: #ca2027;
+}
+.shopping-cart-table .product-list .product-name:hover {
+  color: #ca2027;
+}
+.cart-coupon-update-area button:hover {
+  color: #ca2027;
+}
+.cart-coupon-update-area .coupon-form-wrap form input:focus {
+  border-color: #ca2027;
+}
+.table-responsive::-webkit-scrollbar-thumb,
+.list::-webkit-scrollbar-thumb {
+  background-color: #ca2027;
+}
+.custom-control-input:checked~.custom-control-label:before {
+  border-color: #ca2027;
+  background-color: #ca2027;
+}
+.checkout-page-coupon-area .card h3 {
+  background-color: #ca2027;
+}
+.blog-item__info .post-meta a a:hover,
+.blog-item__info .post-meta span a:hover {
+  color: #ca2027;
+}
+.blog-item__info .post-title a:hover {
+  color: #ca2027;
+}
+.single-comment-wrap .comment-footer a.btn-reply:hover {
+  color: #ca2027;
+}
+.copyright-content a{
+  color: #ca2027;
+}
+.product-sidebar-color li:hover:not(.disabled) {
+  border: 2px solid #ca2027;
+}
+.product-sidebar-color li.active {
+  border: 2px solid #ca2027;
+}
+.tags li.active a {
+  border: 1px solid #ca2027;
+  color: #ca2027;
+}
+.sidebar-list li.active a {
+  color: #ca2027;
+}
+.product-ratting .spr-icon {
+  color: #ca2027;
+}
+.swatch-element.color input:checked + label {
+  outline: 0px solid #ca2027;
+  border: 2px solid #ca2027;
+}
+.swatch-element input:checked + label {
+  color: #ca2027;
+}
+.add-to-cart {
+  background: #ca2027;
+  border: 1px solid #ca2027;
+}
+.btn-bordered.add-to-cart:hover {
+  border-color: #ca2027;
+}
+.spr-icon {
+  color: #ca2027;
+}
+.spr-button:hover, .spr-button-primary:hover {
+  background: #ca2027;
+}
+.product-description-review a:hover, .create-custom-page a:hover, .custom-page a:hover{
+  color: #ca2027;
+}
+ul.archive-sidebar li a:hover {
+  color: #ca2027;
+}
+.share-article a:hover {
+  color: #ca2027;
+}
+.tab-header ul li a.active, .tab-header ul li a:hover {
+  color: #ca2027;
+}
+.list-product-collection .section-title a:hover, .collection-item h6 a:hover{
+  color: #ca2027;
+}
+.customer-page a:hover{
+  color: #ca2027;
+}
+.cart-table td a:hover{
+  color: #ca2027;
+}
+.proceed-to-checkout .theme-default-button {
+  background: #ca2027;
+}
+.quick-view-rating i {
+  color: #ca2027;
+}
+.off-canvas-widget-social a:hover {
+  color: #ca2027;
+}
+.product-item__action button:hover, .product-item__action a:hover {
+    color: #ca2027;
+}
+.footer-social a:hover {
+  color: #ca2027;
+  border: 1px solid #ca2027;
+}

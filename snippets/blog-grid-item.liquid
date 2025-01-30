@@ -1,0 +1,25 @@
+<div class="blog-item">
+  {%- if article.image -%}
+  <figure class="blog-item__thumb">
+    <a href="{{ article.url }}">{{ article | img_url: '1024x1024' | img_tag: article.title }}</a>
+  </figure>
+  {%- endif -%}
+  <div class="blog-item__info">
+    <div class="post-date">
+      <span>{{ article.published_at | date: '%d' }}</span>
+      <span>{{ article.published_at | date: '%m' }}</span>
+    </div>
+    <div class="post-meta">
+      <span class="author">Author: {{ article.author }}</span>
+      {%- if article.comments.size > 0 -%}
+      <span class="comment">Comments: <a href="{{ article.url }}#comments" rel="author">{{ article.comments_count }}</a></span>
+      {%- endif -%}
+    </div>
+    <h2 class="post-title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+    {%- if article.excerpt.size > 0 -%}
+    {{ article.excerpt }}
+    {%- else -%}
+    <p class="post-excerpt">{{ article.content | strip_html | truncatewords: 25 }}</p>
+    {%- endif -%}
+  </div>
+</div>

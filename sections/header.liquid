@@ -1,0 +1,194 @@
+<header class="header-area d-none d-lg-block">
+  <div class="container container-wide">
+    <div class="row align-items-center">
+      <div class="col-sm-4 col-lg-2">
+        <div class="site-logo text-center text-sm-left">
+          {%- include 'header-logo' -%}
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="site-navigation">
+          {%- include 'main-menu' -%}
+        </div>
+      </div>
+      <div class="col-sm-8 col-lg-3">
+        <div class="site-action d-flex justify-content-center justify-content-sm-end align-items-center">
+          {%- if section.settings.account_menu_enable -%}
+          <ul class="login-reg-nav nav">
+            {%- if shop.customer_accounts_enabled and customer and section.settings.logout_title != '' -%}
+            <li>
+              <a href="/account/logout">{{ section.settings.logout_title }}</a>
+            </li>
+            {%- elsif shop.customer_accounts_enabled and section.settings.login_title != '' -%}
+            <li>
+              <a href="/account/login">{{ section.settings.login_title }}</a>
+            </li>
+            {%- endif -%} 
+            {%- if shop.customer_accounts_enabled and customer and section.settings.account_title != '' -%}
+            <li><a href="/account">{{ section.settings.account_title }}</a></li>
+			{%- elsif shop.customer_accounts_enabled and section.settings.register_title != '' -%}
+            <li><a href="/account/register">{{ section.settings.register_title }}</a></li>
+            {%- endif -%}
+          </ul>
+          {%- endif -%}
+          
+          {%- include 'currency-picker' -%}
+
+          {%- include 'mini-cart' -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<header class="header-area d-lg-none">
+  <div class="container container-wide">
+    {%- include 'mobile-header' -%}
+  </div>
+</header>
+
+
+<style>
+  .theme-logo img{
+    max-width: {{ section.settings.logo_width }}px;
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+		{
+          "type": "range",
+          "id": "logo_width",
+          "label": "Custom logo width",
+          "min": 50,
+          "max": 300,
+          "step": 5,
+          "unit": "px",
+          "default": 150
+        },
+		{
+          "type": "checkbox",
+          "id": "ratina_logo_enable",
+          "label": "Retina Logo Enable",
+		  "default": false
+        },
+		{
+          "type": "checkbox",
+          "id": "google_translate_enable",
+          "label": "Google Translate (Language) Enable",
+		  "default": true
+        },
+		{
+          "type": "header",
+          "content": "User Menu"
+        },
+		{
+          "type": "checkbox",
+          "id": "account_menu_enable",
+          "label": "Show User Menu",
+		  "default": true
+        },
+		{
+          "type": "text",
+          "id": "login_title",
+          "label": "Login Title",
+		  "default": "Login"
+        },
+		{
+          "type": "text",
+          "id": "logout_title",
+          "label": "Logout Title",
+		  "default": "Logout"
+        },
+		{
+          "type": "text",
+          "id": "register_title",
+          "label": "Login Title",
+		  "default": "Register"
+        },
+		{
+          "type": "text",
+          "id": "account_title",
+          "label": "Account Title",
+		  "default": "My Account"
+        },
+		{
+          "type": "header",
+          "content": "Mobile Header"
+        },
+		{
+          "type": "checkbox",
+          "id": "mobile_search_field_enable",
+          "label": "Search Bar Enable",
+		  "default": true
+        },
+		{
+          "type": "checkbox",
+          "id": "user_menu_enable",
+          "label": "Show User Menu",
+		  "default": true
+        },
+		{
+          "type": "text",
+          "id": "user_menu_title",
+          "label": "User Menu Title",
+		  "default": "My Account"
+        },
+		{
+          "type": "checkbox",
+          "id": "mobile_header_currency_enable",
+          "label": "Show Currency",
+		  "default": true
+        },
+		{
+          "type": "text",
+          "id": "currency_title",
+          "label": "Currency Title",
+		  "default": "Currency:"
+        },
+		{
+          "type": "text",
+          "id": "mobile_tel_number",
+          "label": "Telephone Number",
+		  "default": "(1245) 2456 012"
+        },
+		{
+          "type": "text",
+          "id": "mobile_email_address",
+          "label": "Email Address",
+		  "default": "info@yourdomain.com"
+        },
+		{
+          "type": "checkbox",
+          "id": "mobile_social_midea_enable",
+          "label": "Social Midea Enable",
+		  "default": true
+        },
+		{
+          "type": "header",
+          "content": "Mini Cart"
+        },
+		{
+          "type": "text",
+          "id": "view_cart_title",
+          "label": "View Cart Title",
+		  "default": "View Cart"
+        },
+		{
+          "type": "text",
+          "id": "checkout_title",
+          "label": "Checkout Title",
+		  "default": "Checkout"
+        }
+	]
+  }
+{% endschema %}
+

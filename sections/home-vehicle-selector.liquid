@@ -1,0 +1,36 @@
+<div class="container">
+<ngx-element 
+  class="parts-pal" 
+  selector="home-vehicle-definition-selector"
+        data-skip-category-selection="{{section.settings.skipCategorySelection}}"></ngx-element>
+</div>
+  
+{% schema %}
+  {
+    "name": "Vehicle Selector",
+    "settings": [
+      {
+	      "id": "skipCategorySelection",
+	      "type": "select",
+	      "label": "Skip category selection",
+	      "options":[
+	      { "value": "1", "label": "True"},
+	      { "value": "0", "label": "False"}
+	      ],
+	      "default":"0"
+      }
+    ],
+	"presets": [
+    {
+      "name": "Vehicle Selector",
+      "category": "PartsPal"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

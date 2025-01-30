@@ -1,0 +1,369 @@
+<div class="slider-area-wrapper {% if section.settings.dots_right %}home-2{% endif %}" id="section-{{ section.id }}">
+  <div class="slider-content-active">
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'slide' -%}
+    <div class="slider-slide-item bg-img" data-bg="{% if block.settings.slide_bg_image %}{{ block.settings.slide_bg_image | img_url: 'master' }}{% else %}https://via.placeholder.com/1920x851{% endif %}">
+      <div class="container container-wide h-100">
+        <div class="row align-items-center h-100">
+          {%- if block.settings.slider_content_enable -%}
+          <div class="col-lg-6 order-1 order-lg-0">
+            <div class="slide-content">
+              <div class="slide-content-inner">
+                {%- if block.settings.slide_sub_title != '' -%}
+                <h3>{{ block.settings.slide_sub_title }}</h3>
+                {%- endif -%}
+                {%- if block.settings.slide_title != '' -%}
+                <h2>{{ block.settings.slide_title }}</h2>
+                {%- endif -%}
+                {%- if block.settings.slide_button_title != '' -%}
+                <a class="btn btn-white" href="{{ block.settings.slide_button_url }}">{{ block.settings.slide_button_title }}</a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+          {%- endif -%}
+          {%- if block.settings.slide_caption_image -%}
+          <div class="col-lg-6 order-0 order-lg-1">
+            <div class="slide-img">
+              <img src="{{ block.settings.slide_caption_image | img_url: 'master' }}" alt="{{ block.settings.slide_caption_image.alt }}" />
+            </div>
+          </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+    {%- when 'slide_2' -%}
+    <div class="slider-slide-item bg-img" data-bg="{% if block.settings.slide_bg_image %}{{ block.settings.slide_bg_image | img_url: 'master' }}{% else %}https://via.placeholder.com/1920x851{% endif %}">
+      {%- if block.settings.slider_content_enable -%}
+      <div class="container container-wide h-100">
+        <div class="row align-items-center h-100">
+          <div class="col-lg-6">
+            <div class="slide-content">
+              <div class="slide-content-inner">
+                {%- if block.settings.slide_sub_title != '' -%}
+                <h3>{{ block.settings.slide_sub_title }}</h3>
+                {%- endif -%}
+                {%- if block.settings.slide_title != '' -%}
+                <h2>{{ block.settings.slide_title }}</h2>
+                {%- endif -%}
+                {%- if block.settings.slide_button_title != '' -%}
+                <a class="btn btn-white" href="{{ block.settings.slide_button_url }}">{{ block.settings.slide_button_title }}</a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%- endif -%}
+    </div>
+    {%- endcase -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="slider-dots-arrow-area">
+    <div class="container container-wide">
+      <div class="slider-dots-arrow">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{%- include 'section-style' -%}
+
+
+{% schema %}
+  {
+    "name": "Slideshow",
+    "settings": [
+        {
+          "type": "checkbox",
+          "id": "dots_right",
+          "label": "Dots Right",
+          "default": true
+        }
+	],
+	"blocks":[
+	   {
+          "type": "slide",
+          "name": "Slide - 1",
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "slide_bg_image",
+			  "label": "BG Image",
+			  "info": "Recommended Size: 1920 x 852px"
+			},
+			{
+			  "type": "header",
+			  "content": "Caption Image"
+			},
+			{
+			  "type": "image_picker",
+			  "id": "slide_caption_image",
+			  "label": "Caption Image",
+			  "info": "Recommended Size: 539 x 593px"
+			},
+			{
+			  "type": "header",
+			  "content": "Content"
+			},
+			{
+			  "type": "checkbox",
+			  "id": "slider_content_enable",
+			  "label": "Show content",
+			  "default": true
+			},
+			{
+			  "type": "textarea",
+			  "id": "slide_sub_title",
+			  "label": "Sub Title",
+			  "default": "Sub Title"
+			},
+			{
+			  "type": "textarea",
+			  "id": "slide_title",
+			  "label": "Title",
+			  "default": "Slide Title"
+			},
+			{
+			  "type": "text",
+			  "id": "slide_button_title",
+			  "label": "Button Title",
+			  "default": "Shop Now"
+			},
+			{
+			  "type": "url",
+			  "id": "slide_button_url",
+			  "label": "Button URL"
+			}
+          ]
+       },
+	   {
+          "type": "slide_2",
+          "name": "Slide - 2",
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "slide_bg_image",
+			  "label": "BG Image",
+			  "info": "Recommended Size: 1920 x 852px"
+			},
+			{
+			  "type": "header",
+			  "content": "Content"
+			},
+			{
+			  "type": "checkbox",
+			  "id": "slider_content_enable",
+			  "label": "Show content",
+			  "default": true
+			},
+			{
+			  "type": "textarea",
+			  "id": "slide_sub_title",
+			  "label": "Sub Title",
+			  "default": "Sub Title"
+			},
+			{
+			  "type": "textarea",
+			  "id": "slide_title",
+			  "label": "Title",
+			  "default": "Slide Title"
+			},
+			{
+			  "type": "text",
+			  "id": "slide_button_title",
+			  "label": "Button Title",
+			  "default": "Shop Now"
+			},
+			{
+			  "type": "url",
+			  "id": "slide_button_url",
+			  "label": "Button URL"
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Slideshow",
+		  "category": "1. slideshow",
+		  "blocks":[
+				{
+					"type": "slide"
+				},
+				{
+					"type": "slide"
+				},
+				{
+					"type": "slide"
+				},
+				{
+					"type": "section_padding"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

@@ -1,0 +1,231 @@
+<div class="page-content-wrapper sp-y">
+  <div class="blog-page-content-wrap">
+    <div class="container container-wide">
+      <div class="row {% if section.settings.sidebar_handle == 'left_sidebar_handle' %}flex-row-reverse{% endif %}">
+        {%- assign blogs_limit = section.settings.blog_limit_handle -%}
+        {%- paginate blog.articles by blogs_limit -%} 
+        <div class="{% if section.settings.sidebar_handle == 'without_sidebar' %}col-lg-12{% else %}col-lg-8{% endif %}">
+          <div class="row">
+            {% for article in blog.articles %}
+            <div class="col-lg-{{ section.settings.blog_column }} col-md-6 col-12">
+              {% include 'blog-grid-item' %}
+            </div>
+            {% endfor %}
+          </div>
+          {%- if paginate.pages > 1 -%}
+          <div class="action-bar-inner mt-30">
+            <div class="row align-items-center">
+              <div class="col-sm-12">
+                {% include 'pagination' %}
+              </div>
+            </div>
+          </div>
+          {%- endif -%}
+        </div>
+        {%- endpaginate -%}
+        {%- unless section.settings.sidebar_handle == 'without_sidebar' -%}
+        <div class="col-lg-4">
+          {% include 'blog-sidebar' %}
+        </div>
+        {%- endunless -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Blog Page",
+    "settings": [
+		{
+			"type": "header",
+            "content": "Blog"
+        },
+		{
+            "type": "range",
+            "id": "blog_limit_handle",
+            "min": 2,
+            "max": 100,
+            "step": 1,
+            "label": "Post Limit",
+            "default": 9,
+			"info": "How many products are displayed on each page"
+        },
+		{
+			"type": "header",
+            "content": "Blog Column"
+        },
+		{
+          "type": "select",
+          "id": "blog_column",
+          "label": "Desktop",
+		  "options":[
+				{
+                    "label": "2",
+                    "value": "6"
+                },
+                {
+                    "label": "3",
+                    "value": "4"
+                },
+                {
+                    "label": "4",
+                    "value": "3"
+                }
+			],
+			"default": "4"
+      	},
+		{
+          "type": "select",
+          "id": "blog_column_md",
+          "label": "Tablet",
+		  "options":[
+				{
+                    "label": "2",
+                    "value": "6"
+                },
+                {
+                    "label": "3",
+                    "value": "4"
+                },
+                {
+                    "label": "4",
+                    "value": "3"
+                }
+			],
+			"default": "6"
+      	},
+		{
+          "type": "select",
+          "id": "blog_column_xs",
+          "label": "Mobile",
+		  "options":[
+				{
+                    "label": "1",
+                    "value": "12"
+                },
+                {
+                    "label": "2",
+                    "value": "6"
+                }
+			],
+			"default": "12"
+      	},
+		{
+			"type": "header",
+			"content": "Blog Sidebar"
+		},
+		{
+			"type": "radio",
+			"id": "sidebar_handle",
+			"label": "Sidebar Position -",
+			"options": [
+				{
+					"label": "Left Sidebar",
+					"value": "left_sidebar_handle"
+				},
+				{
+					"label": "Right Sidebar",
+					"value": "right_sidebar_handle"
+				},
+				{
+					"label": "Without Sidebar",
+					"value": "without_sidebar"
+				}
+			],
+			"default": "left_sidebar_handle"
+		}
+	 ],
+	 "blocks":[
+		{
+          "type": "search",
+          "name": "Search",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "widget_title",
+              "label": "Title",
+              "default": "Search"
+            }
+          ]
+       },
+	   {
+          "type": "recent_post",
+          "name": "Recent Post",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "recent_post_title",
+              "label": "Recent Post Title",
+              "default": "Recent Post"
+			},
+            {
+              "type": "range",
+              "id": "recent_post_limit_handle",
+              "min": 2,
+              "max": 10,
+              "step": 1,
+              "label": "Post Limit",
+              "default": 3
+            }
+          ]
+       },
+	   {
+          "type": "archive",
+          "name": "Archive",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "archive_title",
+              "label": "Archive Title",
+              "default": "Archive"
+            }
+          ]
+       },
+	   {
+          "type": "tag",
+          "name": "Tag",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "blog_tags_title",
+              "label": "Tags Title",
+              "default": "Tags"
+			},
+            {
+              "type": "range",
+              "id": "blog_tags_list_limit_handle",
+              "min": 5,
+              "max": 20,
+              "step": 1,
+              "label": "Tag Limit",
+              "default": 10
+            }
+          ]
+       },
+	   {
+          "type": "menu",
+          "name": "Menu",
+          "settings": [
+            {
+              "type": "text",
+              "id": "menu_title",
+              "label": "Menu Title",
+              "default": "Custom Menu"
+            },
+			{
+              "type": "link_list",
+              "id": "menu_handle",
+              "label": "Menu"
+            }
+          ]
+       }
+	]
+  }
+{% endschema %}
