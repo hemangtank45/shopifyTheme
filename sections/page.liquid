@@ -1,0 +1,211 @@
+<link rel="stylesheet" href="{{ 'component-rte.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'section-main-page.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'section-main-page.css' | asset_url | stylesheet_tag }}</noscript>
+
+<div class="page-content">
+  <div class="page-width page-width--narrow section-{{ section.id }}-padding">
+    <h2 class="theme_main_heading m-40 {{ section.settings.heading_size }}">
+      {%- if section.settings.page.title != blank -%}
+        {{ section.settings.page.title | escape }}
+      {%- else -%}
+        {{ 'sections.page.title' | t }}
+      {%- endif -%}
+    </h2>
+    <div class="rte">
+      {%- if section.settings.page.content != blank -%}
+        {{ section.settings.page.content }}
+      {%- else -%}
+        <div class="page-placeholder-wrapper placeholder">
+          {{ 'page' | placeholder_svg_tag: 'page-placeholder' }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- style -%}
+.page-content .theme_main_heading{
+  color: {{ settings.theme_heading_color }};
+  justify-content: {{ section.settings.main_title_alignment }};
+  background-color: {{ settings.theme_text_bg_color }};
+}
+.section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding-top }}px;
+  padding-bottom: {{ section.settings.padding-bottom }}px;
+}
+@media screen and (max-width: 1366px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-1366 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-1366 }}px;
+  }
+}
+@media screen and (max-width: 1099px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-1099 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-1099 }}px;
+  }
+}
+@media screen and (max-width: 840px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-840 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-840 }}px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-640 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-640 }}px; 
+  }
+}
+@media screen and (max-width: 480px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-480 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-480 }}px;
+  }
+}
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "t:sections.page.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "page",
+      "id": "page",
+      "label": "t:sections.page.settings.page.label"
+    },
+    {
+      "type": "select",
+      "id": "main_title_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Text alignment"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "number",
+      "id": "padding-top",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom",
+      "label": "Padding bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Screen wise section padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1366"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-1366",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-1366",
+      "label": "Padding bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-1099",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-1099",
+      "label": "Padding bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-840",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-840",
+      "label": "Padding bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-640",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-640",
+      "label": "Padding bottom",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-480",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-480",
+      "label": "Padding bottom",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.page.presets.name"
+    }
+  ]
+}
+{% endschema %}

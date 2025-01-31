@@ -1,0 +1,300 @@
+{{ 'tsp.css' | asset_url | stylesheet_tag }}
+<div class="privacy-policy_main">
+  <div class="page-width">
+    <div class="privacy-policy-title-wrapper" style="text-align: {{ section.settings.heading_alignment }};">
+      <h2 class="heading_privacy-policy theme_main_heading inner_page_title">{{
+        section.settings.privacy-policy_maintitle }}</h2>
+    </div>
+    {% if section.settings.show_topimg %}
+    <div class="privacy_image_wrapper">
+      {% if section.settings.privacy_top_img != blank %}
+      <div class="media media--transparent ratio" style="--ratio-percent: 30%">
+        {{ section.settings.privacy_top_img | image_url: width: 1920 | image_tag : loading: 'lazy', class: 'w-100' }}
+      </div>
+      {% else %}
+      <div class="media media--transparent ratio" style="--ratio-percent: 30%">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    <div class="privacy-policy-part">
+      {% for block in section.blocks %}
+      {%- case block.type -%}
+      {%- when 'questions' -%}
+      <div class="privacy_policy_title h3">
+        <div class="policy-icon">
+          {% render 'icon-wings' %}
+        </div>
+        <h3 class="policy-content">
+          {{ block.settings.privacy-policy_title_text }}
+        </h3>
+      </div>
+
+      {%- when 'answers' -%}
+      <p class="privacy-policy_paragraph">{{ block.settings.privacy-policy_paragraph_text }}</p>
+      {% endcase %}
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% style %}
+  .privacy-policy_main{
+    padding-top:{{ section.settings.padding_top }}px;
+    padding-bottom:{{ section.settings.padding_bottom }}px;
+  }
+  .privacy-policy_main .theme_main_heading{
+    color: {{ settings.theme_heading_color }};
+  }
+  .privacy_policy_title {
+    background: {{ section.settings.privacy_bg_color }};
+    color: {{ section.settings.privacy_title_color }};
+    fill: {{ section.settings.privacy_title_color }};
+  }
+  .privacy-policy_paragraph {
+    color: {{ settings.content_color }};
+  }
+    @media screen and (max-width: 1099px) {
+    .privacy-policy_main {
+      padding-top: {{ section.settings.padding_top_1099 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_1099 }}px;
+    }
+  }
+  @media screen and (max-width: 989px) {
+    .privacy-policy_main {
+      padding-top: {{ section.settings.padding_top_989 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_989 }}px;
+    }
+  }
+  @media screen and (max-width: 840px) {
+    .privacy-policy_main {
+      padding-top: {{ section.settings.padding_top_840 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_840 }}px;
+    }
+  }
+   @media screen and (max-width: 767px) {
+    .privacy-policy_main {
+      padding-top: {{ section.settings.padding_top_767 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_767 }}px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .privacy-policy_main {
+      padding-top: {{ section.settings.padding_top_640 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_640 }}px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .privacy-policy_main {
+      padding-top: {{ section.settings.padding_top_480 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_480 }}px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+  "name": "Privacy policy",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_topimg",
+      "label": "Show top image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "privacy_top_img",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "privacy-policy_maintitle",
+      "default": "Privacy policy",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Color settings"
+    },
+    {
+      "type": "color",
+      "id": "privacy_bg_color",
+      "label": "Privacy bg color",
+      "default": "#f6f4f3"
+    },
+    {
+      "type": "color",
+      "id": "privacy_title_color",
+      "label": "Privacy text color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Screen wise padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_1099",
+      "label": "Top padding",
+      "default": 55
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_1099",
+      "label": "Bottom padding",
+      "default": 55
+    },
+    {
+      "type": "header",
+      "content": "@media screen 989"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_989",
+      "label": "Top padding",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_989",
+      "label": "Bottom padding",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_840",
+      "label": "Top padding",
+      "default": 45
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_840",
+      "label": "Bottom padding",
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "@media screen 767"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_767",
+      "label": "Top padding",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_767",
+      "label": "Bottom padding",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_640",
+      "label": "Top padding",
+      "default": 35
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_640",
+      "label": "Bottom padding",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_480",
+      "label": "Top padding",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_480",
+      "label": "Bottom padding",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "questions",
+      "name": "Privacy policy title",
+      "settings": [
+        {
+          "type": "text",
+          "id": "privacy-policy_title_text",
+          "default": "Privacy policy title",
+          "label": "Heading"
+        }
+      ]
+    },
+    {
+      "type": "answers",
+      "name": "Privacy policy paragraph",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "privacy-policy_paragraph_text",
+          "label": "Paragraph",
+          "default": "Please read these privacy policy of Service carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these privacy policy of Service. If you do not agree to all the privacy policy and conditions of this agreement, then you may not access the website or use any services. If these privacy policy of Service are considered an offer, acceptance is expressly limited to these privacy policy of Service."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

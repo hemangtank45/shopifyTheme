@@ -1,0 +1,598 @@
+{{ 'shipping-section.css' | asset_url | stylesheet_tag }}
+
+<div class="shipping_pattern_image {% if section.settings.full_width == false %} page-width {% endif %}">
+  <div class="shipping-main-wrapper section-{{ section.id }}-shipping section-{{ section.id }}-padding">
+    <div class="{% if section.settings.full_width == true %}page-width{% else %}full_width{% endif %}">
+      <div class="Shipping-inner-row swiper-container"
+        data-desktop="{{ section.settings.columns_desktop }}" data-large-tablet="{{ section.settings.columns_large_tablet }}"
+        data-tablet="{{ section.settings.columns_tablet }}" data-mobile="{{ section.settings.columns_mobile }}" data-autoplay="{{ section.settings.autoplay-enable }}">
+        <div class="shipping-trap swiper-wrapper">
+          {% for block in section.blocks %}
+          {% if block.type == 'shipping' %}
+          <div class="shipping-partition ship-{{ block.id }} swiper-slide wow fadeInUp">
+            <div class="shipping-flex ship-flex-{{ block.id }}">
+              <div class="shipping-content-specification {{ block.settings.shipping_content_alignment }}">
+                {% if block.settings.shipping_icon != blank %}
+                   <div class="media media--transparent ratio {{ section.settings.image_size }}" style="--ratio-percent: 100%">
+                    {{ block.settings.shipping_icon | image_url: width: 1920 | image_tag : loading: 'lazy', class: 'w-100' }}
+                   </div>
+                  {% else %}
+                   <div class="media media--transparent ratio {{ section.settings.image_size }}" style="--ratio-percent: 100%">
+                    {{ 'image' | placeholder_svg_tag }}
+                   </div>
+                {% endif %}
+  
+                <div class="shipping-heading-class h3">{{ block.settings.shipping_heading }}</div>
+                <p class="shipping-paragraph-class">{{ block.settings.shipping_paragraph }}</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% if section.settings.arrows %}
+          <div class="swiper-buttons">
+            <div class="content-buttons">
+              <div class="swiper-button-next">{% render 'icon-right' %}</div>
+              <div class="swiper-button-prev">{% render 'icon-left' %}</div>
+            </div>
+          </div>  
+        {% endif %}
+        {% if section.settings.dots -%}
+          <div class="swiper-pagination shipping-swiper-pagination"
+            id="swiper-pagination-{{section.id}}" style="position: inherit;"></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+                  
+{% style %}
+  {% for block in section.blocks %}
+    {% if block.type == 'shipping' %}
+       .ship-flex-{{ block.id }} .shipping-content-specification{
+        display: inline-block;
+        vertical-align: middle;
+        text-align: {{ block.settings.shipping_content_alignment }};
+      }
+      .ship-flex-{{ block.id }} .shipping-content-specification.center .media{
+        margin: 0 auto;
+      }
+      .ship-flex-{{ block.id }} .shipping-content-specification.right .media{
+        margin: 0 0 0 auto;
+      }
+      .ship-{{ block.id }} .shipping-flex {
+        text-align: {{ block.settings.shipping_block_alignment }};
+      }
+      .ship-flex-{{ block.id }} .shipping-paragraph-class{
+        font-style: {{ block.settings.font_style }};
+      }
+      .shipping-partition.ship-{{ block.id }} {
+        margin-top: {{ block.settings.margin_top }}px;
+      }
+    {% endif %}
+  {% endfor %}
+  {% if section.settings.full_width == false %}
+    .shipping-main-wrapper{
+      border-radius: var(--radius_img);
+    }
+  {% endif %}
+  .shipping-content-specification .shipping-heading-class{
+    color: {{ section.settings.heading_color }};
+    transition: all .5s ease;
+  }
+  .shipping-content-specification .shipping-paragraph-class{
+    color: {{ section.settings.content_color }};
+  }
+  .shipping-content-specification:hover .shipping-heading-class{
+    color: {{ section.settings.theme_hover_color }}
+  }
+  .shipping-main-wrapper .swiper-button-next,.shipping-main-wrapper .swiper-button-prev{
+    background:{{ settings.theme_nav_bg }};
+    stroke:{{ settings.theme_nav_icon }};
+  }
+  .shipping-main-wrapper .swiper-button-next:hover,.shipping-main-wrapper .swiper-button-prev:hover{
+    background: {{ settings.theme_nav_hr_bg }}; 
+    stroke: {{ settings.theme_nav_hr_icon }}; 
+  }
+  .shipping-main-wrapper .swiper-pagination-bullet-active{
+     background-color: {{ settings.theme_dots_active }} !important;
+     transition: all 0.5s ease-in-out;
+     opacity: 1 !important;
+   }
+  .shipping-main-wrapper .swiper-pagination-bullet{
+    background-color: {{ settings.theme_dots }};
+    transition: all 0.5s ease-in-out;
+    opacity: 0.5;
+  } 
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top }}px;
+    padding-bottom: {{ section.settings.padding-bottom }}px;
+    background-color: {{section.settings.section_bg}};
+  }
+  .shipping_pattern_image{
+    margin-top: {{ section.settings.margin-top }}px;
+    margin-bottom: {{ section.settings.margin-bottom }}px;
+  }
+  @media screen and (max-width: 1366px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-1366 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-1366 }}px;
+    }
+    .shipping_pattern_image{
+       margin-top: {{ section.settings.margin-top-1366 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-1366 }}px;
+    }
+  }
+  @media screen and (max-width: 1099px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-1099 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-1099 }}px;
+    }
+    .shipping_pattern_image{
+      margin-top: {{ section.settings.margin-top-1099 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-1099 }}px;
+    }
+  }
+  @media screen and (max-width: 991px) {
+    .shipping-trap {
+      row-gap: 30px;
+    }
+  }
+  @media screen and (max-width: 840px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-840 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-840 }}px;
+    }
+    .shipping_pattern_image{
+       margin-top: {{ section.settings.margin-top-840 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-840 }}px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-640 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-640 }}px;
+    }
+    .shipping_pattern_image{
+      margin-top: {{ section.settings.margin-top-640 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-640 }}px;  
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-480 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-480 }}px;
+    }
+    .shipping_pattern_image{
+       margin-top: {{ section.settings.margin-top-480 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-480 }}px;
+    }
+    .shipping-trap {
+      row-gap: 15px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Shipping section",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Show full width",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "small",
+      "label": "Image size"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "t:sections.featured-collection.settings.columns_desktop.label"
+    },
+    {
+      "type": "range",
+      "id": "columns_large_tablet",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "Number of columns on large tablet"
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 2,
+      "label": "Number of columns on tablet"
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 1,
+      "label": "Number of columns on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay-enable",
+      "label": "Autoplay enable",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Enable navigation arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Enable pagination dots",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Color settings"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background color"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "content color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "theme_hover_color",
+      "label": "Heading hover color",
+      "default": "#eca28d"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "number",
+      "id": "padding-top",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom",
+      "label": "Padding bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Screen wise section padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1366"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-1366",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-1366",
+      "label": "Padding bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-1099",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-1099",
+      "label": "Padding bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-840",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-840",
+      "label": "Padding bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-640",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-640",
+      "label": "Padding bottom",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-480",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-480",
+      "label": "Padding bottom",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Margin settings"
+    },
+    {
+      "type": "number",
+      "id": "margin-top",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Screen wise section margin"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1366"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-1366",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-1366",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-1099",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-1099",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-840",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-840",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-640",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-640",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-480",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-480",
+      "label": "Margin bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "shipping",
+      "name": "Shipping",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "shipping_icon",
+          "label": "Shipping icon"
+        },
+        {
+          "type": "textarea",
+          "id": "shipping_heading",
+          "default": "Shipping heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "shipping_paragraph",
+          "default": "Shipping content",
+          "label": "Content"
+        },
+        {
+          "type": "select",
+          "id": "font_style",
+          "options": [
+            {
+              "value": "italic",
+              "label": "Italic"
+            },
+            {
+              "value": "normal",
+              "label": "Normal"
+            }
+          ],
+          "default": "italic",
+          "label": "Content style"
+        },
+        {
+          "type": "select",
+          "id": "shipping_content_alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left",
+          "label": "Content text alignment"
+        },
+        {
+          "type": "select",
+          "id": "shipping_block_alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Block alignment"
+        },
+        {
+          "type": "number",
+          "id": "margin_top",
+          "label": "Block top margin",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shipping section",
+      "blocks": [
+        {
+          "type": "shipping"
+        },
+        {
+          "type": "shipping"
+        },
+        {
+          "type": "shipping"
+        },
+        {
+          "type": "shipping"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

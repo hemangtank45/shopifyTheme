@@ -1,0 +1,92 @@
+{% comment %}
+  Renders cart notification
+
+  Accepts:
+  - color_scheme: {String} sets the color scheme of the notification (optional)
+
+  Usage:
+  {% render 'cart-notification' %}
+{% endcomment %}
+
+<cart-notification>
+  <div class="cart-notification-wrapper page-width">
+    <div
+      id="cart-notification"
+      class="cart-notification focus-inset{% if color_scheme %} color-{{ color_scheme }} gradient{% endif %}"
+      aria-modal="true"
+      aria-label="{{ 'general.cart.item_added' | t }}"
+      role="dialog"
+      tabindex="-1"
+    >
+      <div class="cart-notification__header">
+        <h2 class="cart-notification__heading caption-large text-body">
+          {%- render 'icon-checkmark' -%}
+          {{ 'general.cart.item_added' | t }}
+        </h2>
+        <button
+          type="button"
+          class="cart-notification__close modal__close-button link link--text focus-inset theme_buttons"
+          aria-label="{{ 'accessibility.close' | t }}"
+        >
+          <svg class="icon icon-close" aria-hidden="true" focusable="false">
+            <use href="#icon-close">
+          </svg>
+        </button>
+      </div>
+      <div id="cart-notification-product" class="cart-notification-product"></div>
+      <div class="cart-notification__links">
+        <a
+          href="{{ routes.cart_url }}"
+          id="cart-notification-button"
+          class="button button--secondary button--full-width theme_buttons"
+        >{{ 'general.cart.view_empty_cart' | t }}</a>
+        <form action="{{ routes.cart_url }}" method="post" id="cart-notification-form">
+          <button class="button button--primary button--full-width theme_buttons" name="checkout">
+            {{ 'sections.cart.checkout' | t }}
+          </button>
+        </form>
+        <button type="button" class="link button-label">{{ 'general.continue_shopping' | t }}</button>
+      </div>
+    </div>
+  </div>
+</cart-notification>
+{% style %}
+  #cart-notification {
+    background-color: {{ settings.bg_color }};
+  }
+  .cart-notification {
+    display: none;
+  }
+  div#cart-notification a#cart-notification-button{
+    background:{{ settings.theme_btn_bg }};
+    color:{{ settings.theme_btn_text }};
+  }
+  div#cart-notification #cart-notification-form button{
+    background-color: {{ settings.theme_btn_hr_bg  }}; 
+    color:{{ settings.theme_btn_hr_text }}; 
+  }
+  div#cart-notification a#cart-notification-button:hover{
+    background-color: {{ settings.theme_btn_hr_bg  }}; 
+    color:{{ settings.theme_btn_hr_text }}; 
+  }
+  div#cart-notification #cart-notification-form button:hover{
+    background:{{ settings.theme_btn_bg }};
+    color:{{ settings.theme_btn_text }};
+  }
+  .cart-notification-product__name{
+    color: {{ settings.theme_black_color }};
+    transition: all .5s ease;
+  }
+  .cart-notification-wrapper .cart-notification__heading,div#cart-notification .cart-notification__links button.link.button-label,.modal__close-button .icon{
+    color: {{ settings.theme_black_color }};
+    transition: all .5s ease;
+  }
+   div#cart-notification .product-option{
+    color: {{ settings.theme_black_color }};
+  }
+  div#cart-notification .cart-notification__links button.link.button-label:hover,
+  .cart-notification-product__name:hover,
+  .cart-notification .modal__close-button .icon:hover{
+    color: {{ settings.theme_main_color }};
+  }
+{% endstyle %}

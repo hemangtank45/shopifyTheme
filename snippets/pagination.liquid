@@ -1,47 +1,79 @@
-{%- comment -%} "theme-default-pagination" this Class is needed for active page pagination button disable{%- endcomment -%}
-<div class="theme-default-pagination">
-  <nav class="pagination pagination-wrap mb-10 mb-sm-0">
-    <ul class="pagination">
-      {% if paginate.previous %}
+{% comment %}
+  Renders a set of links for paginated results. Must be used within paginate tags.
+
+  Usage:
+  {% paginate results by 2 %}
+    {% render 'pagination', paginate: paginate, anchor: '#yourID' %}
+  {% endpaginate %}
+
+  Accepts:
+  - paginate: {Object}
+  - anchor: {String} (optional) This can be added so that on page reload it takes you to wherever you've placed your anchor tag.
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'component-pagination.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'component-pagination.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- if paginate.parts.size > 0 -%}
+<div class="pagination-wrapper">
+  <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+    <ul class="pagination__list list-unstyled" role="list">
+      {%- if paginate.previous -%}
       <li>
-        <a href="{{ paginate.previous.url }}" aria-label="Previous">
-          <i class="ion-ios-arrow-thin-left"></i>
+        <a href="{{ paginate.previous.url }}{{ anchor }}"
+          class="pagination__item pagination__item--next pagination__item-arrow link motion-reduce"
+          aria-label="{{ 'general.pagination.previous' | t }}">
+          {% render 'icon-caret' %}
         </a>
       </li>
-      {% else %}
-      <li class="disabled prev">
-        <a href="#">
-          <i class="ion-ios-arrow-thin-left"></i>
-        </a>
-      </li>
-      {% endif %}
-      {% for part in paginate.parts %}
-      {% if part.is_link %}
+      {%- endif -%}
+
+      {%- for part in paginate.parts -%}
       <li>
-        <a href="{{ part.url }}" title="">{{ part.title }}</a>
+        {%- if part.is_link -%}
+        <a href="{{ part.url }}{{ anchor }}" class="pagination__item link"
+          aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+          {{- part.title -}}
+        </a>
+        {%- else -%}
+        {%- if part.title == paginate.current_page -%}
+        <a role="link" aria-disabled="true" class="pagination__item pagination__item--current" aria-current="page"
+          aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+          {{- part.title -}}
+        </a>
+        {%- else -%}
+        <span class="pagination__item">{{ part.title }}</span>
+        {%- endif -%}
+        {%- endif -%}
       </li>
-      {% else %}
-      {% if part.title == paginate.current_page %}
-      <li class="active"><a href="">{{ part.title }}</a></li>
-      {% else %}
-      <li><a href="#">{{ part.title }}</a></li>
-      {% endif %}
-      {% endif %}
-      {% endfor %}
-      {% if paginate.next %}
-      <li class="next"><a href="{{ paginate.next.url }}" title="{{ paginate.next.title }}"><i class="ion-ios-arrow-thin-right"></i></a></li>
-      {% else %}
-      <li class="disabled next">
-        <a href="#">
-          <i class="ion-ios-arrow-thin-right"></i>
+      {%- endfor -%}
+
+      {%- if paginate.next -%}
+      <li>
+        <a href="{{ paginate.next.url }}{{ anchor }}"
+          class="pagination__item pagination__item--prev pagination__item-arrow link motion-reduce"
+          aria-label="{{ 'general.pagination.next' | t }}">
+          {%- render 'icon-caret' -%}
         </a>
       </li>
-      {% endif %}
+      {%- endif -%}
     </ul>
   </nav>
 </div>
+{%- endif -%}
 
-<script>
-  $(".theme-default-pagination .disabled a").removeAttr("href");
-  $(".theme-default-pagination li.active a").removeAttr("href");
-</script>
+{% style %}
+.pagination__list li a{
+  color: {{ settings.input_text }};
+  background-color: {{ settings.input_bg }};
+  transition: all .5s ease;
+}
+.pagination__list li .pagination__item--current{
+  background:{{ settings.theme_btn_bg }};
+  color:{{ settings.theme_btn_text }};
+}
+.pagination-wrapper li a:hover{
+  background:{{ settings.theme_btn_hr_bg }};
+  color:{{ settings.theme_btn_hr_text }};
+}
+{% endstyle %}

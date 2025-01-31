@@ -1,0 +1,300 @@
+{{ 'tsp.css' | asset_url | stylesheet_tag }}
+<div class="shipping-policy_main">
+  <div class="page-width">
+    <div class="shipping-policy-title-wrapper" style="text-align: {{ section.settings.heading_alignment }};">
+      <h2 class="heading_shipping-policy theme_main_heading inner_page_title">{{
+        section.settings.shipping-policy_maintitle }}</h2>
+    </div>
+    {% if section.settings.show_topimg %}
+    <div class="shipping_image_wrapper">
+      {% if section.settings.shipping_top_img != blank %}
+      <div class="media media--transparent ratio" style="--ratio-percent: 30%">
+        {{ section.settings.shipping_top_img | image_url: width: 1920 | image_tag : loading: 'lazy', class: 'w-100' }}
+      </div>
+      {% else %}
+      <div class="media media--transparent ratio" style="--ratio-percent: 30%">
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    <div class="shipping-policy-part">
+      {% for block in section.blocks %}
+      {%- case block.type -%}
+      {%- when 'questions' -%}
+      <div class="shipping_policy_title h3">
+        <div class="shipping-icon">
+          {% render 'icon-wings' %}
+        </div>
+        <h3 class="shipping-content">
+          {{ block.settings.shipping-policy_title_text }}
+        </h3>
+      </div>
+
+      {%- when 'answers' -%}
+      <p class="shipping-policy_paragraph">{{ block.settings.shipping-policy_paragraph_text }}</p>
+      {% endcase %}
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% style %}
+  .shipping-policy_main{
+    padding-top:{{ section.settings.padding_top }}px;
+    padding-bottom:{{ section.settings.padding_bottom }}px;
+  }
+  .shipping-policy_main .theme_main_heading{
+    color: {{ settings.theme_heading_color }};
+  }
+  .shipping_policy_title {
+    background: {{ section.settings.shipping_bg_color }};
+    color: {{ section.settings.shipping_title_color }};
+    fill: {{ section.settings.shipping_title_color }};
+  }
+  .shipping-policy_paragraph {
+    color: {{ settings.content_color }};
+  }
+  @media screen and (max-width: 1099px) {
+    .shipping-policy_main {
+      padding-top: {{ section.settings.padding_top_1099 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_1099 }}px;
+    }
+  }
+  @media screen and (max-width: 989px) {
+    .shipping-policy_main {
+      padding-top: {{ section.settings.padding_top_989 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_989 }}px;
+    }
+  }
+  @media screen and (max-width: 840px) {
+    .shipping-policy_main {
+      padding-top: {{ section.settings.padding_top_840 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_840 }}px;
+    }
+  }
+   @media screen and (max-width: 767px) {
+    .shipping-policy_main {
+      padding-top: {{ section.settings.padding_top_767 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_767 }}px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .shipping-policy_main {
+      padding-top: {{ section.settings.padding_top_640 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_640 }}px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .shipping-policy_main {
+      padding-top: {{ section.settings.padding_top_480 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_480 }}px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+  "name": "Shipping policy",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_topimg",
+      "label": "Show top image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "shipping_top_img",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "shipping-policy_maintitle",
+      "default": "Shipping policy",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Color settings"
+    },
+    {
+      "type": "color",
+      "id": "shipping_bg_color",
+      "label": "Shipping bg color",
+      "default": "#f6f4f3"
+    },
+    {
+      "type": "color",
+      "id": "shipping_title_color",
+      "label": "Shipping text color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Screen wise padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_1099",
+      "label": "Top padding",
+      "default": 55
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_1099",
+      "label": "Bottom padding",
+      "default": 55
+    },
+    {
+      "type": "header",
+      "content": "@media screen 989"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_989",
+      "label": "Top padding",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_989",
+      "label": "Bottom padding",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_840",
+      "label": "Top padding",
+      "default": 45
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_840",
+      "label": "Bottom padding",
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "@media screen 767"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_767",
+      "label": "Top padding",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_767",
+      "label": "Bottom padding",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_640",
+      "label": "Top padding",
+      "default": 35
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_640",
+      "label": "Bottom padding",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_480",
+      "label": "Top padding",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_480",
+      "label": "Bottom padding",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "questions",
+      "name": "Shipping policy title",
+      "settings": [
+        {
+          "type": "text",
+          "id": "shipping-policy_title_text",
+          "default": "Shipping policy title",
+          "label": "Heading"
+        }
+      ]
+    },
+    {
+      "type": "answers",
+      "name": "Shipping policy paragraph",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "shipping-policy_paragraph_text",
+          "label": "Paragraph",
+          "default": "Please read these Terms of Service carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these Terms of Service. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services. If these Terms of Service are considered an offer, acceptance is expressly limited to these Terms of Service."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,53 @@
+.counterup-section .count {
+  font-size: 80px;
+  font-weight: 500;
+}
+.counterup-section .heading {
+  font-size: 30px;
+  margin-bottom: 0;
+  line-height: 1;
+  text-transform: var(--text_style);
+}
+ul#counter {
+  overflow: hidden;
+  margin: 0px -15px;
+}
+ul#counter li{
+  max-width: 25%;
+  width: 100%;
+  float: left;
+  padding: 0px 15px;
+  text-align: center;
+  font-family: var(--font-heading-family);
+}
+
+@media screen and (max-width: 1429px) {
+  .counterup-section .count {
+      font-size: 65px;
+  }
+  .counterup-section .heading {
+    font-size: 26px;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .counterup-section .count {
+      font-size: 50px;
+  }
+  .counterup-section .heading {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 991px) {
+  .counterup-section .count {
+      font-size: 35px;
+  }
+  .counterup-section .heading {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 575px) {
+  ul#counter li {
+      max-width: 50%;
+      width: 100%;
+  }
+}

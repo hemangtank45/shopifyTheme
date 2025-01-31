@@ -1,0 +1,245 @@
+{{ 'mobile-bottom-menu.css' | asset_url | stylesheet_tag }}
+<div id="myID" class="main-mobile-menu-bottom hide">
+  <ul>
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'home' -%}
+    <li>
+      <a href="{{ routes.root_url }}" class="header__icon" aria-label="home">
+        {%- render 'icon-home' -%}
+      </a>
+    </li>
+    {%- when 'cart' -%}
+    <li>
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="mobile-cart-icon" aria-label="mobile-cart">
+        {%- liquid
+          if cart == empty
+            render 'icon-cart-empty'
+          else
+            render 'icon-cart'
+          endif
+        -%}
+        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+        {%- if cart != empty -%}
+          <div class="cart-count-bubble">
+            {%- if cart.item_count < 100 -%}
+              <span aria-hidden="true">{{ cart.item_count }}</span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+          </div>
+        {%- endif -%}
+      </a>
+    </li>
+    {%- when 'wishlist' -%}
+    <li>
+      <div class="header__icon footer-search-btn push_side">
+        {%- render 'block-wishlist' -%}
+      </div>
+    </li>
+    {%- when 'compare' -%}
+    <li>
+      <div class="header__icon footer-search-btn push_side">
+        {%- render 'block-compare' -%}
+      </div>
+    </li>
+    {%- when 'account' -%}
+    <li>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}" aria-label="mobile-account">
+          {% render 'icon-account' %}
+          <span class="visually-hidden">
+            {%- liquid
+              if customer
+                echo 'customer.account_fallback' | t
+              else
+                echo 'customer.log_in' | t
+              endif
+            -%}
+          </span>
+        </a>
+      {%- endif -%}
+    </li>
+    {%- endcase -%}
+    {%- endfor -%}
+  </ul>
+</div>
+
+<script>
+myID = document.getElementById("myID");
+
+var myScrollFunc = function () {
+    var y = window.scrollY;
+    if (y >= 20) {
+        myID.className = "main-mobile-menu-bottom show {{ section.settings.menu_style }}"
+    } else {
+        myID.className = "main-mobile-menu-bottom hide {{ section.settings.menu_style }}"
+    }
+};
+
+window.addEventListener("scroll", myScrollFunc);
+</script>
+
+{% style %}
+  .main-mobile-menu-bottom > ul > li {
+    border-right: 1px solid {{ settings.border_color }};
+  }
+  .main-mobile-menu-bottom.menu_radius{
+    margin: 10px 15px;
+    border-radius: 50px;
+  }
+  .main-mobile-menu-bottom > ul > li a{
+    color: {{ section.settings.icon-color }};
+    fill: {{ section.settings.icon-color }};
+  }
+  .main-mobile-menu-bottom .js-wishlist-link .wishlist-count-wrapper,.main-mobile-menu-bottom .lg-compare-count{
+    background-color: {{ settings.theme_btn_bg }};
+    color: {{ settings.theme_btn_text }};
+  }
+  .main-mobile-menu-bottom {
+    background: {{ section.settings.background-color }};
+  }
+  .main-mobile-menu-bottom > ul > li{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .main-mobile-menu-bottom.hide {
+    opacity:0;
+  }
+  .main-mobile-menu-bottom .cart-count-bubble{
+    background-color: {{ settings.theme_btn_bg }};
+    color: {{ settings.theme_btn_text }};
+  }
+  .main-mobile-menu-bottom.show {
+    opacity: 1;
+    animation: 1s ease 0s normal none 1 running fadeInUp;
+    animation-duration: 1s;
+  }
+   @media screen and (max-width: 767px) {
+    .main-mobile-menu-bottom > ul > li {
+      padding-top: {{ section.settings.padding-top-767 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-767 }}px;   
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .main-mobile-menu-bottom > ul > li {
+      padding-top: {{ section.settings.padding-top-640 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-640 }}px;   
+    }
+  }
+{% endstyle %}
+
+{%- schema -%}
+  {
+  "name": "Menu bottom",
+  "class": "menu-bottom",
+  "settings": [
+    {
+      "type": "select",
+      "id": "menu_style",
+      "options": [
+        {
+          "value": "menu_radius",
+          "label": "Radius menu"
+        },
+        {
+          "value": "menu_square",
+          "label": "Square menu"
+        }
+      ],
+      "default": "menu_square",
+      "label": "Bottom menu style"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 15
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Screen wise section padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 767"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-767",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 15
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-767",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-640",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 15
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-640",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "background-color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "icon-color",
+      "label": "Icon color",
+      "default": "#333333"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cart",
+      "name": "Cart",
+      "limit": 1
+    },
+    {
+      "type": "wishlist",
+      "name": "Wishlist",
+      "limit": 1
+    },
+    {
+      "type": "home",
+      "name": "Home",
+      "limit": 1
+    },
+    {
+      "type": "compare",
+      "name": "Compare",
+      "limit": 1
+    },
+    {
+      "type": "account",
+      "name": "Account",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}

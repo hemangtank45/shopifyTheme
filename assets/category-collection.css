@@ -1,0 +1,100 @@
+.main-collection-list-item .main-collection-list-wrapper .swiper-button-next, .main-collection-list-wrapper .swiper-button-prev{
+  opacity: 0;
+}
+.main-collection-list-item .main-collection-list-wrapper:hover .swiper-button-next, .main-collection-list-wrapper:hover .swiper-button-prev{
+  opacity: 1;
+}
+.main-collection-list-item .main-collection-item--left {
+  text-align: left;
+}
+.main-collection-list-item .main-collection-item--center {
+  text-align: center;
+}
+.main-collection-list-item .main-collection-item--right {
+  text-align: right;
+}
+.main-collection-list-item .collection-name-wrapper{
+  text-align: left;
+  margin-top: 12px;
+}
+.main-collection-list-item .collection-card__image {
+  position: relative;
+}
+.main-collection-list-item .collection-name-wrapper h3{
+  font-size: 18px;
+  transition: all .5s ease;
+  text-transform: var(--text_style);
+   font-weight: var(--text_weight);
+}
+.main-collection-item .theme_buttons {
+  margin-top: 10px;
+}
+.main-collection-list-item .category_box{
+  padding: 22px;
+  position: relative;
+  border-radius: var(--radius_img);
+}
+.multi_category_collection{
+  display: grid;
+  grid-column-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 20px;
+}
+.main-collection-title{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.main-collection-title .main_heading{
+  font-size: 22px;
+  font-weight: var(--text_weight);
+}
+.main-collection-title a,.main-collection-title a:hover{
+  text-decoration: underline !important;
+}
+.main-collection-list-item .swiper-button-next, .main-collection-list-item .swiper-button-prev{
+  position: absolute !important;
+}
+
+@keyframes spinAround {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media screen and (max-width: 1366px){
+  .main-collection-title .main_heading{
+    font-size: 20px;
+  }
+   .main-collection-list-item .collection-name-wrapper h3{
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1299px){
+ .main-collection-list-item .category_box{
+   padding: 16px;
+ }
+  .multi_category_collection{
+    grid-row-gap: 16px;
+    grid-column-gap: 16px;
+  }
+  .main-collection-title{
+    margin-bottom: 16px;
+  }
+}
+@media screen and (max-width: 1199px){
+  .main-collection-title .main_heading{
+    font-size: 16px;
+  }
+  .main-collection-list-item .collection-name-wrapper h3{
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 991px){
+  .main-collection-list-item .collection-name-wrapper h3 {
+    font-size: 14px;
+  }
+}

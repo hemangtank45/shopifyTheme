@@ -1,0 +1,543 @@
+{{ 'brand-section.css' | asset_url | stylesheet_tag }}
+
+<div class="brand-slider-section section-{{ section.id }}-padding">
+  <div class="swiper-container {% if section.settings.container %} page-width {% endif %}">
+    
+    <div class="brand-slider-section-wrapper wow fadeInUp"
+      data-desktop="{{ section.settings.columns_desktop }}" data-large-tablet="{{ section.settings.columns_large_tablet }}"
+      data-tablet="{{ section.settings.columns_tablet }}" data-mobile="{{ section.settings.columns_mobile }}" data-autoplay="{{ section.settings.autoplay-enable }}"
+      data-speed="{{ section.settings.speed }}" data-loop="{{ section.settings.loop }}">
+      {% if section.settings.show_block_title %}
+      <div class="brandslider-main-heading brandslider-main-heading--{{ section.settings.main_tab_title_alignment }} m-40 title_row wow fadeInUp">
+             
+      <div class="brand-heading-wrapper">
+        {% if section.settings.section_subtitle != blank %}
+          <div class="brandslider_subheading theme_main_subheading">
+            {{ section.settings.section_subtitle }}
+          </div>
+        {% endif %}
+        
+          {% if section.settings.main_heading != blank %}
+            <div class="theme_main_heading h2">{{ section.settings.main_heading }}</div>
+          {% endif %}
+        
+         {% if section.settings.section_description != blank %}
+            <p class="collection__description theme_main_description">
+              {{ section.settings.description }}
+            </p>
+          {% endif %}
+      
+      </div>
+
+      {% if section.settings.arrows %}
+      <div class="swiper-buttons">
+        <div class="content-buttons d-flex">
+          <div class="swiper-button-prev">{% render 'icon-left' %}</div>
+          <div class="swiper-button-next">{% render 'icon-right' %}</div>
+        </div>
+      </div>
+      {% endif %}
+        
+      </div>
+    {% endif %}
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+        <div class="swiper-slide brand-slider-img">
+          {% if block.settings.brand_img != blank %}
+          <div class="media media--transparent ratio" style="--ratio-percent: {{ block.settings.image-ratio }}%">
+            {{ block.settings.brand_img | image_url: width: 1920 | image_tag : loading: 'lazy', class: 'w-100' }}
+          </div>
+          {% else %}
+          <div class="media media--transparent ratio" style="--ratio-percent: {{ block.settings.image-ratio }}%">
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      
+      {% if section.settings.dots -%}
+      <div class="swiper-pagination brand-swiper-pagination" id="swiper-pagination-{{section.id}}" style="position: inherit;"></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% style %}
+  .brand-slider-section-wrapper {
+    background-color: {{ section.settings.bg_color }};
+    border: 1px solid {{ settings.border_color }};
+    border-radius: var(--radius_img);
+  }
+  .brand-slider-section .theme_main_subheading{
+    color: {{ settings.theme_subheading_color }};
+  }
+  .brand-slider-section .theme_main_heading{
+    color: {{ settings.theme_heading_color }};
+  }
+  .brand-slider-section .theme_main_description{
+    color: {{ settings.content_color }};
+  }
+  .brand-slider-section .swiper-button-next,.brand-slider-section .swiper-button-prev{
+    background:{{ settings.theme_nav_bg }};
+    stroke:{{ settings.theme_nav_icon }};
+  }
+  .brand-slider-section .swiper-button-next:hover,.brand-slider-section .swiper-button-prev:hover{
+    background: {{ settings.theme_nav_hr_bg }}; 
+    stroke: {{ settings.theme_nav_hr_icon }};
+  }
+  .brand-slider-section .swiper-pagination-bullet-active{
+     background-color: {{ settings.theme_dots_active }} !important;
+     transition: all 0.5s ease-in-out;
+    opacity: 1 !important;
+   }
+  .brand-slider-section .swiper-pagination-bullet{
+    background-color: {{ settings.theme_dots }};
+    transition: all 0.5s ease-in-out;
+    opacity: 1;
+  }
+  .brandslider-main-heading.brandslider-main-heading--left{
+    text-align: left;
+  }
+  .brandslider-main-heading.brandslider-main-heading--center{
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+  .brandslider-main-heading.brandslider-main-heading--right{
+    text-align: right;
+    flex-direction: row-reverse;
+  }
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top }}px;
+    padding-bottom: {{ section.settings.padding-bottom }}px;
+    margin-top: {{ section.settings.margin-top }}px;
+    margin-bottom: {{ section.settings.margin-bottom }}px;
+  }
+  @media screen and (max-width: 1366px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-1366 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-1366 }}px;
+      margin-top: {{ section.settings.margin-top-1366 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-1366 }}px;
+    }
+  }
+  @media screen and (max-width: 1099px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-1099 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-1099 }}px;
+      margin-top: {{ section.settings.margin-top-1099 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-1099 }}px;
+    }
+  }
+  @media screen and (max-width: 840px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-840 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-840 }}px;
+      margin-top: {{ section.settings.margin-top-840 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-840 }}px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-640 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-640 }}px;
+      margin-top: {{ section.settings.margin-top-640 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-640 }}px;  
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding-top-480 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-480 }}px;
+      margin-top: {{ section.settings.margin-top-480 }}px;
+      margin-bottom: {{ section.settings.margin-bottom-480 }}px;  
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+  "name": "Brand section",
+  "settings": [
+    {
+      "type" : "checkbox",
+      "id" : "show_block_title",
+      "label" : "Show block title",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Sub heading",
+      "default": "Best of all brands"
+    },
+    {
+      "type": "textarea",
+      "id": "main_heading",
+      "label": "Heading",
+      "default": "Most popular brands"
+    },
+    {
+      "type": "textarea",
+      "id": "section_description",
+      "label": "Content",
+      "default": "Pair text with an image to focus on your chosen product."
+    },
+    {
+      "type": "select",
+      "id": "main_tab_title_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Main title alignment"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 6,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "range",
+      "id": "columns_large_tablet",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 5,
+      "label": "Number of columns on large tablet"
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on tablet"
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "label": "Number of columns on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay-enable",
+      "label": "Autoplay enable",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay-speed",
+      "min": 1000,
+      "max": 5000,
+      "step": 1000,
+      "label": "Autoplay speed",
+      "default": 3000
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Enable navigation arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Enable pagination dots",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "speed",
+      "label": "Slide spped",
+      "default": "500"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Enable loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "container",
+      "label": "Enable container",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Color padding"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "number",
+      "id": "padding-top",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom",
+      "label": "Padding bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Screen wise section padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1366"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-1366",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-1366",
+      "label": "Padding bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-1099",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-1099",
+      "label": "Padding bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-840",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-840",
+      "label": "Padding bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-640",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-640",
+      "label": "Padding bottom",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "padding-top-480",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "number",
+      "id": "padding-bottom-480",
+      "label": "Padding bottom",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Margin settings"
+    },
+    {
+      "type": "number",
+      "id": "margin-top",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom",
+      "label": "Margin bottom",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Screen wise section margin"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1366"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-1366",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-1366",
+      "label": "Margin bottom",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-1099",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-1099",
+      "label": "Margin bottom",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-840",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-840",
+      "label": "Margin bottom",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-640",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-640",
+      "label": "Margin bottom",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "margin-top-480",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "margin-bottom-480",
+      "label": "Margin bottom",
+      "default": 15
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand section",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "brand_img",
+          "label": "Brand image"
+        },
+        {
+          "type": "text",
+          "id": "image-ratio",
+          "label": "Image height ratio",
+          "default": "17.38"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand section",
+      "blocks": [
+        {
+          "type": "brand"
+        },
+        {
+          "type": "brand"
+        },
+        {
+          "type": "brand"
+        },
+        {
+          "type": "brand"
+        },
+        {
+          "type": "brand"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

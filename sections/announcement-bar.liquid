@@ -1,0 +1,350 @@
+{{ 'announcement-bar.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.annoucementbar %}
+<div class="announcement-pattern-image">
+  <section class="announcement-with-text">
+      <div class="main-announcement_bar_slider_text {% if section.settings.show_container %} page-width {% endif %}">
+        <div class="announcement_bar_call_setting">
+            {%- if section.settings.menu != blank -%}
+              <ul class="list-unstyled announce-link">
+                {%- for link in section.settings.menu.links -%}
+                  <li>
+                    <a href="{{ link.url }}" class="menu-link{% if link.active %} list-menu__item--active{% endif %}">
+                      {{ link.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+        </div>
+        <div class="announcement_bar_slider_text">
+          <div class="swiper-container">
+            <div class="announcement-text-function">
+              <div class="swiper-wrapper">
+                {%- for block in section.blocks -%}
+                  <div class="swiper-slide annoucment-text">
+                    <span>{{ block.settings.content }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+              {% if section.settings.arrows %}
+                <div class="swiper-buttons">
+                  <div class="content-buttons">
+                    <div class="swiper-button-next">{% render 'icon-right' %}</div>
+                    <div class="swiper-button-prev">{% render 'icon-left' %}</div>
+                  </div>
+                </div>
+                {% endif %}
+              {% if section.settings.dots -%}
+              <div class="swiper-pagination brand-swiper-pagination" id="swiper-pagination-{{section.id}}" style="position: inherit;"></div>
+              {% endif %}
+            </div>                
+          </div>
+        </div>
+        <div id="drawer_currency_div" class="announcement_bar-language-currency">
+          {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+            <noscript>
+              {%- form 'localization', id: 'FooterLanguageFormNoScript', class: 'localization-form' -%}
+              <div class="localization-form__select">
+                <h2 class="visually-hidden" id="FooterLanguageLabelNoScript">{{ 'localization.language_label' | t }}</h2>
+                <select class="localization-selector link" name="locale_code" aria-labelledby="FooterLanguageLabelNoScript">
+                  {%- for language in localization.available_languages -%}
+                  <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}" {%- if
+                    language.iso_code==localization.language.iso_code %} selected{% endif %}>
+                    {{ language.endonym_name | capitalize }}
+                  </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+              <button class="button button--tertiary">{{ 'localization.update_language' | t }}</button>
+              {%- endform -%}
+            </noscript>
+  
+            <localization-form>
+              {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
+              <div class="no-js-hidden">
+                {% comment %}<h2 class="caption-large text-body" id="FooterLanguageLabel">{{ 'localization.language_label' |
+                  t
+                  }}</h2>{% endcomment %}
+                <div class="disclosure">
+                  <button type="button"
+                    class="disclosure__button localization-form__select localization-selector link link--text caption-large"
+                    aria-expanded="false" aria-controls="FooterLanguageList" aria-describedby="FooterLanguageLabel">
+                    <p data-code="{{shop.locale}}" class="toggle-submenu item-active"
+                     style="margin-right: 8px; display: inline-block; line-height: 0;">
+                      <img alt="{{shop.locale | upcase}}" class="flag" width="17px" height="17px"
+                        src="{{shop.locale | prepend: 'flag_' | append: '.png' | asset_url }}" style="border-radius: 50%; object-fit: cover;"/>
+                    </p>
+                    {{ localization.language.endonym_name | capitalize }}
+                    {% render 'icon-caret' %}
+                  </button>
+                  <div class="disclosure__list-wrapper" hidden>
+                    <ul id="FooterLanguageList" class="disclosure__list list-unstyled">
+                      {%- for language in localization.available_languages -%}
+                      <li class="disclosure__item" tabindex="-1">
+                        <a class="link link--text disclosure__link caption-large{% if language.iso_code == localization.language.iso_code %} disclosure__link--active{% endif %} focus-inset"
+                          href="#" hreflang="{{ language.iso_code }}" lang="{{ language.iso_code }}" {% if
+                          language.iso_code==localization.language.iso_code %} aria-current="true" {% endif %}
+                          data-value="{{ language.iso_code }}">
+                          <p data-code="{{ language.iso_code }}" class="language-code"
+                            style="margin-right: 5px; display: inline-block; line-height: 0;">
+                            <img class="flag" width="16px" height="16px"
+                              src="{{ language.iso_code | prepend: 'flag_' | append: '.png' | asset_url }}" style="border-radius: 50%; object-fit: cover;"/>
+                          </p>
+                          {{ language.endonym_name | capitalize }}
+                        </a>
+                      </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                </div>
+                <input type="hidden" name="locale_code" value="{{ localization.language.iso_code }}">
+              </div>
+              {%- endform -%}
+            </localization-form>
+            {%- endif -%}
+            {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+            <noscript>
+              {%- form 'localization', id: 'FooterCountryFormNoScript', class: 'localization-form' -%}
+              <div class="localization-form__select">
+                <h2 class="visually-hidden" id="FooterCountryLabelNoScript">{{ 'localization.country_label' | t }}</h2>
+                <select class="localization-selector link" name="country_code" aria-labelledby="FooterCountryLabelNoScript">
+                  {%- for country in localization.available_countries -%}
+                  <option value="{{ country.iso_code }}" {%- if country.iso_code==localization.country.iso_code %}
+                    selected{% endif %}>
+                    {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+                  </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+              <button class="button button--tertiary">{{ 'localization.update_country' | t }}</button>
+              {%- endform -%}
+            </noscript>
+            <localization-form>
+              {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
+              <div class="no-js-hidden">
+                {% comment %}<h2 class="caption-large text-body" id="FooterCountryLabel">{{ 'localization.country_label' | t
+                  }}</h2>{% endcomment %}
+                <div class="disclosure">
+                  <button type="button"
+                    class="disclosure__button localization-form__select localization-selector link link--text caption-large"
+                    aria-expanded="false" aria-controls="FooterCountryList" aria-describedby="FooterCountryLabel">
+                    {{ localization.country.name }} 
+                    {% render 'icon-caret' %}
+                  </button>
+                  <div class="disclosure__list-wrapper" hidden>
+                    <ul id="FooterCountryList" class="disclosure__list list-unstyled">
+                      {%- for country in localization.available_countries -%}
+                      <li class="disclosure__item" tabindex="-1">
+                        <a class="link link--text disclosure__link caption-large{% if country.iso_code == localization.country.iso_code %} disclosure__link--active{% endif %} focus-inset"
+                          href="#" {% if country.iso_code==localization.country.iso_code %} aria-current="true" {% endif %}
+                          data-value="{{ country.iso_code }}">
+                          {{ country.name }} <span class="localization-form__currency">({{ country.currency.iso_code }} {{
+                            country.currency.symbol }})</span>
+                        </a>
+                      </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                </div>
+                <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+              </div>
+              {%- endform -%}
+            </localization-form>
+            {%- endif -%}
+        </div>
+      </div>
+  </section>
+</div>
+{% endif %}
+
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+    let brand;
+  
+    function initBlogSwiper() {
+      brand = new Swiper('.announcement-text-function', {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        autoplay: {{ section.settings.autoplay-enable }},
+        grabCursor: true,
+        freeMode: false,
+        loop: {{ section.settings.loop }},
+        speed: {{ section.settings.speed }},
+        mousewheel: false,
+        dots: false,
+         navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+          el: ".brand-swiper-pagination",
+          clickable: true,
+        }
+      });
+    }
+  
+    // Initialize brand swiper on page load
+    initBlogSwiper();
+  
+    document.addEventListener('shopify:section:select', function() {
+      // Reinitialize brand swiper on section select
+      initBlogSwiper();
+    });
+
+    document.addEventListener('shopify:section:load', function() {
+      // Reinitialize brand swiper on section load
+      initBlogSwiper();
+    });
+  
+    document.addEventListener('shopify:section:deselect', function() {
+      // Cleanup brand swiper on section deselect if necessary
+      if (brand) {
+        brand.destroy();
+        brand = null;
+      }
+    });
+  });
+</script>
+                      
+{% style %}
+.announcement-with-text .disclosure__link {
+   color: {{ settings.theme_black_color }};
+}
+.disclosure__list::-webkit-scrollbar-thumb{
+  background-color: {{ settings.theme_main_color }};
+}
+.disclosure__list-wrapper{
+  background: {{ settings.bg_color }};
+  border: 1px solid {{ settings.border_color }};
+}
+.announcement_bar_slider_text .swiper-button-next,.announcement_bar_slider_text .swiper-button-prev{
+  stroke: {{ section.settings.s_text_color }};
+}
+.announcement-with-text{
+  background-color: {{ section.settings.background_color }};
+}
+.annoucment-text,
+.announce-link .menu-link,
+.announcement-with-text .disclosure__button{
+  color: {{ section.settings.s_text_color }} !important;
+  transition: all 0.5s ease;
+}
+.announcement-with-text #FooterCountryForm{
+  border-left: 1px solid {{ section.settings.s_text_color | color_modify: 'alpha', 0.40 }};
+}
+.announce-link .menu-link{
+  border-right: 1px solid {{ section.settings.s_text_color | color_modify: 'alpha', 0.40 }};
+}
+.announce-link li:last-child .menu-link {
+  border-right: none;
+  padding-right: 0px;
+  margin-right: 0px;
+}
+.disclosure__list::-webkit-scrollbar-thumb{
+  background-color: {{ settings.theme_main_color }};
+}
+.announcement_bar_slider_text .swiper-button-next svg path,.announcement_bar_slider_text .swiper-button-prev svg path{
+  stroke:{{ section.settings.s_text_color }};
+}
+{% endstyle %}
+                      
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "class": "announcement-bar-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "annoucementbar",
+      "label": "Show annoucementbar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_container",
+      "label": "Show container",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#131921"
+    },
+    {
+      "type": "color",
+      "id": "s_text_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "footer",
+      "label": "Link menu",
+      "info": "maximum 3 menu add"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay-enable",
+      "label": "Autoplay enable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Enable navigation arrows",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "speed",
+      "label": "Slide speed",
+      "default": "500"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Enable loop",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header__5.content",
+      "info": "t:sections.footer.settings.header__6.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": true,
+      "label": "t:sections.footer.settings.enable_language_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header__3.content",
+      "info": "t:sections.footer.settings.header__4.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": true,
+      "label": "t:sections.footer.settings.enable_country_selector.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "scrolling_text",
+      "name": "Content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "content",
+          "label": "Text",
+          "default": "Announcement product discount offer here for all happy customers."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

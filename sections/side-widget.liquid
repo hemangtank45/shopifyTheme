@@ -1,0 +1,149 @@
+{{ 'side-widget.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.widget-enable %}
+{{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+<div id="side-widget-pop">
+  <div id="so-groups" class="right widget-sticky-pop active">
+    <div class="popup-close">
+      {% render 'icon-anim-chevron' %}
+    </div>
+    
+    {% if section.settings.show_cart %}
+    <div class="item">
+      <div class="svg-icon-set delivery-time">
+        <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="mobile-cart-icon" aria-label="mobile-cart">
+          {%- liquid
+            if cart == empty
+              render 'icon-cart-empty'
+            else
+              render 'icon-cart'
+            endif
+          -%}
+          <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+          {%- if cart != empty -%}
+            <div class="cart-count-bubble">
+              {%- if cart.item_count < 100 -%}
+                <span aria-hidden="true">{{ cart.item_count }}</span>
+              {%- endif -%}
+              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+            </div>
+          {%- endif -%}
+        </a>
+      </div>
+    </div>
+    {% endif %}
+  
+    {% if section.settings.show_account %}
+    <div class="item">
+      {% if customer %}
+         <a href="#" class="svg-icon-set myaccount" data-target="popup" data-popup="#popup-myaccount"
+            aria-label="Side widget">
+            {% render 'icon-account' %}
+          </a>
+        
+        {% else %}
+          <a href="/account/login" class="svg-icon-set myaccount" data-target="popup" data-popup="#popup-myaccount"
+            aria-label="Side widget">
+            {% render 'icon-account' %}
+          </a>
+    {% endif %}
+    </div>
+    {% endif %}
+  
+    {% if section.settings.show_wishlist %}
+    <div class="item">
+      <div class="svg-icon-set delivery-time">
+        {%- render 'block-wishlist' -%}
+      </div>
+    </div>
+    {% endif %}
+  
+    {% if section.settings.show_compare %}
+    <div class="item">
+      <div class="svg-icon-set support">
+        {%- render 'block-compare' -%}
+      </div>
+    </div>
+    {% endif %}
+  
+  </div>
+</div>
+{% endif %}
+
+
+{% style %}
+#side-widget-pop .item svg{
+  stroke: {{ settings.theme_black_color }};
+}
+#side-widget-pop .widget-inner-box a, #side-widget-pop .widget-inner-box .account-slash{
+  color: {{ settings.theme_black_color }};
+}
+#side-widget-pop .item:hover svg{
+  stroke: {{ settings.theme_text_hover_color }};
+}
+#side-widget-pop .item:hover a, #side-widget-pop .item:hover .account-slash{
+  color: {{ settings.theme_text_hover_color }};
+}
+#side-widget-pop .wishlist-count-wrapper,#side-widget-pop .lg-compare-count{
+  background:{{ settings.theme_btn_bg }};
+  color:{{ settings.theme_btn_text }};
+}
+#side-widget-pop #so-groups > div.item:before {
+  border-bottom: 1px solid {{ settings.border_color }};
+}
+#side-widget-pop #so-groups .popup-close {
+  background:{{ settings.theme_btn_hr_bg  }}; 
+  color:{{ settings.theme_btn_hr_text }};
+}
+#side-widget-pop #so-groups .popup-close:hover{
+   background: none repeat scroll 0% 0% {{ settings.theme_btn_bg }};
+  color:{{ settings.theme_btn_text }};
+}
+#side-widget-pop .widget-sticky-pop {
+  background: {{ settings.bg_color }};
+}
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Side widget",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "widget-enable",
+      "label": "Widget enable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show wishlist",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare",
+      "label": "Show compare",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Side widget",
+      "category": "Side widget"
+    }
+  ]
+}
+{% endschema %}

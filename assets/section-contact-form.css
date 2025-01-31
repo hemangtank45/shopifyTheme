@@ -1,0 +1,302 @@
+.contact img {
+  max-width: 100%;
+}
+
+.contact .form__message {
+  align-items: flex-start;
+}
+
+.contact .icon-success {
+  margin-top: 0.2rem;
+}
+
+.contact .field {
+  margin-bottom: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .contact .field {
+    margin-bottom: 2rem;
+  }
+}
+
+.contact__button {
+  margin-top: 3rem;
+}
+
+@media screen and (min-width: 750px) {
+  .contact__button {
+    margin-top: 4rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .contact__fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 2rem;
+  }
+}
+
+.contact_main_heading{
+  font-size: 32px;
+  margin-bottom: 15px;
+  text-transform: var(--text_style);
+  font-weight: var(--text_weight);
+}
+.contact-map {
+  width: 100%;
+  padding-bottom: 40px;
+}
+.contact-form-partition {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+  width: 100%;
+}
+.form-partition, .contact-address-partition{
+ max-width: 50%;
+ width: 100%;
+ float: left;
+ padding-left: 15px;
+ padding-right: 15px;
+} 
+.contact-row{
+  display: flex;
+  margin: 0px -15px;
+}
+.company-info li i {
+  font-size: 25px;
+}
+ul.company-info li {
+  margin-bottom: 25px;
+}
+ul.company-info li:last-child {
+  margin-bottom: 0;
+}
+.address-information-wrapper, .contact-information-wrapper, .email-information-wrapper, .clock-information-wrapper {
+  display: flex;
+  width: 100%;
+}
+.address-icon-information, .contact-icon-information, .email-icon-information, .clock-icon-information {
+  display: block;
+  padding-right: 15px;
+}
+.address-text-information p, .contact-text-information p, .email-text-information p, .clock-text-information p {
+  margin-bottom: 0;
+}
+p.info-paragraph {
+  margin: 0;
+  padding-bottom: 30px;
+  padding-right: 25px;
+}
+.address-text-information .h3,
+.contact-text-information .h3,
+.email-text-information .h3,
+.clock-text-information .h3{ 
+  line-height: 1;
+  font-size: 16px;
+  margin-bottom: 5px;
+  text-transform: var(--text_style);
+  font-weight: var(--text_weight);
+}
+.team-wrap .socials {
+  line-height: 0;
+  display: flex;
+  justify-content: center;
+  column-gap: 15px;
+}
+.our-team .team-wrap {
+  padding: 0 40px;
+}
+.our-team .container-fluid {
+  padding: 0 50px;
+}
+.team-img img {
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 0;
+}
+.team-member,
+.team-img {
+  position: relative;
+  overflow: hidden;
+}
+.team-member{
+  border-radius: var(--radius_img);
+}
+.overlay {
+  background-color: rgba(20,20,20,.7);
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+.team-details {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  padding: 5%;
+  overflow: hidden;
+  width: 100%;
+  z-index: 2;
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  text-align: center;
+}
+.team-details p {
+  color: #fff;
+  margin-bottom: 15px;
+}
+.team-img:hover .team-details {
+  opacity: 1;
+  margin-top: -40px;
+}
+.team-img:hover .overlay {
+  opacity: 1;
+}
+.socials a {
+  display: inline-block;
+  background-color: transparent;
+}
+.socials svg {
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  -ms-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.team-details .socials svg {
+  color: #fff;
+  fill: #fff;
+  width: 20px;
+  height: 20px;
+}
+.our-exclusive-team {
+  display: inline-block;
+  width: 100%;
+  max-width: 100%;
+  vertical-align: middle;
+}
+.team-sections-details {
+  line-height: 1;
+  text-align: center;
+  padding: 15px;
+  text-transform: capitalize;
+}
+.team-title.members-name {
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+.contact-map iframe{
+  width: 100% !important;
+  border-radius: var(--radius_img);
+}
+.swiper-container.team_block .swiper-button-next, .swiper-container.team_block .swiper-button-prev{
+  position: absolute !important;
+  opacity: 0; 
+}
+.swiper-container.team_block:hover .swiper-button-next, .swiper-container.team_block:hover .swiper-button-prev{
+  opacity: 1; 
+}
+@media screen and (max-width: 1360px) {
+  .address-text-information .h3, .contact-text-information .h3, .email-text-information .h3, .clock-text-information .h3 {
+    line-height: 1;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .contact_main_heading {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 1099px) {
+  .contact_main_heading {
+    font-size: 28px;
+  }
+}
+@media screen and (max-width: 1099px) {
+  .contact_main_heading {
+    font-size: 28px;
+  }
+  .address-icon-information, .contact-icon-information, .email-icon-information, .clock-icon-information{
+    padding-right: 10px;
+  }
+}
+@media screen and (max-width: 991px) {
+  p.info-paragraph {
+    padding-right: 0px;
+  }
+  .team-sections-details {
+    padding: 10px;
+  }
+  ul.company-info li {
+    margin-bottom: 0px;
+  }
+  .contact-map {
+     padding-bottom: 35px;
+  }
+  .contact-row{
+    flex-direction: column;
+  }
+  .form-partition, .contact-address-partition{
+    max-width: 100%;
+  }
+  .contact.form-partition{
+    margin-top: 30px;
+  }
+   .team-details p {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .team-details .socials svg {
+    width: 14px;
+    height: 14px;
+  }
+  .team-wrap .socials {
+    column-gap: 10px;
+  }
+}
+@media screen and (max-width: 840px) {
+  .contact_main_heading {
+    font-size: 24px;
+  }
+   .contact-map{
+     padding-bottom: 30px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .contact-map{
+     padding-bottom: 25px;
+  }
+  .team-title.members-name,
+  .address-text-information .h3, .contact-text-information .h3, .email-text-information .h3, .clock-text-information .h3{
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .contact_main_heading {
+    font-size: 20px;
+  }
+  .contact-map iframe{
+    height: 200px;
+  }
+}
+@media screen and (max-width: 575px) {
+  .contact-map{
+     padding-bottom: 15px;
+  }
+}

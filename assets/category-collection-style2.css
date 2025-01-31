@@ -1,0 +1,129 @@
+.main-collection-list-wrapper2 .swiper-button-next, .main-collection-list-wrapper2 .swiper-button-prev{
+  opacity: 0;
+}
+.main-collection-list-wrapper2:hover .swiper-button-next, .main-collection-list-wrapper2:hover .swiper-button-prev{
+  opacity: 1;
+}
+.main-collection-item2--left {
+  text-align: left;
+}
+.main-collection-item2--center {
+  text-align: center;
+}
+.main-collection-item2--right {
+  text-align: right;
+}
+.collection-name-wrapper2{
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+}
+.collection-card__image {
+  position: relative;
+}
+.collection-name-wrapper2 h3{
+  font-size: 20px;
+  transition: all .5s ease;
+  font-weight: var(--text_weight);
+}
+.main-collection-item2 .theme_buttons {
+  margin-top: 10px;
+}
+.collection-list2{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+.main-collection-list-item2 .main-collection-list{
+  max-width: 20%;
+  width: 100%;
+  float: left;
+}
+.modern-category .main-collection-list {
+  max-width: 12.5%;
+  width: 100%;
+  float: left;
+}
+.category_content {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  padding: 20px;
+}
+.modern-category .category_content {
+  flex-direction: column;
+  row-gap: 20px;
+}
+.category-inner{
+ max-width: 100px;
+  width: 100%;
+  padding: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.category_content:hover .category-inner .media {
+  -webkit-animation: policy 1.2s linear;
+  animation: policy 1.2s linear;
+}
+@keyframes policy {
+  16.65% {
+      transform: translate(7px);
+  }
+  33.33% {
+      transform: translate(-5px);
+  }
+  49.95% {
+      transform: translate(3px);
+  }
+  66.6% {
+      transform: translate(-2px);
+  }
+  83.25% {
+      transform: translate(1px);
+  }
+  100% {
+      transform: translate(0);
+  }
+}
+@media screen and (max-width: 1299px){
+  .collection-name-wrapper2 h3{
+    font-size: 18px;
+  }
+  .category_content{
+    column-gap: 15px;
+  }
+  .modern-category .main-collection-list {
+    max-width: 20%;
+    width: 100%;
+    float: left;
+  }
+}
+@media screen and (max-width: 1199px){
+  .main-collection-list-item2 .main-collection-list{
+    max-width: 25%;
+  }
+  .category-inner{
+    max-width: 85px;
+  }
+  .category_content{
+    padding: 15px;
+  }
+  .collection-name-wrapper2 h3 {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 840px){
+  .main-collection-list-item2 .main-collection-list{
+    max-width: 33.33%;
+  }
+}
+@media (max-width: 680px){
+  .main-collection-list-item2 .main-collection-list{
+    max-width: 50%;
+  }
+  .collection-name-wrapper2 h3 {
+    font-size: 14px;
+  }
+}

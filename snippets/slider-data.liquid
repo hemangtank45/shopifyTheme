@@ -1,0 +1,96 @@
+{%- assign img_url = block.settings.image | img_url: '2000x' -%}
+
+
+{%- if block.settings.slider_type == 'video' -%}
+  {% if block.settings.hero_slideshow_link_video != blank %}
+  <div class="hero-slideshow_video">
+    <div class="slideshow-img media media--transparent ratio w-100" style="--ratio-percent: 100%">
+      <video id="Mp4{{ section.id }}" src="{{ block.settings.hero_slideshow_link_video }}" loop="" muted="" playsinline=""
+        autoplay=""></video>
+    </div>
+  </div>
+  {% else %}
+    <div class="slideshow-img desktop-only media media--transparent ratio w-100" style="--ratio-percent: 100%">
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+  {% endif %}
+{% endif %}
+
+{%- if block.settings.slider_type == 'image' -%}
+  {% if block.settings.image != blank %}
+  <div class="slideshow-img desktop-only media media--transparent ratio w-100" style="--ratio-percent: 100%">
+    {{ block.settings.image | image_url: width: 1920 | image_tag : loading: 'eager', class: 'w-100' }}
+  </div>
+  {% else %}
+  <div class="slideshow-img desktop-only media media--transparent ratio w-100" style="--ratio-percent: 100%">
+    {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+  </div>
+  {% endif %}
+
+  {% if block.settings.mobile_image != blank %}
+  <div class="slideshow-img mobile-only media media--transparent ratio w-100" style="--ratio-percent: 100%">
+    {{ block.settings.mobile_image | image_url: width: 1920 | image_tag : loading: 'eager', class: 'w-100' }}
+  </div>
+  {% else %}
+  <div class="slideshow-img mobile-only media media--transparent ratio w-100" style="--ratio-percent: 100%">
+    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+  </div>
+  {% endif %}
+
+    <div
+      class="slider-content {% if section.settings.content_within_container %}page-width{% endif %} slider-content-bg {{ block.settings.text_alignment }} slider-content--{{ block.settings.content_position }}">
+      <div class="slide_{{forloop.index}}">
+        
+        {% if block.settings.show_thumb %}
+              {% if block.settings.slide-thumb != blank %}
+              <div class="media media--transparent ratio w-100 slide-thumb" style="--ratio-percent: 100%">
+                <img src="{{ block.settings.slide-thumb | img_url: 'master' }}" alt="slider-img" class="w-100" loading="eager">
+              </div>
+              {% else %}
+              <div class="media media--transparent ratio w-100 slide-thumb" style="--ratio-percent: 100%">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              {% endif %}
+          {% endif %}
+      
+        
+        {% if block.settings.title != blank %}
+        <div class="slide-heading h2">
+          {{ block.settings.title }}
+        </div>
+        {% endif %}
+    
+        {% if block.settings.title_2 != blank %}
+        <div class="slide-sub-heading-2 theme_main_subheading">
+          {{ block.settings.title_2 }}
+        </div>
+        {% endif %}
+    
+        {% if block.settings.desc != blank %}
+        <p class="slide-text">
+          {{ block.settings.desc }}
+        </p>
+        {% endif %}
+    
+        <div class="offer_text">
+        {% if block.settings.offer_text1 != blank %}
+          <span class="theme_main_subheading offer_subheading slide-sub-heading-2">{{ block.settings.offer_text1 }}</span>
+        {% endif %}
+         {% if block.settings.offer_text2-1 != blank %}
+          <span class="theme_main_heading h2 slide-heading">{{ block.settings.offer_text2-1 }}</span>
+        {% endif %}
+        </div>
+    
+        <div class="multiple-buttons">
+          {% if block.settings.button != blank %}
+          <a {% if block.settings.link %} href="{{ block.settings.link }}" {% else %} role="link" aria-disabled="true" {%
+            endif %} class="button slide-button theme_buttons">{{ block.settings.button }}</a>
+          {% endif %}
+          {% if block.settings.button_2 != blank %}
+          <a {% if block.settings.link_2 %} href="{{ block.settings.link_2 }}" {% else %} role="link" aria-disabled="true"
+            {% endif %} class="button slide-button theme_buttons secondary">{{ block.settings.button_2 }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+{% endif %}

@@ -1,252 +1,749 @@
-{%- if section.settings.contact_form -%}
-<div class="contact-form-wrapper" id="section-{{ section.id }}">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="contact-form-content">
-          {%- if section.settings.form_title -%}
-          <h2>{{ section.settings.form_title }}</h2>
-          {%- endif -%}
-          {%- include 'contact-form' -%}
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+<div class="gradient">
+  <div class="contact-form-partition section-{{ section.id }}-padding">
+    <div class="page-width">
+      <div class="contact-title-wrapper " style="text-align: {{ section.settings.heading_alignment }};">
+        <div class="theme_main_heading inner_page_title h2">{{ section.settings.contact_maintitle }}</div>
+      </div>
+      <div class="google-map">
+        {% if section.settings.contact_us_map_enable %}
+        <div class="contact-map">
+          {{ section.settings.contact_map }}
         </div>
+        {% endif %}
+      </div>
+      <div class="contact-row">
+        <div class="contact-address-partition">
+          <div class="contact-information-pannel">
+            <div class="contact_main_heading h2">{{ section.settings.information_heading }}
+            </div>
+            <p class="info-paragraph theme_main_description">{{ section.settings.information_paragraph }}</p>
+            <ul class="company-info list-unstyled">
+              <li>
+                <div class="address-information-wrapper">
+                  <div class="address-icon-information">
+                    {% render 'icon-home' %}
+                  </div>
+                  <div class="address-text-information">
+                    <div class="h3">{{ section.settings.address_heading }}</div>
+                    <p>{{ section.settings.address_paragraph }}</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="contact-information-wrapper">
+                  <div class="contact-icon-information">
+                    {% render 'icon-phone' %}
+                  </div>
+                  <div class="contact-text-information">
+                    <div class="h3">{{ section.settings.contact_heading }}</div>
+                    <p>{{ section.settings.contact_paragraph }}</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="email-information-wrapper">
+                  <div class="email-icon-information">
+                    {% render 'icon-email' %}
+                  </div>
+                  <div class="email-text-information">
+                    <div class="h3">{{ section.settings.email_heading }}</div>
+                    <p>{{ section.settings.email_paragraph }}</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="clock-information-wrapper">
+                  <div class="clock-icon-information">
+                    {% render 'icon-watch' %}
+                  </div>
+                  <div class="clock-text-information">
+                    <div class="h3">{{ section.settings.clock_heading }}</div>
+                    <p>{{ section.settings.clock_paragraph }}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="contact form-partition">
+
+          <div class="contact_main_heading h2">
+            {{ section.settings.heading-contact | escape }}
+          </div>
+
+          {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
+          {%- if form.posted_successfully? -%}
+          <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+            {% render 'icon-success' %}
+            {{ 'templates.contact.form.post_success' | t }}
+          </h2>
+          {%- elsif form.errors -%}
+          <div class="form__message">
+            <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+              {% render 'icon-error' %}
+              {{ 'templates.contact.form.error_heading' | t }}
+            </h2>
+          </div>
+          <ul class="form-status-list caption-large" role="list">
+            <li>
+              <a href="#ContactForm-email" class="link">
+                {{ form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email }}
+              </a>
+            </li>
+          </ul>
+          {%- endif -%}
+          <div class="contact__fields">
+            <div class="field">
+              <input class="field__input" autocomplete="name" type="text" id="ContactForm-name"
+                name="contact[{{ 'templates.contact.form.name' | t }}]"
+                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                placeholder="{{ 'templates.contact.form.name' | t }}">
+            </div>
+            <div class="field field--with-error">
+              <input autocomplete="email" type="email" id="ContactForm-email" class="field__input" name="contact[email]"
+                spellcheck="false" autocapitalize="off"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                aria-required="true" {% if form.errors contains 'email' %} aria-invalid="true"
+                aria-describedby="ContactForm-email-error" {% endif %}
+                placeholder="{{ 'templates.contact.form.email' | t }}">
+              {%- if form.errors contains 'email' -%}
+              <small class="contact__field-error" id="ContactForm-email-error">
+                <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                <span class="form__message">
+                  {%- render 'icon-error' -%}
+                  {{- form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email -}}
+                </span>
+              </small>
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="field">
+            <input type="tel" id="ContactForm-phone" class="field__input" autocomplete="tel"
+              name="contact[{{ 'templates.contact.form.phone' | t }}]" pattern="[0-9\-]*"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              placeholder="{{ 'templates.contact.form.phone' | t }}">
+          </div>
+          <div class="field">
+            <textarea rows="10" id="ContactForm-body" class="text-area field__input"
+              name="contact[{{ 'templates.contact.form.comment' | t }}]"
+              placeholder="{{ 'templates.contact.form.comment' | t }}">
+                            {{- form.body -}}
+                          </textarea>
+          </div>
+          <div class="contact__button">
+            <button type="submit" class="button theme_buttons">
+              {{ 'templates.contact.form.send' | t }}
+            </button>
+          </div>
+          {%- endform -%}
+        </div>
+
       </div>
     </div>
   </div>
 </div>
+{%- if section.settings.show_team -%}
+<div class="our-exclusive-team">
+  <div class="page-width">
 
-{%- include 'section-style' -%}
-{%- endif -%}
+    <div class="heading">
+      <div class="our-team-heading-part m-40" style="text-align: {{ section.settings.heading_alignment }};">
+        <div class="team-main-heading theme_main_heading h2">{{ section.settings.team_main_title }}</div>
+        <p class="team-subheading theme_main_description">{{ section.settings.team_main_subtitle }}</p>
+      </div>
+    </div>
+
+  <div class="swiper-container team_block">
+    <div class="team-row swiper-wrapper">
+      {% for block in section.blocks %}
+          {% if block.type == 'team-block' %}
+            <div class="team-wrap swiper-slide">
+              <div class="team-member text-center">
+                <div class="team-img">
+                  {% if block.settings.team-img-main-1 != blank %}
+                  <div class="media media--transparent ratio" style="--ratio-percent: 125%">
+                    {{ block.settings.team-img-main-1 | image_url: width: 1920 | image_tag : loading: 'lazy', class: 'w-100' }}
+                  </div>
+                  {% else %}
+                  <div class="media media--transparent ratio" style="--ratio-percent: 125%">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                  {% endif %}
+                  <div class="overlay">
+                    <div class="team-details text-center">
+                      <p>
+                        {{ block.settings.team_paragraph_1 }}
+                      </p>
+                      <div class="socials">
+                        <a href="{{ block.settings.facebook_url_1 }}">{% render 'icon-facebook' %}</a>
+                        <a href="{{ block.settings.twitter_url_1 }}">{% render 'icon-twitter' %}</a>
+                        <a href="{{ block.settings.instagram_url_1 }}">{% render 'icon-instagram' %}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="team-sections-details">
+                  <div class="team-title members-name h3">{{ block.settings.team_name_1 }}</div>
+                  <span class="members-designation">{{ block.settings.team_designation_1 }}</span>
+                </div>
+              </div>
+            </div> 
+          {% endif %}
+        {% endfor %}
+    </div>
+    {% if section.settings.arrows %}
+      <div class="swiper-buttons">
+        <div class="content-buttons">
+          <div class="swiper-button-next">{% render 'icon-right' %}</div>
+          <div class="swiper-button-prev">{% render 'icon-left' %}</div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  </div>
+</div>
+{% endif %}
+
+{% for block in section.blocks %}
+{% if block.type == 'team-block' %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let teamswiper;
+  
+    function initteamswiper() {
+      teamswiper = new Swiper('.team_block', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        autoplay: {{ section.settings.autoplay-enable }},
+        speed: {{ section.settings.speed }},
+        loop: {{ section.settings.loop }},
+        grabCursor: true,
+        freeMode: false,
+        mousewheel: false,
+         navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        breakpoints: {
+          320: {
+            slidesPerView: {{ section.settings.colums_mobile }},
+            spaceBetween: 15
+          },
+          480: {
+            slidesPerView: {{ section.settings.colums_tablet }}
+          },
+          641: {
+            slidesPerView: {{ section.settings.columns_large_tablet }}
+          },
+          768: {
+            slidesPerView: {{ section.settings.columns_large_tablet }},
+            spaceBetween: 15
+          },
+          992: {
+            slidesPerView: {{ section.settings.colums_desktop }}
+          }
+        },
+      });
+    }
+  
+    // Initialize team swiper on page load
+    initteamswiper();
+  
+    document.addEventListener('shopify:section:select', function() {
+      // Reinitialize team swiper on section select
+      initteamswiper();
+    });
+
+     document.addEventListener('shopify:section:load', function() {
+      // Reinitialize team swiper on section load
+      initteamswiper();
+    });
+  
+    document.addEventListener('shopify:section:deselect', function() {
+      // Cleanup team swiper on section deselect if necessary
+      if (teamswiper) {
+        teamswiper.destroy();
+        teamswiper = null;
+      }
+    });
+  });
+</script>
+{% endif %}
+{% endfor %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding, .our-exclusive-team {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .socials a:hover svg{
+    fill: {{ settings.theme_main_color }};
+  }
+  .contact-form-partition  .field__input{
+    background:{{ settings.input_bg }};
+    color:{{ settings.input_text }};
+  }
+  .contact-form-partition .field__input::placeholder{
+    color:{{ settings.input_text }};
+  }
+  .contact-form-partition .contact_main_heading,.our-exclusive-team .theme_main_heading, .contact-form-partition .theme_main_heading{
+    color: {{ settings.theme_heading_color }};
+  }
+  .contact-form-partition .theme_main_description,
+  .our-exclusive-team .theme_main_description,
+  .address-text-information p, .contact-text-information p, .email-text-information p, .clock-text-information p{
+    color: {{ settings.content_color }};
+  }
+  .company-info svg{
+    color:  {{ settings.theme_black_color }};
+  }
+  .address-text-information .h3, .contact-text-information .h3, .email-text-information .h3, .clock-text-information .h3{
+    color:  {{ settings.theme_black_color }};
+  }
+  .contact-form-partition .theme_buttons,.team-sections-details{
+    background: {{ settings.theme_btn_bg }};
+    color:{{ settings.theme_btn_text }};
+  }
+  .contact-form-partition .theme_buttons:hover{
+    color:{{ settings.theme_btn_hr_text }};
+    background:{{ settings.theme_btn_hr_bg }};
+  }
+  .our-exclusive-team .swiper-button-next,.our-exclusive-team .swiper-button-prev{
+    background:{{ settings.theme_nav_bg }};
+    stroke:{{ settings.theme_nav_icon }};
+  }
+  .our-exclusive-team .swiper-button-next:hover,.our-exclusive-team .swiper-button-prev:hover{
+    background: {{ settings.theme_nav_hr_bg }}; 
+    stroke: {{ settings.theme_nav_hr_icon }};
+  }
+  @media screen and (max-width: 1099px) {
+    .section-{{ section.id }}-padding, .our-exclusive-team {
+      padding-top: {{ section.settings.padding_top_1099 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_1099 }}px;
+    }
+  }
+  @media screen and (max-width: 989px) {
+    .section-{{ section.id }}-padding, .our-exclusive-team {
+      padding-top: {{ section.settings.padding_top_989 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_989 }}px;
+    }
+  }
+  @media screen and (max-width: 840px) {
+    .section-{{ section.id }}-padding, .our-exclusive-team {
+      padding-top: {{ section.settings.padding_top_840 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_840 }}px;
+    }
+  }
+   @media screen and (max-width: 767px) {
+    .section-{{ section.id }}-padding, .our-exclusive-team {
+      padding-top: {{ section.settings.padding_top_767 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_767 }}px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .section-{{ section.id }}-padding, .our-exclusive-team {
+      padding-top: {{ section.settings.padding_top_640 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_640 }}px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .section-{{ section.id }}-padding, .our-exclusive-team {
+      padding-top: {{ section.settings.padding_top_480 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_480 }}px;
+    }
+  }
+{%- endstyle -%}
 
 {% schema %}
-  {
-    "name": "Contact Form",
-    "settings": [
-		{
-          "type": "checkbox",
-          "id": "contact_form",
-          "label": "Show Contact Form",
-          "default": true
-      	},
-		{
+{
+  "name": "t:sections.contact-form.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "contact_maintitle",
+      "default": "Contact us",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Map Setting"
+    },
+    {
+      "type": "checkbox",
+      "id": "contact_us_map_enable",
+      "label": "Show map",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "contact_map",
+      "label": "Map",
+      "default": "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13004323.590934537!2d-104.6752891796967!3d37.27418510935136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sin!4v1680755419965!5m2!1sen!2sin' width='600' height='564' style='border:0;' allowfullscreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>",
+      "info": "google map iframe here"
+    },
+    {
+      "type": "text",
+      "id": "information_heading",
+      "default": "Our information",
+      "label": "Heading left"
+    },
+    {
+      "type": "text",
+      "id": "information_paragraph",
+      "default": "Create your own website with us",
+      "label": "Paragraph"
+    },
+    {
+      "type": "header",
+      "content": "Address information"
+    },
+    {
+      "type": "text",
+      "id": "address_heading",
+      "default": "Address",
+      "label": "Address heading"
+    },
+    {
+      "type": "text",
+      "id": "address_paragraph",
+      "default": "Enter your address here",
+      "label": "Address Paragraph"
+    },
+    {
+      "type": "header",
+      "content": "Contact information"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "default": "Phone",
+      "label": "Contact heading"
+    },
+    {
+      "type": "text",
+      "id": "contact_paragraph",
+      "default": "+01 0123 456 789",
+      "label": "Contact paragrapgh"
+    },
+    {
+      "type": "header",
+      "content": "Email information"
+    },
+    {
+      "type": "text",
+      "id": "email_heading",
+      "default": "Email",
+      "label": "Email heading"
+    },
+    {
+      "type": "text",
+      "id": "email_paragraph",
+      "default": "admin@gmail.com",
+      "label": "Email paragrapgh"
+    },
+    {
+      "type": "header",
+      "content": "Clock information"
+    },
+    {
+      "type": "text",
+      "id": "clock_heading",
+      "default": "Open hours",
+      "label": "Clock heading"
+    },
+    {
+      "type": "text",
+      "id": "clock_paragraph",
+      "default": "Monday to friday 09:30 - 18:30 <br/> saturday & sunday 10:00 - 17:00",
+      "label": "Clock paragrapgh"
+    },
+    {
+      "type": "text",
+      "id": "heading-contact",
+      "default": "Contact form",
+      "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Our team settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_team",
+      "label": "Show team",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "team_main_title",
+      "default": "Meet our team",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "team_main_subtitle",
+      "default": "Create your own website with us",
+      "label": "Sub title"
+    },
+    {
+      "type": "range",
+      "id": "colums_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "range",
+      "id": "columns_large_tablet",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "Number of columns on large tablet"
+    },
+    {
+      "type": "range",
+      "id": "colums_tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2,
+      "label": "Number of columns on tablet"
+    },
+    {
+      "type": "range",
+      "id": "colums_mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2,
+      "label": "Number of columns on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay-enable",
+      "label": "Autoplay enable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Enable navigation arrows",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "speed",
+      "label": "Slide speed",
+      "default": "500"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Enable loop",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Screen wise padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_1099",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 55
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_1099",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 55
+    },
+    {
+      "type": "header",
+      "content": "@media screen 989"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_989",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_989",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_840",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 45
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_840",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "@media screen 767"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_767",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_767",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_640",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 35
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_640",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_480",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_480",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "team-block",
+      "name": "Team block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "team-img-main-1",
+          "label": "Image"
+        },
+        {
           "type": "text",
-          "id": "form_title",
-          "label": "Form Title",
-          "default": "GET IN TOUCH"
-      	},
-		{
+          "id": "team_paragraph_1",
+          "default": "Add tem members work description here.",
+          "label": "Team paragrapgh"
+        },
+        {
           "type": "text",
-          "id": "name_placeholder",
-          "label": "Name Title",
-          "default": "Name"
-      	},
-		{
+          "id": "team_name_1",
+          "default": "Author",
+          "label": "Team name"
+        },
+        {
           "type": "text",
-          "id": "email_placeholder",
-          "label": "Email Title",
-          "default": "Email"
-      	},
-		{
-          "type": "text",
-          "id": "subject_placeholder",
-          "label": "Subject Title",
-          "default": "Subject"
-      	},
-		{
-          "type": "text",
-          "id": "message_placeholder",
-          "label": "Message Title",
-          "default": "Message"
-      	},
-		{
-          "type": "text",
-          "id": "form_button_name",
-          "label": "Send Title",
-          "default": "Send a message"
-      	}
-	],
-	"blocks":[
-	   {
-          "type": "section_padding",
-          "name": "Section Padding",
-		  "limit": 1,
-          "settings": [
-            {
-			  "type": "header",
-			  "content": "Large/Desktop Device"
-			},
-			{
-			  "type": "range",
-			  "id": "section_padding_top",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Padding Top",
-			  "unit": "px",
-			  "default": 0
-			},
-			{
-			  "type": "range",
-			  "id": "section_padding_bottom",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Padding Bottom",
-			  "unit": "px",
-			  "default": 100
-			},
-			{
-			  "type": "header",
-			  "content": "Tablet Device"
-			},
-			{
-			  "type": "range",
-			  "id": "section_padding_top_md",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Padding Top",
-			  "unit": "px",
-			  "default": 0
-			},
-			{
-			  "type": "range",
-			  "id": "section_padding_bottom_md",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Padding Bottom",
-			  "unit": "px",
-			  "default": 80
-			},
-			{
-			  "type": "header",
-			  "content": "Mobile Device"
-			},
-			{
-			  "type": "range",
-			  "id": "section_padding_top_xs",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Padding Top",
-			  "unit": "px",
-			  "default": 0
-			},
-			{
-			  "type": "range",
-			  "id": "section_padding_bottom_xs",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Padding Bottom",
-			  "unit": "px",
-			  "default": 60
-			}
-          ]
-       },
-	   {
-          "type": "section_margin",
-          "name": "Section Margin",
-		  "limit": 1,
-          "settings": [
-            {
-			  "type": "header",
-			  "content": "Large/Desktop Device"
-			},
-			{
-			  "type": "range",
-			  "id": "section_margin_top",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Margin Top",
-			  "unit": "px",
-			  "default": 0
-			},
-			{
-			  "type": "range",
-			  "id": "section_margin_bottom",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Margin Bottom",
-			  "unit": "px",
-			  "default": 0
-			},
-			{
-			  "type": "header",
-			  "content": "Tablet Device"
-			},
-			{
-			  "type": "range",
-			  "id": "section_margin_top_md",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Margin Top",
-			  "unit": "px",
-			  "default": 0
-			},
-			{
-			  "type": "range",
-			  "id": "section_margin_bottom_md",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Margin Bottom",
-			  "unit": "px",
-			  "default": 0
-			},
-			{
-			  "type": "header",
-			  "content": "Mobile Device"
-			},
-			{
-			  "type": "range",
-			  "id": "section_margin_top_xs",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Margin Top",
-			  "unit": "px",
-			  "default": 0
-			},
-			{
-			  "type": "range",
-			  "id": "section_margin_bottom_xs",
-			  "min": 0,
-			  "max": 150,
-			  "step": 5,
-			  "label": "Margin Bottom",
-			  "unit": "px",
-			  "default": 0
-			}
-          ]
-       },
-	   {
-          "type": "section_background",
-          "name": "Section Background",
-		  "limit": 1,
-          "settings": [
-            {
-			  "type": "image_picker",
-			  "id": "section_bg_image",
-			  "label": "BG Image"
-			},
-			{
-			  "type": "color",
-			  "id": "section_bg_color",
-			  "label": "BG Color",
-			  "default": "#ffffff"
-			}
-          ]
-       }
-	],
-	"presets": [
-		{
-		  "name": "Contact Form",
-		  "category": "6. contact"
-		}
-	]
-  }
+          "id": "team_designation_1",
+          "default": "Designation",
+          "label": "Team designation"
+        },
+        {
+          "type": "url",
+          "id": "facebook_url_1",
+          "label": "Facebook link"
+        },
+        {
+          "type": "url",
+          "id": "twitter_url_1",
+          "label": "Twitter link"
+        },
+        {
+          "type": "url",
+          "id": "instagram_url_1",
+          "label": "Instagram link"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

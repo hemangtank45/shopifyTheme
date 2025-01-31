@@ -1,0 +1,68 @@
+.customer.login, .customer.register {
+  padding: 30px!important;
+  border-radius: var(--buttons-radius);
+}
+.forgot_pass_wrapper{
+  text-align: left;
+  margin-top: 3rem;
+}
+.login .forgot_pass_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+}
+.login_image_wrapper,
+.register_image_wrapper {
+  padding-bottom: 40px;
+}
+
+@media screen and (max-width: 991px) {
+  .login_image_wrapper,.register_image_wrapper{
+     padding-bottom: 35px;
+  }
+}
+@media screen and (max-width: 840px) {
+  .login_image_wrapper,.register_image_wrapper{
+     padding-bottom: 30px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .customer.login, .customer.register {
+    padding: 15px !important;
+  }
+  .login .forgot_pass_wrapper{
+    font-size: 14px;
+    flex-direction: column;
+    row-gap: 15px;
+  }
+  .customer .field {
+    margin: 1.5rem 0 0 !important;
+  }
+  .login_image_wrapper,.register_image_wrapper{
+     padding-bottom: 25px;
+  }
+  .field__label, .customer .field label{
+    font-size: 14px !important;
+  }
+}
+@media screen and (max-width: 575px) {
+  .customer.login, .customer.register {
+    padding: 10px !important;
+  }
+  .login .forgot_pass_wrapper {
+    row-gap: 10px;
+  }
+  .forgot_pass_wrapper {
+    margin-top: 2rem;
+  }
+  .customer button {
+    margin-top: 2rem !important;
+  }
+  .login_image_wrapper,.register_image_wrapper{
+     padding-bottom: 15px;
+  }
+  .customer .field {
+    margin: 1rem 0 0 !important;
+  }
+}

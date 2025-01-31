@@ -1,0 +1,15 @@
+<div class="modal fade" id="jsCompare" role="dialog" aria-hidden="true">
+  <div class="modal-dialog main-dialog--compare" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">{%- render 'icon-close' -%}</button>
+      </div>
+      <div class="modal-body">
+        <div class="compare_popup_title theme_main_heading h3">{{ 'products.product.compare_text' | t }}</div>
+        <p class="wishlist_note">{{ 'products.product.wishlist_compare_note' | t }}<span class="wishlist_span"> {{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})</span></p>
+        <div class="main-compare-popup-content">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

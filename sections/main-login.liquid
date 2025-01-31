@@ -1,0 +1,386 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+{{ 'login-signup.css' | asset_url | stylesheet_tag }}
+
+<div class="section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="login-title-wrapper" style="text-align: {{ section.settings.heading_alignment }};">
+      <h1 id="login" tabindex="-1" class="theme_main_heading inner_page_title">
+        {{ 'customer.login_page.title' | t }}
+      </h1>
+    </div>
+    {% if section.settings.show_topimg %}
+    <div class="login_image_wrapper">
+      {% if section.settings.login_top_img != blank %}
+      <div class="media media--transparent ratio" style="--ratio-percent: 30%">
+        {{ section.settings.login_top_img | image_url: width: 1920 | image_tag : loading: 'lazy', class: 'w-100' }}
+      </div>
+      {% else %}
+      <div class="media media--transparent ratio" style="--ratio-percent: 30%">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    <div class="customer login">
+      <h1 id="recover" tabindex="-1">
+        {{ 'customer.recover_password.title' | t }}
+      </h1>
+      <div>
+        <p>
+          {{ 'customer.recover_password.subtext' | t }}
+        </p>
+
+        {%- form 'recover_customer_password' -%}
+        {% assign recover_success = form.posted_successfully? %}
+        <div class="field">
+          <input type="email" value="" name="email" id="RecoverEmail" autocorrect="off" autocapitalize="off"
+            autocomplete="email" {% if form.errors %} aria-invalid="true" aria-describedby="RecoverEmail-email-error"
+            autofocus {% endif %} placeholder="{{ 'customer.login_page.email' | t }}">
+        </div>
+        {%- if form.errors -%}
+        <small id="RecoverEmail-email-error" class="form__message">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+            <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2" />
+            <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7" />
+            <path
+              d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z"
+              fill="white" />
+            <path
+              d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z"
+              fill="white" stroke="#EB001B" stroke-width="0.7">
+          </svg>
+          {{ form.errors.messages.form }}
+        </small>
+        {%- endif -%}
+
+        <button class="button theme_buttons">
+          {{ 'customer.login_page.submit' | t }}
+        </button>
+
+        <a href="#login">
+          {{ 'customer.login_page.cancel' | t }}
+        </a>
+        {%- endform -%}
+      </div>
+
+      <h1 id="login" tabindex="-1">
+        {{ 'customer.login_page.title' | t }}
+      </h1>       
+
+      <div>
+        {%- if recover_success == true -%}
+        <h3 class="form__message" tabindex="-1" autofocus>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+            <path
+              d="M6.5 12.35C9.73087 12.35 12.35 9.73086 12.35 6.5C12.35 3.26913 9.73087 0.65 6.5 0.65C3.26913 0.65 0.65 3.26913 0.65 6.5C0.65 9.73086 3.26913 12.35 6.5 12.35Z"
+              fill="#428445" stroke="white" stroke-width="0.7" />
+            <path d="M5.53271 8.66357L9.25213 4.68197" stroke="white" />
+            <path d="M4.10645 6.7688L6.13766 8.62553" stroke="white">
+          </svg>
+          {{ 'customer.recover_password.success' | t }}
+        </h3>
+        {%- endif -%}
+        {%- form 'customer_login', novalidate: 'novalidate' -%}
+        {%- if form.errors -%}
+        <h2 class="form__message" tabindex="-1" autofocus>
+          <span class="visually-hidden">{{ 'accessibility.error' | t }} </span>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+            <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2" />
+            <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7" />
+            <path
+              d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z"
+              fill="white" />
+            <path
+              d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z"
+              fill="white" stroke="#EB001B" stroke-width="0.7">
+          </svg>
+          {{ 'templates.contact.form.error_heading' | t }}
+        </h2>
+        {{ form.errors | default_errors }}
+        {%- endif -%}
+
+        <div class="field">
+          <input type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" autocorrect="off"
+            autocapitalize="off" {% if form.errors contains 'form' %} aria-invalid="true" {% endif %}
+            placeholder="{{ 'customer.login_page.email' | t }}">
+        </div>
+
+        {%- if form.password_needed -%}
+        <div class="field">
+          <input type="password" value="" name="customer[password]" id="CustomerPassword"
+            autocomplete="current-password" {% if form.errors contains 'form' %} aria-invalid="true" {% endif %}
+            placeholder="{{ 'customer.login_page.password' | t }}">
+        </div>
+
+        <div class="forgot_pass_wrapper">
+          <a href="#recover" class="forgot_pass">
+            {{ 'customer.login_page.forgot_password' | t }}
+          </a>
+          <a href="/" class="back_store">{{ 'customer.login_page.back_store' | t }}</a>
+        </div>
+        {%- endif -%}
+
+        <button class="theme_buttons button">
+          {{ 'customer.login_page.sign_in' | t }}
+        </button>
+        <div class="or_btn"><span>{{ 'customer.login_page.or' | t }}</span></div>
+        <a href="{{ routes.account_register_url }}" class="theme_buttons creat_account button">
+          {{ 'customer.login_page.create_account' | t }}
+        </a>
+        {%- endform -%}
+      </div>
+
+      {%- if shop.checkout.guest_login -%}
+      <div>
+        <hr>
+        <h2>{{ 'customer.login_page.guest_title' | t }}</h2>
+
+        {%- form 'guest_login' -%}
+        <button>
+          {{ 'customer.login_page.guest_continue' | t }}
+        </button>
+        {%- endform -%}
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- style -%}
+  #login{
+    color: {{ settings.theme_black_color }};
+  }
+   .customer .or_btn:before {
+      border-top: 1px solid {{ settings.border_color }};
+    }
+    .customer.login {
+      border: 1px solid {{ settings.border_color }};
+    }
+  .customer .or_btn span {
+    border: 1px solid {{ settings.border_color }};
+  }
+  .login .field input{
+    background-color: {{ settings.input_bg }};
+    color: {{ settings.input_text }};
+  }
+  .login .field input::placeholder{
+    color: {{ settings.input_text }};
+  }
+  .customer button, .login .theme_buttons{
+    background: {{ settings.theme_btn_bg }};
+    color:{{ settings.theme_btn_text }};
+    width: 100%;
+  }
+  .customer button:hover, .login .theme_buttons:hover{
+   color:{{ settings.theme_btn_hr_text }};
+   background:{{ settings.theme_btn_hr_bg }};
+  }
+  .login p{
+    color: {{ settings.content_color }};
+  }
+  .login a{
+    color: {{ settings.theme_black_color }};
+    transition: all .5s ease;
+  }
+  .login a:hover{
+    color: {{ settings.theme_main_color }};
+  }
+  .login-title-wrapper .theme_main_heading, .login h1{
+    color: {{ settings.theme_heading_color }};
+  }
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 1099px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_1099 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_1099 }}px;
+    }
+  }
+  @media screen and (max-width: 989px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_989 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_989 }}px;
+    }
+  }
+  @media screen and (max-width: 840px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_840 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_840 }}px;
+    }
+  }
+   @media screen and (max-width: 767px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_767 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_767 }}px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_640 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_640 }}px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_480 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_480 }}px;
+    }
+  }
+{%- endstyle -%}
+              
+{% schema %}
+{
+  "name": "t:sections.main-login.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_topimg",
+      "label": "Show top image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "login_top_img",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Screen wise padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_1099",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 55
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_1099",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 55
+    },
+    {
+      "type": "header",
+      "content": "@media screen 989"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_989",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_989",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_840",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 45
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_840",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "@media screen 767"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_767",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_767",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_640",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 35
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_640",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_480",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_480",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 30
+    }
+  ]
+}
+{% endschema %}

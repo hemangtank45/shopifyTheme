@@ -1,0 +1,56 @@
+<a href="#" data-toggle="modal" data-target="#jsCompare" class="header_icon header-compare-icon"
+  title="{{ 'products.product.compare_text' | t }}">
+  {%- render 'icon-exchange' -%}
+  <!-- <span class="compare-text">{{ 'products.product.compare_text' | t }}</span> -->
+  <div class="lg-compare-count"></div>
+</a>
+
+{% style %}
+  .wishlist_note {
+    color: {{ settings.content_color }};
+  }
+.compare-item h3, .compare-item a,.compare-item del,.compare-item span{
+  border: 1px solid {{ settings.border_color }};
+}
+.compare_popup_title{
+  border-bottom: 1px solid {{ settings.border_color }};
+}
+.modal-body{
+  background: {{ settings.bg_color }};
+}
+#growls-default,.main-dialog--compare .alert-warning{
+  background-color: {{ settings.input_bg }};
+  color: {{ settings.input_text }};
+}
+.compare-item h3:hover,.compare-item a:hover{
+  color: {{ settings.product_title_hover }};
+}
+.compare-popup-remove-btn{
+  background:{{ settings.theme_btn_bg }};
+  color:{{ settings.theme_btn_text }};
+}
+.compare-popup-remove-btn:hover{
+  background: {{ settings.theme_btn_hr_bg }};
+  color:{{ settings.theme_btn_hr_text }};
+}
+.modal-header .close{
+  background: {{ settings.theme_btn_bg }};
+  color:{{ settings.theme_btn_text }};
+}
+.modal-header .close:hover{
+  background: {{ settings.theme_btn_hr_bg }};
+  color:{{ settings.theme_btn_hr_text }};
+}
+.compare_popup_title{
+  color: {{ settings.theme_heading_color }};
+}
+.compare-item h3, .compare-item a, .compare-item span{
+  transition: all .5s ease;
+  color: {{ settings.theme_heading_color }};
+  text-transform: var(--text_style);
+  font-weight: var(--text_weight);
+}
+.compare-item del{
+  color: {{ settings.content_color }};
+}
+{% endstyle %}

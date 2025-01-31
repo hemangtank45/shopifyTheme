@@ -1,0 +1,136 @@
+{{ 'breadcrumb.css' | asset_url | stylesheet_tag }}
+
+{% if settings.style_breadcrumb == "style_1" %}
+{% unless template == 'index' %}
+<nav class="breadcrumb main-nav-breadcrumb-1 lazyload text-{{ settings.align_bread }}" role="navigation" aria-label="breadcrumbs">
+  <div class="{{settings.layout_bread}}">
+    <a class="main-bread-title" href="/" title="Home">{{ 'products.product.quantity.home' | t }}</a>
+    {% if template contains 'page' %}
+    <span aria-hidden="true">/</span>
+    <span>{{ page.title }}</span>
+    {% elsif template contains 'product' %}
+    {% if collection.url %}
+    <span aria-hidden="true">/</span>
+    {{ collection.title | link_to: collection.url }}
+    {% endif %}
+    <span aria-hidden="true">/</span>
+    <span>{{ product.title }}</span>
+    {% elsif template contains 'collection' and collection.handle %}
+    <span aria-hidden="true">/</span>
+    {% if current_tags %}
+    {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+    {{ collection.title | link_to: url }}
+    <span aria-hidden="true">/</span>
+    <span>{{ current_tags | join: " + " }}</span>
+    {% else %}
+    <span>{{ collection.title }}</span>
+    {% endif %}
+    {% elsif template == 'blog' %}
+    <span aria-hidden="true">/</span>
+    {% if current_tags %}
+    {{ blog.title | link_to: blog.url }}
+    <span aria-hidden="true">/</span>
+    <span>{{ current_tags | join: " + " }}</span>
+    {% else %}
+    <span>{{ blog.title }}</span>
+    {% endif %}
+    {% elsif template == 'article' %}
+    <span aria-hidden="true">/</span>
+    {{ blog.title | link_to: blog.url }}
+    <span aria-hidden="true">/</span>
+    <span>{{ article.title }}</span>
+    {% else %}
+    <span aria-hidden="true">/</span>
+    <span>{{ page_title }}</span>
+    {% endif %}
+  </div>
+</nav>
+{% endunless %}
+
+{% else %}
+
+{% unless template == 'index' %}
+<nav class="breadcrumb main-nav-breadcrumb-2 lazyload" role="navigation" aria-label="breadcrumbs">
+  <div class="breadcrumb-bg-img">
+    {% if settings.breadcrumb_image != blank %}
+    <div class="media media--transparent ratio w-100 {% if settings.tag_attachment  %}attachement{% endif %}" style="--ratio-percent: 10%">
+      {{ settings.breadcrumb_image | image_url: width: 1920 | image_tag : loading: 'lazy', class: 'w-100' }}
+    </div>
+    {% else %}
+    <div class="media media--transparent ratio w-100 {% if settings.tag_attachment  %}attachement{% endif %}" style="--ratio-percent: 10%">
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+    {% endif %}
+    <div class="breadcrumb-text text-{{settings.align_bread}}">
+      <div class="{{settings.layout_bread}}">
+        <a class="main-bread-title" href="/" title="Home">{{ 'products.product.quantity.home' | t }}</a>
+        {% if template contains 'page' %}
+        <span aria-hidden="true">/</span>
+        <span>{{ page.title }}</span>
+        {% elsif template contains 'product' %}
+        {% if collection.url %}
+        <span aria-hidden="true">/</span>
+        {{ collection.title | link_to: collection.url }}
+        {% endif %}
+        <span aria-hidden="true">/</span>
+        <span>{{ product.title }}</span>
+        {% elsif template contains 'collection' and collection.handle %}
+        <span aria-hidden="true">/</span>
+        {% if current_tags %}
+        {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+        {{ collection.title | link_to: url }}
+        <span aria-hidden="true">/</span>
+        <span>{{ current_tags | join: " + " }}</span>
+        {% else %}
+        <span>{{ collection.title }}</span>
+        {% endif %}
+        {% elsif template == 'blog' %}
+        <span aria-hidden="true">/</span>
+        {% if current_tags %}
+        {{ blog.title | link_to: blog.url }}
+        <span aria-hidden="true">/</span>
+        <span>{{ current_tags | join: " + " }}</span>
+        {% else %}
+        <span>{{ blog.title }}</span>
+        {% endif %}
+        {% elsif template == 'article' %}
+        <span aria-hidden="true">/</span>
+        {{ blog.title | link_to: blog.url }}
+        <span aria-hidden="true">/</span>
+        <span>{{ article.title }}</span>
+        {% else %}
+        <span aria-hidden="true">/</span>
+        <span>{{ page_title }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+{% endunless %}
+
+{% endif %}
+
+{% style %}
+  .main-nav-breadcrumb-1{
+    color:{{ settings.color_breadcrumbs_active}} ;
+    background: {{ settings.color_breadcrumbs_bg}} ;
+  }
+  .main-nav-breadcrumb-1 a{
+    color:{{settings.color_breadcrumbs_active}};
+    transition: all .5s ease;
+  }
+  .main-nav-breadcrumb-2{
+    color:{{settings.color_breadcrumbs_active}} ;
+    background: {{settings.input_bg}} ;
+  }
+  .main-nav-breadcrumb-2 a{
+    color:{{settings.color_breadcrumbs_active}};
+    transition: all .5s ease;
+  }
+  .main-nav-breadcrumb-1 a:hover{
+    color:{{settings.color_breadcrumbs_hover}};
+  }
+  .main-nav-breadcrumb-2 a:hover{
+    color:{{settings.color_breadcrumbs_hover}};
+  }
+{% endstyle %}

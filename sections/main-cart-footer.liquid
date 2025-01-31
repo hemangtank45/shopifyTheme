@@ -1,0 +1,249 @@
+{{ 'component-cart.css' | asset_url | stylesheet_tag }}
+{{ 'component-totals.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width{% if cart == empty %} is-empty{% endif %}" id="main-cart-footer" data-id="{{ section.id }}">
+  <div>
+    <div class="cart__footer {{ section.settings.content_type }}">
+      {%- if settings.show_cart_note -%}
+      <cart-note class="cart__note field">
+        <div for="Cart-note" class="note_label">{{ 'sections.cart.note' | t }}</div>
+        <textarea class="text-area field__input" name="note" form="cart" id="Cart-note"
+          placeholder="{{ 'sections.cart.note' | t }}">{{ cart.note }}</textarea>
+      </cart-note>
+      {%- endif -%}
+
+      <div class="cart__blocks">
+        {% for block in section.blocks %}
+        {%- case block.type -%}
+        {%- when '@app' -%}
+        {% render block %}
+        {%- when 'subtotal' -%}
+        <div class="js-contents" {{ block.shopify_attributes }}>
+          <div class="totals">
+            <h2 class="totals__subtotal">{{ 'sections.cart.subtotal' | t }}</h2>
+            <p class="totals__subtotal-value">{{ cart.total_price | money_with_currency }}</p>
+          </div>
+
+          <div>
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+            <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+              {%- for discount in cart.cart_level_discount_applications -%}
+              <li class="discounts__discount discounts__discount--position">
+                {%- render 'icon-discount' -%}
+                {{ discount.title }}
+                (-{{ discount.total_allocated_amount | money }})
+              </li>
+              {%- endfor -%}
+            </ul>
+            {%- endif -%}
+          </div>
+
+          <small class="tax-note caption-large rte">
+            {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+            {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+            {%- elsif cart.taxes_included -%}
+            {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+            {%- elsif shop.shipping_policy.body != blank -%}
+            {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+            {%- else -%}
+            {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+            {%- endif -%}
+          </small>
+        </div>
+        {%- else -%}
+        <div class="cart__ctas" {{ block.shopify_attributes }}>
+          <noscript>
+            <button type="submit" class="cart__update-button button button--secondary" form="cart">
+              {{ 'sections.cart.update' | t }}
+            </button>
+          </noscript>
+
+          <button type="submit" id="checkout" class="cart__checkout-button button theme_buttons" name="checkout" {% if
+            cart==empty %} disabled {% endif %} form="cart">
+            {{ 'sections.cart.checkout' | t }}
+          </button>
+
+        </div>
+        <div class="continue_shop_btn">
+          <a href="{{ routes.all_products_collection_url }}" class="button underlined-link theme_buttons">{{
+            'general.continue_shopping' | t }}</a>
+        </div>
+
+        {%- if additional_checkout_buttons -%}
+        <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
+          {{ content_for_additional_checkout_buttons }}
+        </div>
+        {%- endif -%}
+        {%- endcase -%}
+        {% endfor %}
+
+        <div id="cart-errors"></div>
+      </div>
+    </div>
+
+    <div class="gift-and-coupon-wrapper {{ section.settings.content_type }}">
+     {% if section.settings.gift_wrapping %}
+        <div class="gift-wrapping">
+          {% render 'gift-wrapping' %}
+        </div>
+      {% endif %}
+      {% if section.settings.coupon_code %}
+      <div class="coupon-code">
+        {% render 'coupon-code' %}
+      </div>
+      {% endif %}
+    </div>
+   
+    {% if section.settings.shipping_calculate %}
+    <div class="live_shipping_estimate {{ section.settings.content_type }}">
+      {% render 'shipping-calculator' %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    function isIE() {
+      const ua = window.navigator.userAgent;
+      const msie = ua.indexOf('MSIE ');
+      const trident = ua.indexOf('Trident/');
+
+      return msie > 0 || trident > 0;
+    }
+
+    if (!isIE()) return;
+    const cartSubmitInput = document.createElement('input');
+    cartSubmitInput.setAttribute('name', 'checkout');
+    cartSubmitInput.setAttribute('type', 'hidden');
+    document.querySelector('#cart').appendChild(cartSubmitInput);
+    document.querySelector('#checkout').addEventListener('click', function (event) {
+      document.querySelector('#cart').submit();
+    });
+  });
+</script>
+
+{% style %}
+.cart__footer {
+  border: 1px solid {{ settings.border_color }};
+}
+.cart__footer.border{
+  border: 1px solid {{ settings.border_color }};
+}
+.cart__footer.background{
+  background-color: {{ section.settings.bg_color }};
+  border: 1px solid {{ settings.border_color }};
+}
+.cart__footer .cart__note .note_label{
+  color: {{ settings.theme_black_color }};
+}
+.cart__footer .cart__note .text-area{
+  border: 1px solid {{ settings.border_color }};
+  background: {{ settings.bg_color }};
+  color: {{ settings.theme_black_color }};
+}
+.cart__footer .cart__note .field__input::placeholder{
+  color: {{ settings.theme_black_color }};
+}
+.cart__footer .totals > h2,
+.cart__footer .tax-note,
+.cart__footer div#shipping-calculator h3{
+  color: {{ settings.theme_black_color }};
+}
+.cart__footer .totals__subtotal-value{
+  color: {{ settings.theme_main_color }};
+}
+.cart__footer .continue_shop_btn a:hover{
+  background:{{ settings.theme_btn_bg }};
+  color:{{ settings.theme_btn_text }};
+  transition: all .5s ease;
+}
+.cart__footer .continue_shop_btn a{
+  background:{{ settings.theme_btn_hr_bg }};
+  color:{{ settings.theme_btn_hr_text }};
+  transition: all .5s ease;
+}
+.cart__footer .cart__ctas button{
+  background:{{ settings.theme_btn_bg }};
+  color:{{ settings.theme_btn_text }};
+  transition: all .5s ease;
+}
+.cart__footer .cart__ctas button:hover{
+  background:{{ settings.theme_btn_hr_bg }};
+  color:{{ settings.theme_btn_hr_text }};
+  transition: all .5s ease;
+}
+.live_shipping_estimate.background, .gift-and-coupon-wrapper.background{
+  background-color: {{ section.settings.bg_color }};
+  border: 1px solid {{ settings.border_color }};
+}
+.live_shipping_estimate.border, .gift-and-coupon-wrapper.border{
+  border: 1px solid {{ settings.border_color }};
+}
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "t:sections.main-cart-footer.name",
+  "class": "cart__footer-wrapper",
+  "settings": [
+    {
+      "type": "select",
+      "id": "content_type",
+      "options": [
+        {
+          "value": "border",
+          "label": "Frame"
+        },
+        {
+          "value": "background",
+          "label": "Background"
+        }
+      ],
+      "default": "border",
+      "label": "Content options"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Bg color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "gift_wrapping",
+      "label": "Show gift wrapping",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "coupon_code",
+      "label": "Show coupon code",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "shipping_calculate",
+      "label": "Show shipping calculator",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "t:sections.main-cart-footer.blocks.subtotal.name",
+      "limit": 1
+    },
+    {
+      "type": "buttons",
+      "name": "t:sections.main-cart-footer.blocks.buttons.name",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

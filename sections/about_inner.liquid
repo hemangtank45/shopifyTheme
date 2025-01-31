@@ -1,0 +1,361 @@
+{{ 'about_inner.css' | asset_url | stylesheet_tag }}
+<div class="second-inner-about-us-page">
+  <div class="page-width">
+    <div class="second-inner-about-us-page-wrapper">
+       <div class="about-inner-title" style="text-align: {{ section.settings.heading_alignment }};">
+         <h2 class="theme_main_heading inner_page_title">{{ section.settings.about-us-heading }}</h2>
+       </div>
+      {% if section.settings.show_topimg %}
+        <div class="second-inner-about-us-top-image">
+          {% if section.settings.top-about-us-img != blank %}
+          <div class="media media--transparent ratio" style="--ratio-percent: 30%">
+            {{ section.settings.top-about-us-img | image_url: width: 1920 | image_tag : loading: 'lazy', class: 'w-100' }}
+          </div>
+          {% else %}
+          <div class="media media--transparent ratio" style="--ratio-percent: 30%">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="second-inner-about-us-bottom-text">
+        <p>{{ section.settings.about-us-content }}</p>
+      </div>
+    </div>
+    <div class="main-about-us-page-top">
+      <div class="contact-info">
+        <div class="contact-info-wrapper">
+          <div class="contact-icon">
+            {% render 'icon-phone' %}
+          </div>
+          <div class="contact-content">
+            <h3>{{ section.settings.contact-heading }}</h3>
+            <p>{{ section.settings.contact-content }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="location-info">
+        <div class="location-info-wrapper">
+          <div class="location-icon">
+            {% render 'icon-home' %}
+          </div>
+          <div class="location-content">
+            <h3>{{ section.settings.location-heading }}</h3>
+            <p>{{ section.settings.location-content }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="email-info">
+        <div class="email-info-wrapper">
+          <div class="email-icon">
+            {% render 'icon-email' %}
+          </div>
+          <div class="email-content">
+            <h3>{{ section.settings.email-heading }}</h3>
+            <p>{{ section.settings.email-content }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% style %}
+  .second-inner-about-us-page .contact-info-wrapper,
+  .second-inner-about-us-page .location-info-wrapper,
+  .second-inner-about-us-page .email-info-wrapper {
+    border: 1px solid {{ settings.border_color }};
+  }
+  .second-inner-about-us-page .contact-icon,
+  .second-inner-about-us-page .location-icon,
+  .second-inner-about-us-page .email-icon {
+    border: 1px solid {{ settings.border_color }};
+  }
+  .second-inner-about-us-page {
+    padding-top: {{ section.settings.padding-top }}px;
+    padding-bottom: {{ section.settings.padding-bottom }}px;
+  }
+  .about-inner-title h2 {
+    color: {{ settings.theme_heading_color }};
+  }
+  .second-inner-about-us-bottom-text p {
+    color: {{ settings.content_color }};
+  }
+  .main-about-us-page-top svg{
+    color: {{ settings.theme_black_color }};
+    transition: all .5s ease;
+  }
+  .contact-content h3,
+  .location-content h3,
+  .email-content h3 {
+    color: {{ settings.theme_black_color }};
+  }
+  .contact-content p,
+  .location-content p,
+  .email-content p {
+    color: {{ settings.content_color }};
+  }
+  .contact-info-wrapper:hover .contact-icon svg,
+  .location-info-wrapper:hover .location-icon svg,
+  .email-info-wrapper:hover .email-icon svg{
+    color: {{ settings.theme_btn_text }};
+    transform: rotate3d(0, 1, 0, 180deg);
+  }
+  .second-inner-about-us-page .contact-info-wrapper:hover .contact-icon, 
+  .second-inner-about-us-page .location-info-wrapper:hover .location-icon, 
+  .second-inner-about-us-page .email-info-wrapper:hover .email-icon{
+    background-color: {{ settings.theme_btn_bg }};
+    border: 1px solid {{ settings.theme_btn_bg }};
+  }
+  @media screen and (max-width: 1099px) {
+    .second-inner-about-us-page {
+      padding-top: {{ section.settings.padding-top-1099 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-1099 }}px;
+    }
+  }
+  @media screen and (max-width: 989px) {
+    .second-inner-about-us-page {
+      padding-top: {{ section.settings.padding-top-989 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-989 }}px;
+    }
+  }
+  @media screen and (max-width: 840px) {
+    .second-inner-about-us-page {
+      padding-top: {{ section.settings.padding-top-840 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-840 }}px;
+    }
+  }
+   @media screen and (max-width: 767px) {
+    .second-inner-about-us-page {
+      padding-top: {{ section.settings.padding-top-767 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-767 }}px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .second-inner-about-us-page {
+      padding-top: {{ section.settings.padding-top-640 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-640 }}px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .second-inner-about-us-page {
+      padding-top: {{ section.settings.padding-top-480 }}px;
+      padding-bottom: {{ section.settings.padding-bottom-480 }}px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "About inner page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_topimg",
+        "label": "Show top image",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "top-about-us-img",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "about-us-heading",
+        "label": "Heading",
+        "default": "Story for about us"
+      },
+      {
+        "type": "textarea",
+        "id": "about-us-content",
+        "label": "Content",
+        "default": "Tell about your story, which is more attraction to  the customers. and also tell about your travelling journey for set up your store and your company or your brand and branding. how you start your business from starting to now."
+      },
+      {
+        "type": "select",
+        "id": "heading_alignment",
+        "label": "Heading alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Contact Content Settings"
+      },
+      {
+        "type": "text",
+        "id": "contact-heading",
+        "label": "Heading",
+        "default": "+01 0123 456 789"
+      },
+      {
+        "type": "text",
+        "id": "contact-content",
+        "label": "Content",
+        "default": "Contact Information provides the identity of, and the means to communicate with, the person and organization associated with the data set or information resource. "
+      },
+      {
+        "type": "header",
+        "content": "Location Content Settings"
+      },
+      {
+        "type": "text",
+        "id": "location-heading",
+        "label": "Heading",
+        "default": "Enter your address here"
+      },
+      {
+        "type": "text",
+        "id": "location-content",
+        "label": "Content",
+        "default": "Contact Information provides the identity of, and the means to communicate with, the person and organization associated with the data set or information resource. "
+      },
+      {
+        "type": "header",
+        "content": "Email Content Settings"
+      },
+      {
+        "type": "text",
+        "id": "email-heading",
+        "label": "Heading",
+        "default": "admin@gmail.com"
+      },
+      {
+        "type": "text",
+        "id": "email-content",
+        "label": "Content",
+        "default": "Contact Information provides the identity of, and the means to communicate with, the person and organization associated with the data set or information resource. "
+      },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "number",
+        "id": "padding-top",
+        "label": "Padding top",
+        "default": 60
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom",
+        "label": "Padding bottom",
+        "default": 60
+      },
+      {
+        "type": "header",
+        "content": "Screen wise section padding"
+      },
+      {
+        "type": "header",
+        "content": "@media screen 1099"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-1099",
+        "label": "Padding top",
+        "default": 55
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-1099",
+        "label": "Padding bottom",
+        "default": 55
+      },
+      {
+        "type": "header",
+        "content": "@media screen 989"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-989",
+        "label": "Padding top",
+        "default": 50
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-989",
+        "label": "Padding bottom",
+        "default": 50
+      },
+      {
+        "type": "header",
+        "content": "@media screen 840"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-840",
+        "label": "Padding top",
+        "default": 45
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-840",
+        "label": "Padding bottom",
+        "default": 45
+      },
+      {
+        "type": "header",
+        "content": "@media screen 767"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-767",
+        "label": "Padding top",
+        "default": 40
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-767",
+        "label": "Padding bottom",
+        "default": 40
+      },
+      {
+        "type": "header",
+        "content": "@media screen 640"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-640",
+        "label": "Padding top",
+        "default": 35
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-640",
+        "label": "Padding bottom",
+        "default": 35
+      },
+      {
+        "type": "header",
+        "content": "@media screen 480"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-480",
+        "label": "Padding top",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-480",
+        "label": "Padding bottom",
+        "default": 30
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,182 @@
+{{ 'popup-newletter.css' | asset_url | stylesheet_tag }}
+<section class="newsletter_popup close_popup" id="myModal">
+  <div class="newsletter-overlay">
+    <div class="modal-dialog">
+      <div class="newsletter_popup_inner">
+        <div class="modal-content clearfix">
+          <button class="close close-icon" name="close" id="Subscribe" aria-label="Close">
+            <span class="close-svg">
+              {% render 'icon-close' %}
+            </span>
+          </button>
+          <div class="newsletter-left">
+            <div class="newsletter-left_content">
+
+              {% if settings.name_popup != blank %}
+              <h3 class="top_title">{{settings.name_popup}}</h3>
+              {% endif %}
+              {% if settings.title_popup != blank %}
+              <h2 class="newsletter-heading">{{settings.title_popup}}</h2>
+              {% endif %}
+              {% if settings.description_popup != blank %}
+              <p class="newsletter-subtitle mb-0">{{settings.description_popup}}</p>
+              {% endif %}
+              <div id="subscribe-block">
+                <div id="email-block">
+                  <div class="form">
+                    <div class="email-form">
+                      {%- form 'customer', id: 'ContactFooter'-%}
+                      <input type="hidden" name="contact[tags]" value="newsletter">
+                      <div class="popup-newsletter-form">
+                        <div class="field">
+                          <input
+                            id="NewsletterForm--{{ section.id }}"
+                            type="email"
+                            name="contact[email]"
+                            class="email-input"
+                            value="{{ form.email }}"
+                            aria-required="true"
+                            autocorrect="off"
+                            autocapitalize="off"
+                            autocomplete="email"
+                            {% if form.errors %}
+                              autofocus
+                              aria-invalid="true"
+                              aria-describedby="ContactFooter-error"
+                            {% elsif form.posted_successfully? %}
+                              aria-describedby="ContactFooter-success"
+                            {% endif %}
+                            placeholder="{{settings.placeholder_popup}}"
+                            required
+                          >
+                          <button type="submit" class="submit-btn theme_buttons" name="commit" id="Subscribe" aria-label="{{ 'newsletter.button_label' | t }}">
+                            {{settings.button_name_popup}}
+                          </button>
+                        </div>
+                        {%- if form.errors -%}
+                          <small class="newsletter-form__message form__message" id="ContactFooter-error">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</small>
+                        {%- endif -%}
+                      </div>
+                      {%- if form.posted_successfully? -%}
+                        <h3 class="newsletter-form__message newsletter-form__message--success form__message" id="ContactFooter-success" tabindex="-1" autofocus>{% render 'icon-success' %}{{ 'newsletter.success' | t }}</h3>
+                      {%- endif -%}
+                    {%- endform -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="do-not-show-again  accept-cookie2" name="commit" id="Subscribe">
+                {{ settings.text }}
+              </button>
+
+
+              <div class="news-social-media">
+
+                <ul class="news__list-social list-unstyled list-social">
+                      <li class="list-social__item">
+                        <a href="#" class="link list-social__link facebook">
+                          {%- render 'icon-facebook' -%}
+                          <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
+                        </a>
+                      </li>
+                      <li class="list-social__item">
+                        <a href="#" class="link list-social__link instagram">
+                          {%- render 'icon-instagram' -%}
+                          <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+                        </a>
+                      </li>
+                      <li class="list-social__item">
+                        <a href="#" class="link list-social__link twitter">
+                          {%- render 'icon-twitter' -%}
+                          <span class="visually-hidden">{{ 'general.social.links.twitter' | t }}</span>
+                        </a>
+                      </li>
+                      <li class="list-social__item">
+                        <a href="#" class="link list-social__link youtube">
+                          {%- render 'icon-youtube' -%}
+                          <span class="visually-hidden">{{ 'general.social.links.youtube' | t }}</span>
+                        </a>
+                      </li>
+                      <li class="list-social__item">
+                        <a href="#" class="link list-social__link pintrest">
+                          {%- render 'icon-pinterest' -%}
+                          <span class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span>
+                        </a>
+                      </li>
+                      <li class="list-social__item">
+                        <a href="#" class="link list-social__link snapchat">
+                          {%- render 'icon-snapchat' -%}
+                          <span class="visually-hidden">{{ 'general.social.links.snapchat' | t }}</span>
+                        </a>
+                      </li>
+                      <li class="list-social__item">
+                        <a href="#" class="link list-social__link tumblr">
+                          {%- render 'icon-tumblr' -%}
+                          <span class="visually-hidden">{{ 'general.social.links.tumblr' | t }}</span>
+                        </a>
+                      </li>
+                      <li class="list-social__item">
+                        <a href="#" class="link list-social__link vimeo">
+                          {%- render 'icon-vimeo' -%}
+                          <span class="visually-hidden">{{ 'general.social.links.vimeo' | t }}</span>
+                        </a>
+                      </li>
+                  </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .newsletter_popup .newsletter-form__message{
+    color: {{ settings.theme_content_color }};
+  }
+  .newsletter_popup .modal-content{
+    background: {{ settings.bg_newslatter }};
+  }
+  .top_title{
+    color: {{ settings.theme_content_color }};
+  }
+  .newsletter-heading{
+    color: {{ settings.theme_content_color }};
+  }
+  .newsletter-subtitle{
+    color: {{ settings.theme_content_color }};
+  }
+  .modal-content .close{
+    background: {{ settings.theme_btn_bg_news }};
+    color: {{ settings.theme_btn_text_news }};
+  }
+  .modal-content .close:hover{
+    background: {{ settings.theme_btn_hr_bg_news }};
+    color: {{ settings.theme_btn_hr_text_news }};
+  }
+  .submit-btn{
+    background:{{ settings.theme_btn_bg_news }};
+    color:{{ settings.theme_btn_text_news }};
+    fill: {{ settings.theme_btn_text_news }};
+  }
+  .submit-btn:hover{
+    background:{{ settings.theme_btn_hr_bg_news }};
+    color:{{ settings.theme_btn_hr_text_news }};
+    fill: {{ settings.theme_btn_hr_text_news }};
+  }
+  .do-not-show-again{
+    color: {{ settings.theme_content_color }};
+  }
+  .do-not-show-again:hover{
+    color: {{ settings.theme_text_hover_color }};
+  }
+  .newsletter_popup .newsletter-left #email-block .email-input{
+    background-color: {{ settings.input_bg }};
+    color: {{ settings.input_text }};
+  }
+  .newsletter_popup .newsletter-left #email-block .email-input::placeholder{
+    color: {{ settings.input_text }};
+  }
+{% endstyle %}

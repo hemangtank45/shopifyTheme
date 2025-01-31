@@ -1,0 +1,19 @@
+.brand-slider-section img{
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all .5s ease;
+}
+.brand-slider-section img:hover{
+   opacity: 1;
+}
+.brand-slider-section-wrapper {
+  line-height: 0px;
+  position: relative;
+  padding: 40px 60px;
+  overflow: hidden;
+}
+@media screen and (max-width: 991px) {
+  .brand-slider-section-wrapper {
+    padding: 15px;
+  }
+}

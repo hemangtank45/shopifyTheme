@@ -1,0 +1,364 @@
+{{ 'tab-product-home.css' | asset_url | stylesheet_tag }}
+<section class="main-product-tabination-section">
+  <div class="page-width">
+    <div class="main-product-tabination">
+      <div class="tab">
+        <ul class="nav nav-tabs">
+          {%- for block in section.blocks -%}
+          {%- case block.type -%}
+
+          {%- when 'product_desc' -%}
+          <li>
+            <button class="button tablinks-cus active" onclick="openTab(event, 'tab-1')" id="tab-cus-active">
+              {{ block.settings.product_info_tab_title }}
+            </button>
+          </li>
+
+          {%- when 'shipping_policy' -%}
+          <li>
+            <button class="button tablinks-cus" onclick="openTab(event, 'tab-3')">
+              {{ block.settings.shipping_text }}
+            </button>
+          </li>
+
+          {%- when 'additional-information' -%}
+          <li>
+            <button class="button tablinks-cus" onclick="openTab(event, 'tab-4')">
+              {{ block.settings.additional_text }}
+            </button>
+          </li>
+
+          {%- endcase -%}
+          {%- endfor -%}
+
+        </ul>
+      </div>
+
+      <div class="answering-tab-description tab-content">
+        {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+        {%- when 'product_desc' -%}
+        <div id="tab-1" class="tabcontent-cus" style="display: block;">
+
+          <div class="product_inner_description">{{ product.description }}</div>
+
+        </div>
+
+        {%- when 'shipping_policy' -%}
+        <div id="tab-3" class="tabcontent-cus">
+          <div class="tab-shipping-policy">
+            {{ block.settings.shipping_text_page }}
+          </div>
+        </div>
+
+        {%- when 'additional-information' -%}
+        <div id="tab-4" class="tabcontent-cus">
+          <div class="tab-additional-inmformation">
+
+            <table>
+              <tbody>
+                {%- for product_option in product.options_with_values -%}
+                <tr class="product_{{ product_option.name | handle }}">
+                  <th class="product_value_title">{{ product_option.name }}</th>
+                  <td class="product_value">
+                    <p>{% for value in product_option.values %}{{ value }}{% unless forloop.last == true %}, {%
+                      endunless %}{% endfor %}</p>
+                  </td>
+                </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {%- endcase -%}
+        {%- endfor -%}
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .main-product-tabination-section table:not([class]) td, .main-product-tabination-section table:not([class]) th{
+    border: 1px solid {{ settings.border_color }};
+    color: {{ settings.theme_black_color }};
+  }
+  .main-product-tabination {
+    border: 1px solid {{ settings.border_color }};
+    border-radius: var(--radius_img);
+  }
+ .main-product-tabination-section .answering-tab-description .spr-container input,
+  .main-product-tabination-section .answering-tab-description .spr-container textarea{
+      border: 1px solid {{ settings.border_color }};
+  }
+  .main-product-tabination-section .answering-tab-description .spr-container input::placeholder,
+.main-product-tabination-section .answering-tab-description .spr-container textarea::placeholder{
+  color: {{ settings.input_text }}; 
+}
+.main-product-tabination-section .spr-review-reply{
+  background: {{ settings.input_bg }} !important; 
+   color: {{ settings.input_text }} !important; 
+}
+.main-product-tabination-section .tab ul.nav-tabs li button.active,
+.main-product-tabination-section .tab ul.nav-tabs li button:hover{
+  color:{{ settings.theme_btn_bg }};
+}
+.tab ul.nav-tabs li button:hover:after,.tab ul.nav-tabs li button.active:after{
+  background: {{ settings.theme_btn_bg  }}; 
+  width: 100%;
+  left: 0;
+}
+.main-product-tabination-section .tab ul.nav-tabs li button{
+  color:{{ settings.theme_btn_hr_bg }}; 
+}
+.main-product-tabination-section .tabcontent-cus,
+.main-product-tabination-section .tab-shipping-policy,
+.main-product-tabination-section .tab-additional-inmformation{
+  color: {{ settings.content_color }};
+}
+.main-product-tabination-section .spr-summary-actions-newreview,
+.main-product-tabination-section .answering-tab-description .spr-container .spr-button{
+  color: {{ settings.theme_black_color }};
+  transition: all .5s ease;
+}
+.main-product-tabination-section .spr-summary-actions-newreview:hover,
+.main-product-tabination-section .answering-tab-description .spr-container .spr-button:hover{
+  color: {{ settings.theme_text_hover_color }};
+}
+.main-product-tabination-section .answering-tab-description .spr-container input{
+  background-color: {{ settings.input_bg }};
+  color: {{ settings.input_text }};
+}
+.main-product-tabination-section .answering-tab-description .spr-container .spr-form-label{
+  color: {{ settings.input_text }};
+}
+.main-product-tabination-section .spr-icon {
+  color: {{ settings.rating_color }};
+}
+.main-product-tabination-section {
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+}
+@media screen and (max-width: 1099px) {
+  .main-product-tabination-section {
+    padding-top: {{ section.settings.padding_top_1099 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_1099 }}px;
+  }
+}
+@media screen and (max-width: 989px) {
+  .main-product-tabination-section {
+    padding-top: {{ section.settings.padding_top_989 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_989 }}px;
+  }
+}
+@media screen and (max-width: 840px) {
+  .main-product-tabination-section {
+    padding-top: {{ section.settings.padding_top_840 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_840 }}px;
+  }
+}
+ @media screen and (max-width: 767px) {
+  .main-product-tabination-section {
+    padding-top: {{ section.settings.padding_top_767 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_767 }}px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .main-product-tabination-section {
+    padding-top: {{ section.settings.padding_top_640 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_640 }}px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .main-product-tabination-section {
+    padding-top: {{ section.settings.padding_top_480 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_480 }}px;
+  }
+}
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Information Tab",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Screen wise padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_1099",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 55
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_1099",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 55
+    },
+    {
+      "type": "header",
+      "content": "@media screen 989"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_989",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_989",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_840",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 45
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_840",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "@media screen 767"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_767",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_767",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_640",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 35
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_640",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_480",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_480",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_desc",
+      "name": "Product description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Description Tab"
+        },
+        {
+          "type": "text",
+          "id": "product_info_tab_title",
+          "label": "Description title",
+          "default": "Description"
+        }
+      ]
+    },
+    {
+      "type": "shipping_policy",
+      "name": "Product policy",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product policy Tab"
+        },
+        {
+          "type": "text",
+          "id": "shipping_text",
+          "label": "Shipping title",
+          "default": "Shipping policy"
+        },
+        {
+          "type": "textarea",
+          "id": "shipping_text_page",
+          "label": "Shipping description",
+          "default": "Shipping policy"
+        }
+      ]
+    },
+    {
+      "type": "additional-information",
+      "name": "Additional information",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Information"
+        },
+        {
+          "type": "text",
+          "id": "additional_text",
+          "label": "Additional title",
+          "default": "Additional information"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

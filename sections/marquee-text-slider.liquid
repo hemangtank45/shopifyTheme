@@ -1,0 +1,190 @@
+{{ 'marquee-text-slider.css' | asset_url | stylesheet_tag }}
+
+<section class="marquee-with-text marquee-{{ section.id }} {% if section.settings.border_concept %}border{% endif %}">
+  <div class="{% if section.settings.container %}page-width {% else %} section-full{% endif %}">
+    <div class="scrolling_content">
+       {%- for i in (0..2) -%}
+        <div class="scroll marquee-text-function marquee-text-function--{{ section.settings.animation_style }}">
+          {%- for block in section.blocks -%}
+            <div class="marquee-text">
+              <div class="h3">{{ block.settings.content }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+                      
+{% style %}
+.marquee-with-text.marquee-{{ section.id }} {
+  margin-top: {{ section.settings.m_top }}px;
+  margin-bottom: {{ section.settings.m_bottom }}px;
+}
+.marquee-with-text.marquee-{{ section.id }} {
+  background-color: {{ section.settings.background_color }};
+}
+.marquee-with-text.marquee-{{ section.id }}.border {
+  border-top: 1px solid {{ settings.theme_main_color }};
+  border-bottom: 1px solid {{ settings.theme_main_color }};
+}
+.marquee-with-text.marquee-{{ section.id }} .scrolling_content .marquee-text-function {
+  animation: {{ section.settings.text_time }}s infinite linear;
+}
+.marquee-with-text.marquee-{{ section.id }} .scrolling_content .marquee-text-function--left-right {
+  animation-name: left-right;
+}
+.marquee-with-text.marquee-{{ section.id }} .scrolling_content .marquee-text-function--right-left {
+  animation-name: right-left;
+}
+.marquee-with-text.marquee-{{ section.id }}.border .scrolling_content .marquee-text-function .marquee-text {
+  position: relative;
+}
+.marquee-with-text.marquee-{{ section.id }} .scrolling_content .marquee-text-function .marquee-text .h3 {
+  color: {{ section.settings.s_text_color }} !important;
+}
+.marquee-with-text.marquee-{{ section.id }}.border .scrolling_content .marquee-text-function .marquee-text:before{
+  background-color: {{ section.settings.s_text_color }};
+}
+.marquee-with-text.marquee-{{ section.id }} .scrolling_content .marquee-text .h3 {
+  font-size: {{ section.settings.heading_size }}px;
+  padding: 0px {{ section.settings.text_spacing }}px;
+}
+@media screen and (max-width: 991px){
+  .marquee-with-text.marquee-{{ section.id }} .scrolling_content .marquee-text .h3 {
+    font-size: 18px !important;
+  }
+}
+ @media screen and (max-width: 840px){
+  .marquee-with-text.marquee-{{ section.id }} .scrolling_content .marquee-text .h3 {
+    font-size: 16px !important;
+  }
+}
+@media screen and (max-width: 575px){
+  .marquee-with-text.marquee-{{ section.id }} .scrolling_content .marquee-text .h3 {
+    font-size: 14px !important;
+  }
+}
+{% endstyle %}
+                      
+{% schema %}
+{
+  "name": "Marquee text slider",
+  "class": "marquee-text-slider-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "container",
+      "label": "Show container",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type" : "checkbox",
+      "id" : "border_concept",
+      "label" : "Border concept",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "s_text_color",
+      "label": "Text",
+      "default": "#333333"
+    },
+    {
+      "type": "select",
+      "id": "animation_style",
+      "options": [
+        {
+          "value": "left-right",
+          "label": "Left to right"
+        },
+        {
+          "value": "right-left",
+          "label": "Right to left"
+        }
+      ],
+      "default": "left-right",
+      "label": "Animation style"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Font size",
+      "min": 14,
+      "max": 100,
+      "step": 2,
+      "default": 26,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "text_time",
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "label": "Time",
+      "unit": "s",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "text_spacing",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "label": "Spacing",
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "text",
+      "id": "m_top",
+      "label": "Marquee margin top",
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "m_bottom",
+      "label": "Marquee margin bottom",
+      "default": "0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "scrolling_text",
+      "name": "Content",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Content",
+          "default": "Product offers for attracting customers."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee text slider",
+      "category": "Marquee text slider",
+      "blocks": [
+        {
+          "type": "scrolling_text"
+        },
+        {
+          "type": "scrolling_text"
+        },
+        {
+          "type": "scrolling_text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

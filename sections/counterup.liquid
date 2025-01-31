@@ -1,0 +1,404 @@
+{{ 'counterup.css' | asset_url | stylesheet_tag }}
+
+<div class="counterup_pattern">
+  <div class="counterup-section">
+    <div class="page-width">
+      <ul id="counter" class="list-unstyled section-{{ section.id }}-padding">
+        <li class="wow fadeInUp">
+          <span class="count" data-count="{{ section.settings.counter1 }}"> 0 </span>
+          <p class="heading">{{ section.settings.award }}</p>
+        </li>
+        <li class="wow fadeInUp">
+          <span class="count" data-count="{{ section.settings.counter2 }}"> 0 </span>
+          <p class="heading">{{ section.settings.care }}</p>
+        </li>
+        <li class="wow fadeInUp">
+          <span class="count" data-count="{{ section.settings.counter3 }}"> 0 </span>
+          <p class="heading">{{ section.settings.walkers }}</p>
+        </li>
+        <li class="wow fadeInUp">
+          <span class="count" data-count="{{ section.settings.counter4 }}"> 0 </span>
+          <p class="heading">{{ section.settings.customer }}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% style %}
+.section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding-top }}px;
+  padding-bottom: {{ section.settings.padding-bottom }}px;
+  margin-top: {{ section.settings.margin-top }}px;
+  margin-bottom: {{ section.settings.margin-bottom }}px;
+}
+.counterup-section{
+  background-color: {{ section.settings.section_bg }};
+}
+.counterup-section .count{
+  color: {{ section.settings.number_color }};
+}
+.counterup-section .heading{
+  color: {{ section.settings.text_color }};
+}
+@media screen and (max-width: 1366px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-1366 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-1366 }}px;
+    margin-top: {{ section.settings.margin-top-1366 }}px;
+    margin-bottom: {{ section.settings.margin-bottom-1366 }}px;
+  }
+}
+@media screen and (max-width: 1099px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-1099 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-1099 }}px;
+    margin-top: {{ section.settings.margin-top-1099 }}px;
+    margin-bottom: {{ section.settings.margin-bottom-1099 }}px;
+  }
+}
+@media screen and (max-width: 840px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-840 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-840 }}px;
+    margin-top: {{ section.settings.margin-top-840 }}px;
+    margin-bottom: {{ section.settings.margin-bottom-840 }}px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-640 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-640 }}px;
+    margin-top: {{ section.settings.margin-top-640 }}px;
+    margin-bottom: {{ section.settings.margin-bottom-640 }}px;  
+  }
+}
+@media screen and (max-width: 480px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding-top-480 }}px;
+    padding-bottom: {{ section.settings.padding-bottom-480 }}px;
+    margin-top: {{ section.settings.margin-top-480 }}px;
+    margin-bottom: {{ section.settings.margin-bottom-480 }}px;  
+  }
+}
+{% endstyle %}
+
+<script>
+   var counted = 0;
+  $(window).scroll(function() {
+
+    var oTop = $('#counter').offset().top - window.innerHeight;
+    if (counted == 0 && $(window).scrollTop() > oTop) {
+      $('.count').each(function() {
+        var $this = $(this),
+          countTo = $this.attr('data-count');
+        $({
+          countNum: $this.text()
+        }).animate({
+            countNum: countTo
+          },
+          {
+            duration: 2000,
+            easing: 'swing',
+            step: function() {
+              $this.text(Math.floor(this.countNum));
+            },
+            complete: function() {
+              $this.text(this.countNum);
+              //alert('finished');
+            }
+          });
+      });
+      counted = 1;
+    }
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Counterup section",
+    "settings": [
+      {
+        "type": "color",
+        "id": "section_bg",
+        "label": "Section bg",
+        "default": "#f6f4f0"
+      },
+      {
+        "type": "color",
+        "id": "number_color",
+        "label": "Counter number color",
+        "default": "#333333"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Counter text color",
+        "default": "#333333"
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "label": "Counter border color",
+        "default": "#333333"
+      },
+      {
+        "type": "header",
+        "content": "counterup setting"
+      },
+      {
+        "type": "text",
+        "id": "counter1",
+        "default": "20",
+        "label": "Count number"
+      },
+      {
+        "type": "text",
+        "id": "award",
+        "default": "Branches",
+        "label": "Block name"
+      },
+      {
+        "type": "text",
+        "id": "counter2",
+        "default": "1300",
+        "label": "Count number"
+      },
+      {
+        "type": "text",
+        "id": "care",
+        "default": "Happy customers",
+        "label": "Block name"
+      },
+      {
+        "type": "text",
+        "id": "counter3",
+        "default": "65",
+        "label": "Count number"
+      },
+      {
+        "type": "text",
+        "id": "walkers",
+        "default": "Organic wines",
+        "label": "Block name"
+      },
+      {
+        "type": "text",
+        "id": "counter4",
+        "default": "15",
+        "label": "Count number"
+      },
+      {
+        "type": "text",
+        "id": "customer",
+        "default": "Year of experience",
+        "label": "Block name"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "number",
+        "id": "padding-top",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 50
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 50
+      },
+      {
+        "type": "header",
+        "content": "Screen wise section padding"
+      },
+      {
+        "type": "header",
+        "content": "@media screen 1366"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-1366",
+        "label": "Padding top",
+        "default": 40
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-1366",
+        "label": "Padding bottom",
+        "default": 40
+      },
+      {
+        "type": "header",
+        "content": "@media screen 1099"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-1099",
+        "label": "Padding top",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-1099",
+        "label": "Padding bottom",
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "@media screen 840"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-840",
+        "label": "Padding top",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-840",
+        "label": "Padding bottom",
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "@media screen 640"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-640",
+        "label": "Padding top",
+        "default": 20
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-640",
+        "label": "Padding bottom",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "@media screen 480"
+      },
+      {
+        "type": "number",
+        "id": "padding-top-480",
+        "label": "Padding top",
+        "default": 20
+      },
+      {
+        "type": "number",
+        "id": "padding-bottom-480",
+        "label": "Padding bottom",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Margin settings"
+      },
+      {
+        "type": "number",
+        "id": "margin-top",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "margin-bottom",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Screen wise section margin"
+      },
+      {
+        "type": "header",
+        "content": "@media screen 1366"
+      },
+      {
+        "type": "number",
+        "id": "margin-top-1366",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "margin-bottom-1366",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "@media screen 1099"
+      },
+      {
+        "type": "number",
+        "id": "margin-top-1099",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "margin-bottom-1099",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "@media screen 840"
+      },
+      {
+        "type": "number",
+        "id": "margin-top-840",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "margin-bottom-840",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "@media screen 640"
+      },
+      {
+        "type": "number",
+        "id": "margin-top-640",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "margin-bottom-640",
+        "label": "Margin bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "@media screen 480"
+      },
+      {
+        "type": "number",
+        "id": "margin-top-480",
+        "label": "Margin top",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "margin-bottom-480",
+        "label": "Margin bottom",
+        "default": 0
+      }
+    ],
+     "presets": [
+      {
+        "name": "Counterup section"
+      }
+    ]
+  }
+{% endschema %}

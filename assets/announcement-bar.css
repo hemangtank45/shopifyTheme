@@ -1,0 +1,95 @@
+.section-full {
+  max-width: 100%;
+  width: 100%;
+}
+.announcement-with-text {
+  padding: 10px 0px;
+  position: relative;
+  z-index: 6;
+}
+.main-announcement_bar_slider_text.page-width{
+  padding: 0px 15px;
+}
+.main-announcement_bar_slider_text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.announcement-text-function {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-body-family);
+  text-align: center;
+}
+.announcement_bar_slider_text {
+  overflow: hidden;
+  width: 100%;
+  max-width: 60%;
+}
+.announcement_bar-language-currency {
+  display: flex;
+  align-items: center;
+}
+.announce-link{
+  display: flex;
+}
+.announce-link .menu-link{
+  padding-right: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+.main-announcement_bar_slider_text{
+  padding: 0px 50px;
+}
+.announcement-with-text .swiper-button-next, .announcement-with-text .swiper-button-prev {
+  z-index: 2!important;
+  width: 40px!important;
+  height: 40px!important;
+  transition: all .5s ease;
+  position: absolute!important;
+  margin-top: calc(0px - (var(--swiper-navigation-size)/ 2)) !important;
+}
+.announcement-with-text .swiper-button-next svg {
+  transform: rotate(180deg) !important;
+}
+.announcement-with-text .swiper-button-next svg,
+.announcement-with-text .swiper-button-prev svg{
+    transform: rotate(0deg);
+}
+#FooterCountryForm{
+  padding-left: 14px;
+}
+#FooterLanguageForm{
+  padding-right: 14px;
+}
+@media screen and (max-width: 1429px){
+  .main-announcement_bar_slider_text {
+      flex-direction: column;
+    }
+  .main-announcement_bar_slider_text {
+    padding: 0 15px;
+  }
+}
+@media screen and (max-width: 1199px){
+  .announcement_bar_slider_text {
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 991px){
+  .announcement-with-text .swiper-button-next,
+  .announcement-with-text .swiper-button-prev{
+    display: none;
+  }
+}
+@media screen and (max-width: 420px){
+  #FooterLanguageForm {
+    padding-right: 7px;
+  }
+  .announcement-with-text {
+    padding: 5px 0;
+  }
+  #FooterCountryForm {
+    padding-left: 7px;
+  }
+}

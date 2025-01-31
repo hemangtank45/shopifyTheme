@@ -1,0 +1,134 @@
+.second-inner-about-us-top-image {
+  padding-bottom: 40px;
+}
+.second-inner-about-us-top-image .media{
+  border-radius: var(--radius_img);
+}
+.second-inner-about-us-bottom-text p {
+  font-size: 16px;
+}
+.main-about-us-page-top,
+.main-about-us-page-bottom {
+  display: inline-block;
+  vertical-align: middle;
+}
+.main-about-us-page-top,
+.main-our-team-section-wrapper {
+  margin: 0px -15px;
+  overflow: hidden;
+}
+.second-inner-about-us-page-wrapper {
+  margin-bottom: 60px;
+}
+.second-inner-about-us-page .contact-info,
+.second-inner-about-us-page .location-info,
+.second-inner-about-us-page .email-info {
+  width: 100%;
+  max-width: 33.33%;
+  padding: 0px 15px;
+  float: left;
+}
+.second-inner-about-us-page .contact-info-wrapper,
+.second-inner-about-us-page .location-info-wrapper,
+.second-inner-about-us-page .email-info-wrapper {
+  padding: 40px;
+  text-align: center;
+  border-radius: var(--buttons-radius);
+}
+.second-inner-about-us-page .contact-icon,
+.second-inner-about-us-page .location-icon,
+.second-inner-about-us-page .email-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border-radius: 50%;
+  transition: all .5s ease;
+}
+.second-inner-about-us-page .contact-content,
+.second-inner-about-us-page .location-content,
+.second-inner-about-us-page .email-content {
+   padding-top: 25px;
+}
+.second-inner-about-us-page .contact-content h3,
+.second-inner-about-us-page .location-content h3,
+.second-inner-about-us-page .email-content h3 {
+  padding-bottom: 15px;
+  font-weight: var(--text_weight);
+}
+@media screen and (max-width: 1299px) {
+  .second-inner-about-us-page-wrapper {
+    margin-bottom: 50px;
+  }
+  .second-inner-about-us-page .contact-icon, .second-inner-about-us-page .location-icon, .second-inner-about-us-page .email-icon {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+  .second-inner-about-us-page .contact-info-wrapper, .second-inner-about-us-page .location-info-wrapper, .second-inner-about-us-page .email-info-wrapper{
+    padding: 30px;
+  }
+  .second-inner-about-us-page .contact-content, .second-inner-about-us-page .location-content, .second-inner-about-us-page .email-content {
+    padding-top: 20px;
+  }
+}
+@media screen and (max-width: 1099px){
+   .second-inner-about-us-page .contact-info-wrapper, .second-inner-about-us-page .location-info-wrapper, .second-inner-about-us-page .email-info-wrapper{
+    padding: 20px;
+  }
+  .second-inner-about-us-page-wrapper {
+      margin-bottom: 40px;
+  }
+}
+@media screen and (max-width: 991px){
+  .second-inner-about-us-page .contact-info-wrapper, .second-inner-about-us-page .location-info-wrapper, .second-inner-about-us-page .email-info-wrapper {
+    padding: 15px;
+  }
+  .second-inner-about-us-page .contact-content h3, .second-inner-about-us-page .location-content h3, .second-inner-about-us-page .email-content h3{
+    padding-bottom: 10px;
+    font-size: 16px;
+  }
+  .second-inner-about-us-top-image{
+    padding-bottom: 35px;
+  }
+}
+@media screen and (max-width: 840px){
+  .second-inner-about-us-top-image{
+    padding-bottom: 30px;
+  }
+}
+@media screen and (max-width: 767px){
+  .second-inner-about-us-page .contact-info, .second-inner-about-us-page .location-info, .second-inner-about-us-page .email-info{
+    max-width: 50%;
+    width: 100%
+  }
+  .second-inner-about-us-page .email-info {
+     margin-top: 30px   
+  }
+  .second-inner-about-us-page-wrapper {
+    margin-bottom: 30px;
+  }
+  .second-inner-about-us-top-image{
+    padding-bottom: 25px;
+  }
+}
+@media screen and (max-width: 575px){
+  .second-inner-about-us-bottom-text p {
+    font-size: 14px;
+  }
+  .second-inner-about-us-page .contact-info, .second-inner-about-us-page .location-info, .second-inner-about-us-page .email-info {
+    max-width: 100%;
+    width: 100%;
+  }
+  .second-inner-about-us-page .location-info,.second-inner-about-us-page .email-info {
+    margin-top: 15px;
+  }
+  .second-inner-about-us-page-wrapper {
+    margin-bottom: 20px;
+  }
+  .second-inner-about-us-top-image {
+    padding-bottom: 15px;
+  }
+}

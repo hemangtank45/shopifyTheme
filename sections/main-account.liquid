@@ -1,0 +1,388 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+<div class="customer account section-{{ section.id }}-padding">
+  <div>
+    <h1 class="customer__title theme_main_heading">{{ 'customer.account.title' | t }}</h1>
+    {%- assign customer_name = customer.name | default: customer.default_address.name | default: customer.email -%}
+    <p class="hello-account">{{ 'customer.account.hello_html' | t: name: customer_name,link: routes.account_logout_url
+      }}</p>
+  </div>
+
+  <div>
+    <div>
+      <h2>{{ 'customer.orders.title' | t }}</h2>
+
+      {% paginate customer.orders by 20 %}
+      {%- if customer.orders.size > 0 -%}
+      <table role="table" class="order-history">
+        <caption class="visually-hidden">
+          {{ 'customer.orders.title' | t }}
+        </caption>
+        <thead role="rowgroup">
+          <tr role="row">
+            <th id="ColumnOrder" scope="col" role="columnheader">{{ 'customer.orders.order_number' | t }}</th>
+            <th id="ColumnDate" scope="col" role="columnheader">{{ 'customer.orders.date' | t }}</th>
+            <th id="ColumnPayment" scope="col" role="columnheader">{{ 'customer.orders.payment_status' | t }}</th>
+            <th id="ColumnFulfillment" scope="col" role="columnheader">
+              {{ 'customer.orders.fulfillment_status' | t }}
+            </th>
+            <th id="ColumnTotal" scope="col" role="columnheader">{{ 'customer.orders.total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          {%- for order in customer.orders -%}
+          <tr role="row">
+            <td id="RowOrder" role="cell" headers="ColumnOrder" data-label="{{ 'customer.orders.order_number' | t }}">
+              <a href="{{ order.customer_url }}"
+                aria-label="{{ 'customer.orders.order_number_link' | t: number: order.name }}">
+                {{ order.name }}
+              </a>
+            </td>
+            <td headers="RowOrder ColumnDate" role="cell" data-label="{{ 'customer.orders.date' | t }}">
+              {{ order.created_at | time_tag: format: 'date' }}
+            </td>
+            <td headers="RowOrder ColumnPayment" role="cell" data-label="{{ 'customer.orders.payment_status' | t }}">
+              {{ order.financial_status_label }}
+            </td>
+            <td headers="RowOrder ColumnFulfillment" role="cell"
+              data-label="{{ 'customer.orders.fulfillment_status' | t }}">
+              {{ order.fulfillment_status_label }}
+            </td>
+            <td headers="RowOrder ColumnTotal" role="cell" data-label="{{ 'customer.orders.total' | t }}">
+              {{ order.total_net_amount | money_with_currency }}
+            </td>
+          </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+      {%- else -%}
+      <div class="form__message" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+          <path
+            d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z">
+          </path>
+        </svg>
+        <a class="order_not_place"
+          href="{% if cart.item_count > 0 %}/checkout{% else %}{{ routes.all_products_collection_url | sort_by: 'best-selling' }}{% endif %}">{{
+          'customer.account.make_order' | t }}</a>
+        {{ 'customer.orders.none' | t }}
+      </div>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+      {%- if paginate.parts.size > 0 -%}
+      <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+        <ul role="list">
+          {%- if paginate.previous -%}
+          <li>
+            <a href="{{ paginate.previous.url }}" aria-label="{{ 'general.pagination.previous' | t }}">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z"
+                  fill="currentColor">
+              </svg>
+            </a>
+          </li>
+          {%- endif -%}
+
+          {%- for part in paginate.parts -%}
+          <li>
+            {%- if part.is_link -%}
+            <a href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+              {{- part.title -}}
+            </a>
+            {%- else -%}
+            {%- if part.title == paginate.current_page -%}
+            <span aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+              {{- part.title -}}
+            </span>
+            {%- else -%}
+            <span>{{ part.title }}</span>
+            {%- endif -%}
+            {%- endif -%}
+          </li>
+          {%- endfor -%}
+
+          {%- if paginate.next -%}
+          <li>
+            <a href="{{ paginate.next.url }}" aria-label="{{ 'general.pagination.next' | t }}">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z"
+                  fill="currentColor">
+              </svg>
+            </a>
+          </li>
+          {%- endif -%}
+        </ul>
+      </nav>
+      {%- endif -%}
+      {%- endif -%}
+      {% endpaginate %}
+    </div>
+
+    <div>
+      <h2>{{ 'customer.account.details' | t }}</h2>
+
+      {{ customer.default_address | format_address }}
+
+      <a href="{{ routes.account_addresses_url }}">
+        {{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})
+      </a>
+    </div>
+
+    <div class="testing">
+
+      <table class="order-author-detail">
+        <tbody>
+          <tr>
+            <td><strong>{{ 'customer.ordertable.order_name' | t }}</strong></td>
+            <td>{{ customer.first_name }} {{ customer.last_name }} </td>
+          </tr>
+          <tr>
+            <td><strong>{{ 'customer.ordertable.order_email' | t }}</strong></td>
+            <td>{{ customer.default_address.email | default: customer.email }}</td>
+          </tr>
+
+          {%- if customer.default_address != blank -%}
+          <tr>
+            <td><strong>{{ 'customer.ordertable.order_address' | t }}</strong></td>
+            <td>{{ customer.default_address.address1 }}</td>
+          </tr>
+          {%- if customer.default_address.address2 != blank -%}
+          <tr>
+            <td><strong>{{ 'customer.ordertable.order_address2' | t }}</strong></td>
+            <td>{{ customer.default_address.address2 }}</td>
+          </tr>
+          {%- endif -%}
+          {%- if customer.default_address.city != blank -%}
+          <tr>
+            <td><strong>{{ 'customer.ordertable.order_country' | t }} </strong></td>
+            <td>{{ customer.default_address.city }}, {% if address.province_code %}{{
+              customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}</td>
+          </tr>
+          {%- endif -%}
+          {%- if customer.default_address.zip != blank -%}
+          <tr>
+            <td><strong>{{ 'customer.ordertable.order_pincode' | t }}</strong></td>
+            <td>{{ customer.default_address.zip }}</td>
+          </tr>
+          {%- endif -%}
+          {%- if customer.default_address.phone != blank -%}
+          <tr>
+            <td><strong>{{ 'customer.ordertable.order_phonenumber' | t }}</strong></td>
+            <td>{{ customer.default_address.phone }}</td>
+          </tr>
+          {%- endif -%}
+          {%- endif -%}
+        </tbody>
+      </table>
+    </div>
+    <a href="{{ routes.account_logout_url }}" class="logout_btn theme_buttons">
+      {% render 'icon-account' %}
+      {{ 'customer.log_out' | t }}
+    </a>
+  </div>
+</div>
+
+{%- style -%}
+  .account .customer__title,.account-heading{
+    color: {{ settings.theme_heading_color }};
+  }
+  .customer thead th, .customer tbody td,.customer tbody strong,.form__message{
+    color: {{ settings.theme_black_color }};
+  }
+  .account h1+a,:is(.account,.order) h2,:is(.account,.order) a{
+    color: {{ settings.theme_black_color }};
+    transition: all .5s ease;
+  }
+  .account h1+a:hover,:is(.account,.order) a:hover{
+    color: {{ settings.theme_text_hover_color}};
+  }
+  :is(.account,.order) p{
+    color: {{ settings.content_color }};
+  }
+  .customer table, .customer th, .customer td {
+    border: 1px solid {{ settings.border_color }} !important;
+  }
+  .account .logout_btn{
+    background-color:{{ settings.theme_btn_bg }};
+    color:{{ settings.theme_btn_text }};
+  }
+  .account .logout_btn:hover{
+    color:{{ settings.theme_btn_hr_text }};
+    background-color:{{ settings.theme_btn_hr_bg }};
+  }
+  .customer .form__message svg{
+    fill: {{ settings.theme_black_color }};
+    transition: all .5s ease;
+  }
+  .customer .form__message:hover svg{
+    fill: {{ settings.theme_main_color }};
+  }
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+ @media screen and (max-width: 1099px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_1099 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_1099 }}px;
+    }
+  }
+  @media screen and (max-width: 989px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_989 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_989 }}px;
+    }
+  }
+  @media screen and (max-width: 840px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_840 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_840 }}px;
+    }
+  }
+   @media screen and (max-width: 767px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_767 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_767 }}px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_640 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_640 }}px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top_480 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_480 }}px;
+    }
+  }
+{%- endstyle -%}        
+
+{% schema %}
+{
+  "name": "t:sections.main-account.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Screen wise padding"
+    },
+    {
+      "type": "header",
+      "content": "@media screen 1099"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_1099",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 55
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_1099",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 55
+    },
+    {
+      "type": "header",
+      "content": "@media screen 989"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_989",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_989",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "@media screen 840"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_840",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 45
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_840",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "@media screen 767"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_767",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_767",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "@media screen 640"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_640",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 35
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_640",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "@media screen 480"
+    },
+    {
+      "type": "number",
+      "id": "padding_top_480",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom_480",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 30
+    }
+  ]
+}
+{% endschema %}
